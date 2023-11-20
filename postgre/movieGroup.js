@@ -9,7 +9,7 @@ async function addGroup(group_name, description, owner) {
     await pgPool.query(sql.INSERT_GROUP, [group_name, description, owner])
 }
 
-addGroup('testGroup', 'testDescription', '1');
+//addGroup('testGroup', 'testDescription', '1');
 getGroup();
 
 async function getGroup(){
