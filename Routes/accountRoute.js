@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', upload.none() , async (req, res) => {
     const user_name = req.body.user_name;
-    const password = req.body.password;
+    let password = req.body.password;
     const email = req.body.email;
 
     password = await bcrypt.hash(password, 10);
