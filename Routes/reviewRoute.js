@@ -4,12 +4,12 @@ const upload = multer({dest: 'upload/'});
 
 const {addReview, getReview} = require('../postgre/review');
 
-router.get('/review_id', async (req, res) => {
+router.get('/', async (req, res) => {
 
         res.json(await getReview());
 });
 
-router.post('/review', upload.none() , async (req, res) => {
+router.post('/', upload.none() , async (req, res) => {
     const text_review = req.body.text_review;
     const rating = req.body.rating;
     const recommend = req.body.recommend;

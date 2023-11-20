@@ -4,12 +4,12 @@ const upload = multer({dest: 'upload/'});
 
 const {addGroup, getGroup} = require('../postgre/movieGroup');
 
-router.get('/group_id', async (req, res) => {
+router.get('/', async (req, res) => {
 
         res.json(await getGroup());
 });
 
-router.post('/moviegroup', upload.none() , async (req, res) => {
+router.post('/', upload.none() , async (req, res) => {
     const group_name = req.body.group_name;
     const description = req.body.description;
     const owner = req.body.owner;
