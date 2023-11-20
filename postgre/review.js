@@ -9,6 +9,7 @@ const sql = {
 getReview();
 
 
+
 async function addReview(text_review, rating, recommend) {
     await pgPool.query(sql.INSERT_REVIEW, [text_review, rating, recommend])
 }
