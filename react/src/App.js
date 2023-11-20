@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { LoginContext } from "./components/Contexts";
 import { Login } from "./components/Auth";
+import { NavbarContext } from "./components/Contexts";
+import { Navbar } from "./components/Navbar";
 import axios from "axios";
 import { BrowserRouter, Link, Navigate, Outlet, Route, Routes, useNavigate, useParams } from "react-router-dom";
 
@@ -18,11 +20,15 @@ function App() {
     <div>
       <Link to={''}>Home </Link>
       <Link to={'user'}>user</Link>
+      <NavbarContext.Provider>
+            <Navbar/>
+      </NavbarContext.Provider>
       <Routes>
         <Route path='' element={<Home />} />
         <Route path="user/:userID?" element={<User />} >
           <Route path="profile" element={<Profile />} />
           <Route path="blog" element={<Blog />} />
+          
         </Route>
         <Route path="*" element={<h2>Page not found</h2>} />
       </Routes>
