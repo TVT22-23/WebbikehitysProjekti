@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { LoginContext } from "./components/Contexts";
-import { Login } from "./components/Auth";
 import { NavbarContext } from "./components/Contexts";
 import { Navbar } from "./components/Navbar";
 import axios from "axios";
-import { BrowserRouter, Link, Navigate, Outlet, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
+import { Blog, GSettings, Profile, USettings, User } from "./components/User";
+import { Login } from "./components/Auth";
+import Group from "./components/Group";
+import Home from "./components/Home";
+import {Film, Cast, Crew } from "./components/Film";
 
 const persons = [
   { fname: 'Reima', lname: 'Raniska' },
@@ -13,8 +17,6 @@ const persons = [
 ]
 
 function App() {
-
-  const [login, setLogin] = useState(false);
 
   return (
     <div>
@@ -28,7 +30,21 @@ function App() {
         <Route path="user/:userID?" element={<User />} >
           <Route path="profile" element={<Profile />} />
           <Route path="blog" element={<Blog />} />
-          
+                <Link to={'user/1'}>User </Link>
+      <Link to={'login'}>Login </Link>
+      <Link to={'film/1'}>Film </Link>
+      <Link to={'group/1'}>Group </Link>
+      <Routes>
+        <Route path='' element={<Home />} />
+        <Route path='/film/:filmID?' element={<Film />} >
+          <Route path = 'cast' element={<Cast/>}/>
+          <Route path = 'crew' element={<Crew/>}/>
+        </Route>
+        <Route path='/group/:groupID?' element={<Group />} />
+        <Route path='/login' element={<Login />} />
+        <Route path="/user/:userID?" element={<User />} >
+          <Route path="usettings" element={<USettings />} />
+          <Route path="gsettings" element={<GSettings />} />
         </Route>
         <Route path="*" element={<h2>Page not found</h2>} />
       </Routes>
@@ -36,52 +52,6 @@ function App() {
   );
 }
 
-function Home() {
-
-  const x = true;
-
-  return (
-    <div>
-      <h1>Home</h1>
-      {/* { x &&
-        <Navigate to={'user'}/>
-      } */}
-    </div>
-  )
-}
-
-function User() {
-
-  const nav = useNavigate();
-
-  const { userID } = useParams();
-
-  return (
-    <div>
-      <h1>User with id {userID}</h1>
-      <Link to={'profile'}>Profile  </Link>
-      <Link to={'blog'}>Blog</Link>
-      {/* <button onClick={()=> nav('/')}>Home</button> */}
-      <Outlet/>
-    </div>
-  )
-}
-
-function Profile() {
-  return (
-    <div>
-      User profile
-    </div>
-  )
-}
-
-function Blog() {
-  return (
-    <div>
-      User blog
-    </div>
-  )
-}
 function PersonList() {
 
   const items = persons.map((p, i) => <li key={i}>{p.lname}</li>)
