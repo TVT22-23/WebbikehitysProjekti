@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import { useContext } from "react";
 
 function Navbar() {
@@ -5,12 +6,27 @@ function Navbar() {
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class=".navbar" href="#">lits läts</a>
+      <a class="navbar-brand" href="#">lits läts</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Frontpage</a></li>
-      <li><a href="#">Profile</a></li>
-      <li><a href="#">Settings</a></li>
+      <li class="active">
+      <Link to={''} className='nav-link'>Home</Link>
+      </li>
+      <li>
+      <Link to={'/user'} className='nav-link'>User</Link>
+      </li>
+      <li>
+      <Link to={'/auth'} className='nav-link'>Login</Link>
+      </li>
+      <li>
+      <Link to={'/film'} className='nav-link'>Film</Link>
+      </li>
+      <li>
+      <Link to={'/group'} className='nav-link'>Group</Link>
+      </li>
+      <li>
+      <Link to={'/settings'} className='nav-link'>Settings</Link>
+      </li>
     </ul>
     <form class="navbar-form navbar-left" action="/action_page.php">
       <div class="input-group">
