@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { LoginContext } from "./components/Contexts";
-import { NavbarContext } from "./components/Contexts";
-import { Navbar } from "./components/Navbar";
 import axios from "axios";
 import { Link, Route, Routes } from "react-router-dom";
 import { Blog, GSettings, Profile, USettings, User } from "./components/User";
 import { Login } from "./components/Auth";
+import { NavbarContext } from "./components/Contexts";
+import { Navbar } from "./components/Navbar";
 import Group from "./components/Group";
 import Home from "./components/Home";
 import {Film, Cast, Crew } from "./components/Film";
@@ -21,19 +20,13 @@ function App() {
   return (
     <div>
       <Link to={''}>Home </Link>
-      <Link to={'user'}>user</Link>
-      <NavbarContext.Provider>
-            <Navbar/>
-      </NavbarContext.Provider>
-      <Routes>
-        <Route path='' element={<Home />} />
-        <Route path="user/:userID?" element={<User />} >
-          <Route path="profile" element={<Profile />} />
-          <Route path="blog" element={<Blog />} />
-                <Link to={'user/1'}>User </Link>
+      <Link to={'user/1'}>User </Link>
       <Link to={'login'}>Login </Link>
       <Link to={'film/1'}>Film </Link>
       <Link to={'group/1'}>Group </Link>
+      <NavbarContext.Provider>
+            <Navbar/>
+      </NavbarContext.Provider>
       <Routes>
         <Route path='' element={<Home />} />
         <Route path='/film/:filmID?' element={<Film />} >
