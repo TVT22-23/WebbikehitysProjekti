@@ -36,3 +36,31 @@
     transform: rotate(360deg);
   }
 }
+
+.navbar {
+  float: center;
+  margin-bottom: 0;
+  background-color: #8fbeff;
+  z-index: 9999;
+  border: 0px;
+  font-size: 12px !important;
+  line-height: 1.42857143 !important;
+  letter-spacing: 4px;
+  border-radius: 10px;
+}
+.navbar li a, .navbar .navbar-brand {
+  color: #fff !important;
+}
+.navbar-nav li a:hover, .navbar-nav li.active a {
+  color: #8fbeff !important;
+  background-color: #fff !important;
+}
+.navbar-default .navbar-toggle {
+  border-color: transparent;
+  color: #fff !important;
+}
+
+.navbar li{
+  display: inline-block;
+  margin-right: 10px;
+}
