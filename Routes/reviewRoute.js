@@ -13,11 +13,12 @@ router.post('/', upload.none() , async (req, res) => {
     const text_review = req.body.text_review;
     const rating = req.body.rating;
     const recommend = req.body.recommend;
+    const movie_id = req.body.movie_id;
 
 
 
     try {
-        await addReview(text_review, rating, recommend);
+        await addReview(text_review, rating, recommend, movie_id);
         res.end();
     } catch (error) {
         console.log(error);
