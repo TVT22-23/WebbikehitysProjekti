@@ -8,7 +8,6 @@ const sql = {
 getFavorite();
 
 
-
 async function addFavorite(fav_account_id, movie_id) {
     await pgPool.query(sql.INSERT_FAVORITE, [fav_account_id, movie_id])
 }
@@ -18,5 +17,5 @@ async function getFavorite(){
     const rows = result.rows;
     return rows;
 }
-
+    
 module.exports = {addFavorite, getFavorite};
