@@ -18,7 +18,7 @@ function User() {
         <Col lg="auto">
           <ProfPic />
         </Col>
-        <Col className="border border-primary m-3">
+        <Col className="borders">
           <p>this is where the description of this character goes, jorma is ismo laitela salilla</p>
         </Col>
       </Row>
@@ -99,10 +99,10 @@ function ProfPic() {
 
 function MovieGrid() {
   return (
-    <div className="border">
+    <div className="borders">
       <Container>
         <Row>
-          <Col>
+          <Col className="headingColor">
           movie1
           <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
           </Col>
@@ -126,7 +126,7 @@ function MovieGrid() {
 
 function FavActors() {
   return (
-    <div className="border">
+    <div className="borders">
       <Container>
         <Row>
           <Col>

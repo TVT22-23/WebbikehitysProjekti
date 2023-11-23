@@ -8,8 +8,7 @@ import { Navbar } from "./components/Navbar";
 import Group from "./components/Group";
 import Home from "./components/Home";
 import { Film, Cast, Crew } from "./components/Film";
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
+
 
 
 // const persons = [
