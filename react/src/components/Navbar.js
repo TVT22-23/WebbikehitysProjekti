@@ -4,12 +4,14 @@ function Navbar() {
 
 return(
 <div class="topnav">
-  <a class="active" href="">Home</a>
+  <a class="active" href=" " >Home</a>
   <a href="user">User</a>
   <a href="login">Login</a>
-    <a href="film">Film</a>
+  <a href="film">Film</a>
   <a href="group">Group</a>
   <a href="settings">Settings</a>
+
+    <h1A class="center">elokuva sivun nimi</h1A>
 
   <div class="search-container">
     <form action="/action_page.php">

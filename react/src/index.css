@@ -13,9 +13,11 @@ code {
 }
 
 body {
+  background-size: 50%;
   background-color: #282c34;
   color: white;
   padding: 40px;
   font-family: Arial;
   text-align: center;
+  min-width: 600px;
 }

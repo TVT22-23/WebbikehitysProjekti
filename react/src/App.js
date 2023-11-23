@@ -8,8 +8,6 @@ import { Navbar } from "./components/Navbar";
 import Group from "./components/Group";
 import Home from "./components/Home";
 import {Film, Cast, Crew } from "./components/Film";
-import './App.css';
-
 
 const persons = [
   { fname: 'Reima', lname: 'Raniska' },
