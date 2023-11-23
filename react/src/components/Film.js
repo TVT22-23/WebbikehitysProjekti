@@ -14,6 +14,14 @@ function Film() {
   )
 }
 
+function Ui(){
+  return (
+    <div>
+      <h1>asdasdasd</h1>
+    </div>
+  )
+}
+
 function Cast (){
   return(
     <div>
@@ -37,4 +45,4 @@ function Crew (){
 }
 
 
-export {Film, Crew, Cast};
+export {Film, Ui, Crew, Cast};
