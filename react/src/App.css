@@ -103,3 +103,56 @@
   border-color: #CA3E47;
   margin: 4px;
 }
+
+.imageframe{
+  height: auto;
+  width: 300px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CA3E47;  
+  margin: 10px;
+}
+
+.movieInfo{
+  float: left;
+  color: #ffffff !important;
+  background-color: #414141;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CA3E47;
+  margin: 10px;
+}
+
+.review{
+  width: 500px;
+  height: auto;
+  margin: 10px;
+  background-color: #414141;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CA3E47;
+
+}
+
+.people{
+  color: #ffffff !important;
+  background-color: #414141;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CA3E47;
+  margin: 10px;
+  width: 300px;
+  height: 150px;
+}
+
+.crew{
+  margin-right: 10px;
+  float: right;
+  color: #ffffff;
+}
+
+.cast{
+  margin-left: 10px;
+  float: left;
+  color: #ffffff;
+}
