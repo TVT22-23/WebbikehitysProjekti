@@ -2,24 +2,24 @@
   max-width: 1000px;
   min-width: 600px;
   margin: auto;
-  background: #414141;
-  color: white;
+  background: #525252;
+  color: #ffffff;
   height:100%;
+  color: #ffffff;
 }
 
 .topnav {
   display: flexbox;
   overflow: hidden;
-  background-color: #8fbeff;
-  border-radius: 10px;
-  width: 70%;
+  background-color: #313131;
+  width: 100%;
   margin: auto;
 }
 
 .topnav a {
   float: left;
   display: block;
-  color: rgb(255, 255, 255);
+  color: #CA3E47;
   text-align: center;
   padding: 20px 16px;
   text-decoration: none;
@@ -27,12 +27,12 @@
 }
 
 .topnav a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #525252;
+  color: #CA3E47;
 }
 
 .topnav a.active {
-  background-color: #2196F3;
+  background-color: #525252;
   color: white;
 }
 
@@ -42,7 +42,7 @@
 
 .topnav input[type=text] {
   padding: 6px;
-  margin-top: 10px;
+  margin-top: 14px;
   font-size: 17px;
   border: none;
   border-radius: 10px;
@@ -52,7 +52,7 @@
 .topnav .search-container button {
   float: right;
   padding: 6px;
-  margin-top: 10px;
+  margin-top: 14px;
   margin-right: 16px;
   margin-left: 5px;
   background: #ddd;
@@ -91,11 +91,69 @@
 .link-style a:hover{
   background-color: rgba(135, 206, 250, 0.800);
 }
-.center{
-  display: flexbox;
+
+.headingColor{
+  color: #CA3E47 !important; 
+}
+
+.borders{
+  color: #CA3E47 !important;
+  background-color: #414141;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CA3E47;
+  margin: 4px;
+}
+
+.imageframe{
+  height: auto;
+  width: 300px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CA3E47;  
+  margin: 10px;
+}
+
+.movieInfo{
+  float: left;
+  color: #ffffff !important;
+  background-color: #414141;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CA3E47;
+  margin: 10px;
+}
+
+.review{
+  width: 500px;
+  height: auto;
+  margin: 10px;
+  background-color: #414141;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CA3E47;
+
+}
+
+.people{
+  color: #ffffff !important;
+  background-color: #414141;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CA3E47;
+  margin: 10px;
+  width: 300px;
+  height: 150px;
+}
+
+.crew{
+  margin-right: 10px;
+  float: right;
   color: #ffffff;
-  text-align: center;
-  margin: 20px;
-  text-decoration: none;
-  font-size: 25px;
+}
+
+.cast{
+  margin-left: 10px;
+  float: left;
+  color: #ffffff;
 }

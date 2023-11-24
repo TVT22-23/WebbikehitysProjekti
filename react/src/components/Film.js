@@ -1,15 +1,69 @@
 import { Link, Outlet, useParams } from "react-router-dom";
+import { Col, Container, Image, Row, Form } from 'react-bootstrap';
+import movie_poster from '../testikuvia/movie_poster.jpg';
 
 function Film() {
 
   const { filmID } = useParams();
 
-  return (
-    <div>
-      <h1>Here is so much info about the film with id {filmID}</h1>
-       <Link to={'cast'}>Cast  </Link>
-        <Link to={'crew'}>Crew </Link>
+  return(
+    <Container>
+    <Row>
+        <Col >    
+          <Image src={movie_poster} alt="movie_poster" className="imageframe"/>
+            <p class="people">
+              <div class="crew">
+              <li>tää jätkä</li>
+              <li>tää jätkä</li>
+              <li>tää jätkä</li>
+              <li>tää jätkä</li>
+              <li>tää jätkä</li>
+              <li>tää jätkä</li>
+              </div>
+
+              <div class="cast">
+              <li>tää jätkä</li>
+              <li>tää jätkä</li>
+              <li>tää jätkä</li>
+              <li>tää jätkä</li>
+              <li>tää jätkä</li>
+              <li>tää jätkä</li>
+              </div>
+            </p>
+        </Col>
+      <Col >
+        <FilmInfo />      
+        <div>
+            <Link to={'cast'}>Cast  </Link>
+            <Link to={'crew'}>Crew </Link>
         <Outlet/>
+        </div>          
+        <div class="review">
+          sdfsdfsdf
+        </div>
+      </Col>
+
+    </Row>
+  </Container>
+
+  )
+}
+
+function FilmInfo(){
+  return(
+    <div class="movieInfo" >
+      <h1> _movie name_ </h1>
+      <h> ohjooja </h>
+      <br></br>
+      <h> julukasu vuosj </h>
+      <br></br>
+      <p1>
+      this film is a very big film, the biggest in the world, wow so good, what a great film
+      lkjasldkj lkasjdlkajs dlaksjd alksjdlasdlkajsdlkaskdj alksdj saldjasldkajsld aklsjd 
+      ihaskldja sdlkajsd lkasjd alksdjlaksjd lkasjd alksdjlaksd lkaj sdlkajs ldkja slkdjkasd
+      lasjdlik ajsdlkjasdlkaj sldkjasolkdj alksjd lkajd lkasjd lkajs dlkaj ldks Jaskahkasjdh kashdjkashd kashdjkashd
+      lkasjdlka sdlkj alskdj alksjdol aksjdlkasjd aksd
+      </p1>
     </div>
   )
 }
