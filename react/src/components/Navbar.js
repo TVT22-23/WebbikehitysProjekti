@@ -1,4 +1,3 @@
-import { useContext } from "react";
 
 function Navbar() {
 
@@ -12,8 +11,6 @@ return(
   <a href="group">Group</a>
   <a href="settings">Settings</a>
   <a href="searchFilms">Search Films</a>
-
-
 
   <div className="search-container">
     <form action="/action_page.php">
