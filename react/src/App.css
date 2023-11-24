@@ -131,7 +131,6 @@
   border-width: 2px;
   border-style: solid;
   border-color: #CA3E47;
-
 }
 
 .people{
@@ -155,4 +154,54 @@
   margin-left: 10px;
   float: left;
   color: #ffffff;
+}
+
+textarea {
+  color: #ffffff;
+  height: 180px;
+  width: 250px;
+  padding: 12px 20px;
+  margin: 10px;
+  box-sizing: border-box;
+  border: 2px solid #CA3E47;
+  border-radius: 4px;
+  background-color: #525252;
+  font-size: 16px;
+  resize: none;
+}
+
+.button{
+  background-color: #525252;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CA3E47;
+  margin-left: 20px;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.whereButton{
+  background-color: #525252;
+  border-radius: 50%;
+  margin: 10px;
+  display: inline-block;
+  cursor: pointer;
+  height: 90px;
+  width: 90px;
+}
+
+.watch{
+  width: 600px;
+  height: auto;
+  margin: 10px;
+  background-color: #414141;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #CA3E47;
 }

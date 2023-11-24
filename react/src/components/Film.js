@@ -1,6 +1,16 @@
 import { Link, Outlet, useParams } from "react-router-dom";
 import { Col, Container, Image, Row, Form } from 'react-bootstrap';
 import movie_poster from '../testikuvia/movie_poster.jpg';
+import disney from '../testikuvia/disney.png'
+import hbo from '../testikuvia/hbo.png'
+import hulu from '../testikuvia/hulu.png'
+import netflix from '../testikuvia/netflix.png'
+import prime from '../testikuvia/prime.png'
+
+
+
+
+
 
 function Film() {
 
@@ -32,17 +42,17 @@ function Film() {
             </p>
         </Col>
       <Col >
-        <FilmInfo />      
-        <div>
-            <Link to={'cast'}>Cast  </Link>
-            <Link to={'crew'}>Crew </Link>
-        <Outlet/>
-        </div>          
+        <FilmInfo />     
+        <div>leave a review</div>      
         <div class="review">
-          sdfsdfsdf
-        </div>
+        <form>
+          <textarea></textarea>
+          <SubmitButton />
+        </form>
+        </div>    
+        <div>Where to watch</div>          
+        <WhereToWatch />
       </Col>
-
     </Row>
   </Container>
 
@@ -64,6 +74,38 @@ function FilmInfo(){
       lasjdlik ajsdlkjasdlkaj sldkjasolkdj alksjd lkajd lkasjd lkajs dlkaj ldks Jaskahkasjdh kashdjkashd kashdjkashd
       lkasjdlka sdlkj alskdj alksjdol aksjdlkasjd aksd
       </p1>
+    </div>
+  )
+}
+
+function WhereToWatch(){
+  return(
+    <div>
+      <p class="watch">
+        <button className="whereButton">           
+          <Image src={netflix} height={90} alt="movie_poster"/>
+        </button>
+        <button className="whereButton">
+          <Image src={disney} height={100} alt="movie_poster"/>
+        </button>
+        <button className="whereButton">
+          <Image src={prime} height={90} alt="movie_poster"/>
+        </button>
+        <button className="whereButton"> 
+          <Image src={hbo} height={90} alt="movie_poster"/>
+        </button>
+        <button className="whereButton"> 
+          <Image src={hulu} height={90} alt="movie_poster"/>
+        </button>
+      </p>
+    </div>
+  )
+}
+
+function SubmitButton(){
+  return(
+    <div>
+        <input type="button" class="button" value="add to a group"></input>
     </div>
   )
 }
