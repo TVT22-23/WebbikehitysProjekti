@@ -97,6 +97,8 @@ function ProfPic() {
   )
 }
 
+
+//displays movies, 4 in 1 row
 function MovieGrid() {
   return (
     <div className="borders">
@@ -104,19 +106,19 @@ function MovieGrid() {
         <Row>
           <Col className="headingColor">
           movie1
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
           <Col>
           movie2
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
           <Col>
           movie3
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
           <Col>
           movie4
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
         </Row>
       </Container>
@@ -124,26 +126,28 @@ function MovieGrid() {
   )
 }
 
+//displays actors, 4 in 1 row
 function FavActors() {
   return (
+
     <div className="borders">
       <Container>
         <Row>
           <Col>
           movie1
-          <Image src={favact1} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          <Image src={favact1} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
           <Col>
           movie2
-          <Image src={favact2} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          <Image src={favact2} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
           <Col>
           movie3
-          <Image src={favact3} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          <Image src={favact3} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
           <Col>
           movie4
-          <Image src={favact4} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          <Image src={favact4} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
         </Row>
       </Container>
@@ -151,4 +155,5 @@ function FavActors() {
   )
 }
 
-export { User, GSettings, USettings };
+
+export { User, GSettings, USettings, MovieGrid };

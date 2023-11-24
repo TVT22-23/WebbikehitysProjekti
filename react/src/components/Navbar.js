@@ -11,6 +11,10 @@ return(
   <a href="film">Films</a>
   <a href="group">Group</a>
   <a href="settings">Settings</a>
+  <a href="searchFilms">Search Films</a>
+
+
+
   <div className="search-container">
     <form action="/action_page.php">
       <input type="text" placeholder="Search.." name="search"></input>
