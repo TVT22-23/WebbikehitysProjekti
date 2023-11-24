@@ -1,9 +1,10 @@
 .background-size {
-  min-width: 600px;
-  margin-right: auto;
-  margin-left: auto;
   max-width: 1000px;
-  background: #838383 ;
+  min-width: 600px;
+  margin: auto;
+  background: #414141;
+  color: white;
+  height:100%;
 }
 
 .topnav {

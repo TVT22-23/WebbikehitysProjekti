@@ -8,9 +8,8 @@ import { Navbar } from "./components/Navbar";
 import Group from "./components/Group";
 import Home from "./components/Home";
 import { Film, Cast, Crew } from "./components/Film";
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './App.css'
-
+import Footer from "./components/Footer";
+import SearchFilms from "./components/SearchFilms";
 
 // const persons = [
 //   { fname: 'Reima', lname: 'Raniska' },
@@ -22,24 +21,26 @@ function App() {
 
   const valueForContext = 'Hello world';
   return (
-    <div className="background-size">
-      <NavbarContext.Provider value = {valueForContext}>
+    <div className="background-size" >
+      <NavbarContext.Provider value={valueForContext}>
         <Navbar />
       </NavbarContext.Provider>
       <Routes>
         <Route path='' element={<Home />} />
-        <Route path='/film/:filmID?' element={<Film />} >
+          <Route path='searchFilms' element={<SearchFilms />} />
+        <Route path='/film' element={<Film />} >
           <Route path='cast' element={<Cast />} />
           <Route path='crew' element={<Crew />} />
         </Route>
-        <Route path='/group/:groupID?' element={<Group />} />
+        <Route path='/group' element={<Group />} />
         <Route path='/login' element={<Login />} />
-        <Route path="/user/:userID?" element={<User />} >
+        <Route path="/user" element={<User />} >
           <Route path="usettings" element={<USettings />} />
           <Route path="gsettings" element={<GSettings />} />
         </Route>
         <Route path="*" element={<h2>Page not found</h2>} />
       </Routes>
+      <Footer />
     </div>
   );
 }

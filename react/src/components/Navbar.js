@@ -10,6 +10,7 @@ return(
   <a href="film">Film</a>
   <a href="group">Group</a>
   <a href="settings">Settings</a>
+  <a href="searchFilms">Search Films</a>
 
 
   <div className="search-container">
