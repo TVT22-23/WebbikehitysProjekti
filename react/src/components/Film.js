@@ -11,7 +11,6 @@ import prime from '../testikuvia/prime.png'
 
 
 
-
 function Film() {
 
   const { filmID } = useParams();
@@ -41,15 +40,10 @@ function Film() {
               </div>
             </p>
         </Col>
-      <Col >
+      <Col>
         <FilmInfo />     
         <div>leave a review</div>      
-        <div class="review">
-        <form>
-          <textarea></textarea>
-          <SubmitButton />
-        </form>
-        </div>    
+        <Review />            
         <div>Where to watch</div>          
         <WhereToWatch />
       </Col>        
@@ -108,7 +102,29 @@ function WhereToWatch(){
   )
 }
 
+function Review(){
+  return(
+      <div class="review">
+        <form>
+          <textarea></textarea>
+        </form>
+        <Row>
+        <SubmitButton />
+        <AddToGroupButton />
+        </Row>
+    </div>
+  )
+}
+
 function SubmitButton(){
+  return(
+    <div>
+        <input type="button" class="button" value="save review"></input>
+    </div>
+  )
+}
+
+function AddToGroupButton(){
   return(
     <div>
         <input type="button" class="button" value="add to a group"></input>
@@ -116,7 +132,7 @@ function SubmitButton(){
   )
 }
 
-function Cast (){
+function Cast(){
   return(
     <div>
       <h4>People who acted in the movie</h4>
@@ -127,7 +143,7 @@ function Cast (){
   )
 }
 
-function Crew (){
+function Crew(){
   return(
     <div>
       <h4>People Who made the movie</h4>
@@ -164,6 +180,5 @@ function MovieGrid() {
     </div>
   )
 }
-
 
 export {Film, Crew, Cast};
