@@ -123,6 +123,7 @@
   border-style: solid;
   border-color: #CA3E47;
   margin: 10px;
+  padding: 10px;
 }
 
 .review{
@@ -133,6 +134,7 @@
   border-width: 2px;
   border-style: solid;
   border-color: #CA3E47;
+  padding: 10px;
 }
 
 .people{
@@ -161,7 +163,7 @@
 textarea {
   color: #ffffff;
   height: 180px;
-  width: 250px;
+  width: 300px;
   padding: 12px 20px;
   margin: 10px;
   box-sizing: border-box;
@@ -184,7 +186,7 @@ textarea {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: 10px;
   cursor: pointer;
 }
 .button:hover{
