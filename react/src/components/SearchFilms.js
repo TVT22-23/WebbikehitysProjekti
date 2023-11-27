@@ -3,9 +3,9 @@ import axios from 'axios';
 import { Col, Row } from "react-bootstrap";
 
 function SearchFilms() {
-    const [name, setName] = useState("")
     const [films, setFilms] = useState([]);
-    const [nextID, setNextID] = useState(0);
+    const [showMovies, setShowMovies] = useState(true);
+    const [searchInput, setSearchInput] = useState('')
 
     useEffect(() => {
         axios.get("https://my-json-server.typicode.com/horizon-code-academy/fake-movies-api/movies")
@@ -15,29 +15,23 @@ function SearchFilms() {
             })
     }, []);
 
-    function addFilmToArray() {
-        setFilms(prevFilms => [
-            ...prevFilms, {
-                id: nextID,
-                name: name
-            }
-        ]);
-        setNextID(prevID => prevID + 1);
-        setName("");
-    };
+    const filteredMovies = films.filter((f) => {
+        return f.Title.toLowerCase().includes(searchInput.toLowerCase())
+    })
 
     return (
         <div className="ms-2 mt-2">
-            <p>Films</p>
-            <input
-                value={name}
-                onChange={e => setName(e.target.value)}
-            />
-            <button onClick={addFilmToArray}>add film to array</button>
+            <h1>Films</h1>
+            <input type="search" placeholder="search movies..." onChange={(e) => setSearchInput(e.target.value)} />
             <Row>
-                <Col>
-                    {films.map(f => <MovieInfo Title={f.Title} Year={f.Year} Poster={f.Poster} />)}
-                </Col>
+                {showMovies &&
+                    filteredMovies.map(f =>
+                        <MovieInfo
+                            key={f.Title}
+                            Title={f.Title}
+                            Year={f.Year}
+                            Poster={f.Poster}
+                        />)}
             </Row>
         </div>
     );
@@ -46,9 +40,10 @@ function SearchFilms() {
 function MovieInfo({ Title, Year, Poster }) {
     return (
         <>
-            <h4>{Title}</h4>
-            <h3>{Year}</h3>
-            <img src={Poster} height={80} alt="" />
+            <Col key={Title}>
+                <img src={Poster} height={120} alt="Poster not available" />
+                <p>{Title} {Year}</p>
+            </Col>
         </>
     )
 }
