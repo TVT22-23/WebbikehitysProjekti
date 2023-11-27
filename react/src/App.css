@@ -187,10 +187,18 @@ textarea {
   margin: 4px 2px;
   cursor: pointer;
 }
+.button:hover{
+  background-color: #313131;
+}
+.button:active{
+  background-color: #525252;
+}
+
 
 .whereButton{
-  background-color: #525252;
+  background-color: #414141;
   border-radius: 50%;
+  border: none;
   margin: 10px;
   display: inline-block;
   cursor: pointer;
