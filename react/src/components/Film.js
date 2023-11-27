@@ -83,19 +83,19 @@ function WhereToWatch(){
     <div>
       <p class="watch">
         <button className="whereButton">           
-          <Image src={netflix} height={90} alt="movie_poster"/>
+          <Image src={netflix} height={90}/>
         </button>
         <button className="whereButton">
-          <Image src={disney} height={100} alt="movie_poster"/>
+          <Image src={disney} height={100}/>
         </button>
         <button className="whereButton">
-          <Image src={prime} height={90} alt="movie_poster"/>
+          <Image src={prime} height={90}/>
         </button>
         <button className="whereButton"> 
-          <Image src={hbo} height={90} alt="movie_poster"/>
+          <Image src={hbo} height={90}/>
         </button>
         <button className="whereButton"> 
-          <Image src={hulu} height={90} alt="movie_poster"/>
+          <Image src={hulu} height={90}/>
         </button>
       </p>
     </div>
