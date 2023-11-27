@@ -47,11 +47,9 @@ router.post('/login', upload.none(), async (req, res) => {
     }
 });
 
-router.post('/delete', upload.none() , async (req, res) => {
-    const user_name = req.body.user_name;
-
+router.delete('/delete/:user_name', upload.none() , async (req, res) => {
     try {
-        await deleteAccount(user_name);
+        await deleteAccount(req.params.user_name);
         res.end();
     } catch (error) {
         console.log(error);
