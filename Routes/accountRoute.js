@@ -4,14 +4,14 @@ const upload = multer({dest: 'upload/'});
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const {addAccount, getAccount, checkUser} = require('../postgre/account');
+const {addAccount, getAccount, checkUser, deleteAccount} = require('../postgre/account');
 
 router.get('/', async (req, res) => {
 
         res.json(await getAccount());
 });
 
-router.post('/', upload.none() , async (req, res) => {
+router.post('/create', upload.none() , async (req, res) => {
     const user_name = req.body.user_name;
     let password = req.body.password;
     const email = req.body.email;
@@ -44,6 +44,18 @@ router.post('/login', upload.none(), async (req, res) => {
         }
     } else {
         res.status(401).json({error: 'Account not found'});
+    }
+});
+
+router.post('/delete', upload.none() , async (req, res) => {
+    const user_name = req.body.user_name;
+
+    try {
+        await deleteAccount(user_name);
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.json({error: error.message}).status(500);
     }
 });
 
