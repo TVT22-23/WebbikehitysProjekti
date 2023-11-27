@@ -3,11 +3,13 @@ const pgPool = require('./connection');
 const sql = {
     INSERT_ACCOUNT: 'INSERT INTO account (user_name, password, email) VALUES ($1, $2, $3)',
     GET_ACCOUNT: 'SELECT user_name, email FROM account',
-    GET_PASSWORD: 'SELECT password FROM account WHERE user_name=$1'
+    GET_PASSWORD: 'SELECT password FROM account WHERE user_name=$1',
+    DELETE_ACCOUNT: 'DELETE FROM account WHERE user_name=$1'
 }
 
-//addAccount('testAccount', 'testPassword', 'testEmail');
-getAccount();
+//addAccount('poistoAccount', 'poistoPassword', 'poistoEmail');
+//getAccount();
+//deleteAccount('poistoAccount');
 
 
 async function addAccount(user_name, password, email) {
@@ -30,4 +32,8 @@ async function checkUser(user_name) {
     }
 }
 
-module.exports = {addAccount, getAccount, checkUser};
+async function deleteAccount(user_name) {
+    await pgPool.query(sql.DELETE_ACCOUNT, [user_name]);
+}
+
+module.exports = {addAccount, getAccount, checkUser, deleteAccount};
