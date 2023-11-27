@@ -52,7 +52,13 @@ function Film() {
         </div>    
         <div>Where to watch</div>          
         <WhereToWatch />
-      </Col>
+      </Col>        
+      <Row> 
+          <Col>
+          similar movies
+            <MovieGrid />
+          </Col>
+        </Row> 
     </Row>
   </Container>
 
@@ -83,19 +89,19 @@ function WhereToWatch(){
     <div>
       <p class="watch">
         <button className="whereButton">           
-          <Image src={netflix} height={90}/>
+          <Image src={netflix} height={70}/>
         </button>
         <button className="whereButton">
-          <Image src={disney} height={100}/>
+          <Image src={disney} height={70}/>
         </button>
         <button className="whereButton">
-          <Image src={prime} height={90}/>
+          <Image src={prime} height={70}/>
         </button>
         <button className="whereButton"> 
-          <Image src={hbo} height={90}/>
+          <Image src={hbo} height={70}/>
         </button>
         <button className="whereButton"> 
-          <Image src={hulu} height={90}/>
+          <Image src={hulu} height={70}/>
         </button>
       </p>
     </div>
@@ -128,6 +134,33 @@ function Crew (){
       <li>MAtti</li>
       <li>Jorma</li>
       <li>Jaska</li>
+    </div>
+  )
+}
+
+function MovieGrid() {
+  return (
+    <div className="borders">
+      <Container>
+        <Row>
+          <Col className="headingColor">
+          movie1
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          </Col>
+          <Col>
+          movie2
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          </Col>
+          <Col>
+          movie3
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          </Col>
+          <Col>
+          movie4
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          </Col>
+        </Row>
+      </Container>
     </div>
   )
 }
