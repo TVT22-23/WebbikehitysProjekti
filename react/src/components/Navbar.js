@@ -7,10 +7,10 @@ return(
   <a className="active" href="/" >Home</a>
 
   <a href="user">User</a>
-  <a href="login">Login</a>
   <a href="film">Films</a>
   <a href="group">Group</a>
   <a href="settings">Settings</a>
+  <a href="login">Login</a>
   <div className="search-container">
     <form action="/action_page.php">
       <input type="text" placeholder="Search.." name="search"></input>
