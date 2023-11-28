@@ -8,7 +8,7 @@ return(
   <a href="user">User</a>
   <a href="login">Login</a>
   <a href="film">Films</a>
-  <a href="group">Group</a>
+  <a href="groups">Groups</a>
   <a href="settings">Settings</a>
   <a href="searchFilms">Search Films</a>
 
