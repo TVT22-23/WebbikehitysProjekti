@@ -13,7 +13,7 @@ describe('Creating a new review', () => {
 
     afterEach(async function () {
         await pgPool.query('ROLLBACK');
-    });
+    }); 
 
     it('should create a new review successfully', async () => {
         const reviewData = {
@@ -24,7 +24,7 @@ describe('Creating a new review', () => {
         };
 
         await supertest(app)
-            .post('/review')
+            .post('/review/addReview')
             .send(reviewData)
             .expect(200); // Await for the request and check the response status
 
