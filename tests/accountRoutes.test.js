@@ -7,13 +7,13 @@ const accountTest = require('../postgre/account');
 
 
 describe('Creating an account', () => {
-    beforeEach(async function () {
+   beforeEach(async function () {
         await pgPool.query('BEGIN');
-    });
+    }); 
 
     afterEach(async function () {
         await pgPool.query('ROLLBACK');
-    });
+    }); 
 
     it('should create a new account successfully', async () => {
         const accountData = {
@@ -23,10 +23,10 @@ describe('Creating an account', () => {
         };
 
         await supertest(app)
-            .post('/account')
+            .post('/account/create')
             .send(accountData)
             .expect(200); // Await for the request and check the response status
-
+        
         // Perform additional assertions if needed
 
         // Call done if you prefer to keep it, though it's not mandatory for async/await
