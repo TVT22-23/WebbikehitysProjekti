@@ -120,3 +120,4 @@ This summary is longer and so it will take more space on the card. And so I will
 }
 
 export default Home;
+export { NewsGrid, ReviewGrid }

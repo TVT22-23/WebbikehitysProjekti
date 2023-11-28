@@ -217,3 +217,18 @@ textarea {
   border-style: solid;
   border-color: #CA3E47;
 }
+
+.groupBanner{
+  margin: 20px;
+  padding: 10px;
+  overflow: hidden;
+  text-align: center;
+  color: #CA3E47;
+  font-size: 50px;
+  height: 100px;
+  width: auto;
+  display: block;
+  border-radius: 10px;
+  background-color: #313131;
+  box-shadow: 1px 1px 10px 1px black;
+}
