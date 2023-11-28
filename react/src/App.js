@@ -5,6 +5,7 @@ import { GSettings, USettings, User } from "./components/User";
 import { Login } from "./components/Auth";
 import { NavbarContext } from "./components/Contexts";
 import { Navbar } from "./components/Navbar";
+import Groups from "./components/Groups";
 import Group from "./components/Group";
 import Home from "./components/Home";
 import { Film, Cast, Crew } from "./components/Film";
@@ -27,11 +28,12 @@ function App() {
       </NavbarContext.Provider>
       <Routes>
         <Route path='' element={<Home />} />
-          <Route path='searchFilms' element={<SearchFilms />} />
+        <Route path='searchFilms' element={<SearchFilms />} />
         <Route path='/film' element={<Film />} >
           <Route path='cast' element={<Cast />} />
           <Route path='crew' element={<Crew />} />
         </Route>
+        <Route path='/groups' element={<Groups />} />
         <Route path='/group' element={<Group />} />
         <Route path='/login' element={<Login />} />
         <Route path="/user" element={<User />} >
