@@ -1,16 +1,18 @@
 .background-size {
-  min-width: 600px;
-  margin-right: auto;
-  margin-left: auto;
   max-width: 1000px;
+  min-width: 600px;
+  margin: auto;
   background: #525252;
+  color: #ffffff;
+  height:100%;
   color: #ffffff;
 }
 
 .topnav {
   display: flexbox;
   overflow: hidden;
-  background-color: #313131;
+  background-color:  #313131;
+  box-shadow: 1px 1px 10px 1px black;
   width: 100%;
   margin: auto;
 }
@@ -101,7 +103,7 @@
   border-width: 2px;
   border-style: solid;
   border-color: #CA3E47;
-  margin: 4px;
+  margin-right: 4px;
 }
 
 .imageframe{

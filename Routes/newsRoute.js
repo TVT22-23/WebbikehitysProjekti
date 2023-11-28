@@ -2,21 +2,24 @@ const router = require('express').Router();
 const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 
-
-const {addMemberRequest, getMemberRequest} = require('../postgre/memberRequest');
+const {addNews, getNews} = require('../postgre/news');
 
 router.get('/', async (req, res) => {
 
-        res.json(await getMemberRequest());
+        res.json(await getNews());
 });
 
 router.post('/', upload.none() , async (req, res) => {
-    const account_accountid = req.body.account_accountid;
-    const group_groupid = req.body.group_groupid;
-    let member = false;
+    const title = req.body.title;
+    const publishdate = req.body.publishdate;
+    const article = req.body.article;
+    const account_id = req.body.account_id;
+    const group_id = req.body.group_id;
+
+
 
     try {
-        await addMemberRequest(account_accountid, group_groupid, member);
+        await addReview(title, publishdate, article, account_id, group_id);
         res.end();
     } catch (error) {
         console.log(error);
