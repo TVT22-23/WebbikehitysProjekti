@@ -3,7 +3,7 @@ const express = require('express');
 //const multer = require('multer');
 //const upload = multer({dest: 'upload/'});
 const accountRoute = require('./Routes/accountRoute')
-//const memberRequestRoute = require('./Routes/memberRequestRoute')
+const memberRequestRoute = require('./Routes/memberRequestRoute')
 const memberRoute = require('./Routes/memberRoute')
 const movieGroupRoute = require('./Routes/movieGroupRoute')
 const reviewRoute = require('./Routes/reviewRoute')
@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.static('public'));
 
 app.use('/account', accountRoute);
-//app.use('/memberRequest', memberRequestRoute);
+app.use('/memberRequest', memberRequestRoute);
 app.use('/member', memberRoute);
 app.use('/movieGroup', movieGroupRoute);
 app.use('/review', reviewRoute);
