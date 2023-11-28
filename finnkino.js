@@ -16,21 +16,24 @@ async function getArticle(url, indexNum) {
                         var title = newsItem.getElementsByTagName('Title')[0].textContent.trim();
                         var publishDate = newsItem.getElementsByTagName('PublishDate')[0].textContent.trim();
                         var article = newsItem.getElementsByTagName('HTMLLead')[0].textContent.trim();
-                        console.log(`Title: ${title} \n Publish Date: ${publishDate} \n Article: ${article}`);
+                       // console.log(`Title: ${title} \n Publish Date: ${publishDate} \n Article: ${article}`);
                         resolve({ title, publishDate, article });
-                    } else {
+                    } else if(indexNum == undefined) {
+                        var promises = [];
                         for (var i = 0; i < newsElements.length; i++) {
                             var newsItem = newsElements[i];
                             var title = newsItem.getElementsByTagName('Title')[0].textContent.trim();
                             var publishDate = newsItem.getElementsByTagName('PublishDate')[0].textContent.trim();
                             var article = newsItem.getElementsByTagName('HTMLLead')[0].textContent.trim();
-                            console.log(`Title: ${title} \n Publish Date: ${publishDate} \n Article: ${article}`);
+                            //console.log(`Title: ${title} \n Publish Date: ${publishDate} \n Article: ${article}`);
+                            promises.push({ title, publishDate, article });
                         }
-                        reject(new Error('Index out of range.'));
+                        Promise.all(promises).then(dataArray => resolve(dataArray)).catch(reject);
                     }
                 } 
+                console.log(`Title: ${title}, Publish Date: ${publishDate}, Article: ${article}`);
             })
-            .catch(reject);
+            
     });
 }
 

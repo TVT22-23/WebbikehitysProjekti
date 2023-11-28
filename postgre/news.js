@@ -23,7 +23,7 @@ async function getNews(){
 
 //get information from finnkino.js
 async function fetchAndAddNews() {
-        const newsData = await getArticle('https://www.finnkino.fi/xml/News/', 2);
+        const newsData = await getArticle('https://www.finnkino.fi/xml/News/');
         if (newsData) {
             const { title, publishDate, article } = newsData;
             await addNews(title, publishDate, article, 1, 1);//1.1 should be replaced with actual acccount_id and group_id
