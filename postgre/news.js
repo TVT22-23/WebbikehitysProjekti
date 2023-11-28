@@ -1,4 +1,4 @@
-const pgPool = require('./connection');
+const { pgPool }= require('./connection');
 const {getArticle} = require("../finnkino.js")
 
 const sql = {
@@ -21,8 +21,9 @@ async function getNews(){
     return rows;
 }
 
+//get information from finnkino.js
 async function fetchAndAddNews() {
-        const newsData = await getArticle('https://www.finnkino.fi/xml/News/', 8);
+        const newsData = await getArticle('https://www.finnkino.fi/xml/News/', 2);
         if (newsData) {
             const { title, publishDate, article } = newsData;
             await addNews(title, publishDate, article, 1, 1);//1.1 should be replaced with actual acccount_id and group_id
