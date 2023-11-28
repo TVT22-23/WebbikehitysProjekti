@@ -8,7 +8,7 @@ function Group() {
     return (
        <div>
           <Row> 
-            <h1>Group with id </h1>
+            <h1>Group with </h1>
             <GroupName />  
           </Row>
           <Row>
