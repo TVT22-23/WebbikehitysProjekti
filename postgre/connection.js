@@ -16,4 +16,6 @@ pgPool.connect((err)=> {
     }
 });
 
-module.exports = pgPool;
+
+
+module.exports = { pgPool };

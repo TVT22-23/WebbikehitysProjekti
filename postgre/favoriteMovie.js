@@ -1,4 +1,4 @@
-const pgPool = require('./connection');
+const { pgPool } = require('./connection');
 
 const sql = {
     INSERT_FAVORITE: 'INSERT INTO favoritemovie (fav_account_id, movie_id) VALUES ($1, $2)',

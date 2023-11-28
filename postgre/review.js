@@ -1,4 +1,4 @@
-const pgPool = require('./connection');
+const { pgPool } = require('./connection');
 
 const sql = {
     INSERT_REVIEW: 'INSERT INTO review (text_review, rating, recommend) VALUES ($1, $2, $3)',
