@@ -35,3 +35,5 @@ app.get('/', (req, res) => {
 app.get('/user', (req, res) => {
     res.send('Jorma')
 });
+
+module.exports = app;

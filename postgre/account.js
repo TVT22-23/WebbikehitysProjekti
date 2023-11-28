@@ -1,4 +1,4 @@
-const pgPool = require('./connection');
+const { pgPool } = require('./connection');
 
 const sql = {
     INSERT_ACCOUNT: 'INSERT INTO account (user_name, password, email) VALUES ($1, $2, $3)',

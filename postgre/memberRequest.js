@@ -1,4 +1,4 @@
-const pgPool = require('./connection');
+const { pgPool } = require('./connection');
 
 const sql = {
     INSERT_MEMBERREQUEST: 'INSERT INTO memberrequest (account_accountid, group_groupid, member) VALUES ($1, $2, $3)',
