@@ -11,7 +11,6 @@ import prime from '../testikuvia/prime.png'
 
 
 
-
 function Film() {
 
   const { filmID } = useParams();
@@ -41,18 +40,19 @@ function Film() {
               </div>
             </p>
         </Col>
-      <Col >
+      <Col>
         <FilmInfo />     
         <div>leave a review</div>      
-        <div class="review">
-        <form>
-          <textarea></textarea>
-          <SubmitButton />
-        </form>
-        </div>    
+        <Review />            
         <div>Where to watch</div>          
         <WhereToWatch />
-      </Col>
+      </Col>        
+      <Row> 
+          <Col>
+          similar movies
+            <MovieGrid />
+          </Col>
+        </Row> 
     </Row>
   </Container>
 
@@ -83,21 +83,35 @@ function WhereToWatch(){
     <div>
       <p class="watch">
         <button className="whereButton">           
-          <Image src={netflix} height={90} alt="movie_poster"/>
+          <Image src={netflix} height={70}/>
         </button>
         <button className="whereButton">
-          <Image src={disney} height={100} alt="movie_poster"/>
+          <Image src={disney} height={70}/>
         </button>
         <button className="whereButton">
-          <Image src={prime} height={90} alt="movie_poster"/>
+          <Image src={prime} height={70}/>
         </button>
         <button className="whereButton"> 
-          <Image src={hbo} height={90} alt="movie_poster"/>
+          <Image src={hbo} height={70}/>
         </button>
         <button className="whereButton"> 
-          <Image src={hulu} height={90} alt="movie_poster"/>
+          <Image src={hulu} height={70}/>
         </button>
       </p>
+    </div>
+  )
+}
+
+function Review(){
+  return(
+      <div class="review">
+        <form>
+          <textarea></textarea>
+        </form>
+        <Row>
+        <SubmitButton />
+        <AddToGroupButton />
+        </Row>
     </div>
   )
 }
@@ -105,12 +119,20 @@ function WhereToWatch(){
 function SubmitButton(){
   return(
     <div>
+        <input type="button" class="button" value="save review"></input>
+    </div>
+  )
+}
+
+function AddToGroupButton(){
+  return(
+    <div>
         <input type="button" class="button" value="add to a group"></input>
     </div>
   )
 }
 
-function Cast (){
+function Cast(){
   return(
     <div>
       <h4>People who acted in the movie</h4>
@@ -121,7 +143,7 @@ function Cast (){
   )
 }
 
-function Crew (){
+function Crew(){
   return(
     <div>
       <h4>People Who made the movie</h4>
@@ -132,5 +154,31 @@ function Crew (){
   )
 }
 
+function MovieGrid() {
+  return (
+    <div className="borders">
+      <Container>
+        <Row>
+          <Col className="headingColor">
+          movie1
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          </Col>
+          <Col>
+          movie2
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          </Col>
+          <Col>
+          movie3
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          </Col>
+          <Col>
+          movie4
+          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  )
+}
 
 export {Film, Crew, Cast};

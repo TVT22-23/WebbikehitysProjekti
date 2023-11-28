@@ -6,10 +6,10 @@ return(
   <a className="active" href="/" >Home</a>
 
   <a href="user">User</a>
-  <a href="login">Login</a>
   <a href="film">Films</a>
   <a href="group">Group</a>
   <a href="settings">Settings</a>
+  <a href="login">Login</a>
   <a href="searchFilms">Search Films</a>
 
   <div className="search-container">

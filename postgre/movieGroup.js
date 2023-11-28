@@ -2,7 +2,8 @@ const { pgPool } = require('./connection');
 
 const sql = {
     INSERT_GROUP: 'INSERT INTO moviegroup (group_name, description, owner) VALUES ($1, $2, $3)',
-    GET_GROUP: 'SELECT group_name, description, owner FROM moviegroup'
+    GET_GROUP: 'SELECT group_id, group_name, description, owner FROM moviegroup',
+    DELETE_GROUP: 'DELETE FROM movieGroup WHERE group_id=$1'
 }
 
 async function addGroup(group_name, description, owner) {
@@ -18,4 +19,8 @@ async function getGroup(){
     return rows;
 }
 
-module.exports = {addGroup, getGroup};
+async function deleteGroup(group_id) {
+    await pgPool.query(sql.DELETE_GROUP, [group_id]);
+}
+
+module.exports = {addGroup, getGroup, deleteGroup};
