@@ -12,12 +12,12 @@ function Group() {
             <GroupName />  
           </Row>
           <Row>
-          <h3 className="my-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Saved reviews</h3>
+          <h3 className="my-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>News</h3>
             <NewsGrid />
             <NewsGrid />
           </Row>
           <Row>
-          <h3 className="my-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>News</h3>
+          <h3 className="my-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Reviews</h3>
             <ReviewGrid />
           </Row>
         </div>
