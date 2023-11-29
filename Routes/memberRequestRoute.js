@@ -3,7 +3,7 @@ const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 
 
-const {addMemberRequest, getMemberRequest, deleteMemberRequest} = require('../postgre/memberRequest');
+const {addMemberRequest, getMemberRequest, deleteMemberRequest, handleMemberRequest} = require('../postgre/memberRequest');
 
 router.get('/', async (req, res) => {
 
@@ -27,6 +27,26 @@ router.post('/create', upload.none() , async (req, res) => {
 router.delete('/delete/:request_id', upload.none() , async (req, res) => {
     try {
         await deleteMemberRequest(req.params.request_id);
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.json({error: error.message}).status(500);
+    }
+});
+
+router.post('/accept/:request_id', upload.none() , async (req, res) => {
+    try {
+        await handleMemberRequest(req.params.request_id, 'accept');
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.json({error: error.message}).status(500);
+    }
+});
+
+router.post('/reject/:request_id', upload.none() , async (req, res) => {
+    try {
+        await handleMemberRequest(req.params.request_id, 'reject');
         res.end();
     } catch (error) {
         console.log(error);
