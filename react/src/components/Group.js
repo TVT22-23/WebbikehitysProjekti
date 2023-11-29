@@ -7,8 +7,8 @@ function Group() {
 
     return (
        <div>
+        <Container>
           <Row> 
-            <h1>Group with </h1>
             <GroupName />  
           </Row>
           <Row>
@@ -20,17 +20,19 @@ function Group() {
           <h3 className="my-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Reviews</h3>
             <ReviewGrid />
           </Row>
+          </Container>
         </div>
     )
 }
 
 function GroupName() {
-    const {groupID} = useParams();
+    const groupID = "name";
     return(
         <div>
-            <h class="groupBanner"> Group {groupID} </h>
+            <h class="groupBanner"> {groupID} </h>
         </div>
     )
 }
 
 export default Group;
+export { GroupName }

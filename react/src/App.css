@@ -232,3 +232,19 @@ textarea {
   background-color: #313131;
   box-shadow: 1px 1px 10px 1px black;
 }
+
+.groupBox{
+  border-radius: 10px;
+  border-color: #CA3E47;
+  border-style: solid;
+  background-color: #414141;
+  height: 100px;
+  width: 200px;
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  padding: 10px;
+  display: block;
+  box-shadow: 1px 1px 10px 1px black;
+  margin: 20px;
+}
