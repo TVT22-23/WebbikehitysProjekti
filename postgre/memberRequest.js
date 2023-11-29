@@ -1,16 +1,20 @@
 const { pgPool }= require('./connection');
+const {addMember, getMember} = require('./member');
 
 const sql = {
     INSERT_MEMBERREQUEST: 'INSERT INTO memberrequest (account_accountid, group_groupid, member) VALUES ($1, $2, $3)',
     GET_MEMBERREQUEST: 'SELECT * FROM memberrequest JOIN moviegroup ON group_groupid = moviegroup.group_id WHERE group_id = ($1)',
-    DELETE_MEMBERREQUEST: 'DELETE FROM memberrequest WHERE request_id=$1'
+    DELETE_MEMBERREQUEST: 'DELETE FROM memberrequest WHERE request_id=$1',
+    ACCEPT_MEMBERREQUEST: 'INSERT INTO member(account_accountid, group_groupid) SELECT account_accountid, group_groupid FROM memberrequest WHERE request_id=$1'
     
     // tänne accept ja rejectit vielä!!!
 
 }
 
 //addMemberRequest('', '', '');
-getMemberRequest();
+//getMemberRequest();
+//deleteMemberRequest('3');
+//handleMemberRequest('6', 'rejct');
 
 
 async function addMemberRequest(account_accountid, group_groupid, member) {
@@ -27,4 +31,15 @@ async function deleteMemberRequest(request_id) {
     await pgPool.query(sql.DELETE_MEMBERREQUEST, [request_id]);
 }
 
-module.exports = {addMemberRequest, getMemberRequest, deleteMemberRequest};
+async function handleMemberRequest(request_id, text) {
+    if (text === 'accept') {
+        await pgPool.query(sql.ACCEPT_MEMBERREQUEST, [request_id]);
+        deleteMemberRequest(request_id);
+    } else if (text === 'reject') {
+        deleteMemberRequest(request_id);
+    } else {
+        console.log('failed');
+    }
+}
+
+module.exports = {addMemberRequest, getMemberRequest, deleteMemberRequest, handleMemberRequest};
