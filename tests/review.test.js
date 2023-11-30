@@ -28,9 +28,22 @@ describe('Creating a new review', () => {
             .send(reviewData)
             .expect(200); // Await for the request and check the response status
 
-        // Perform additional assertions if needed
+    });
+});
 
-        // Call done if you prefer to keep it, though it's not mandatory for async/await
-        // done();
+describe('Get review data', () => {
+    beforeEach(async function () {
+        await pgPool.query('BEGIN');
+    });
+
+    afterEach(async function () {
+        await pgPool.query('ROLLBACK');
+    }); 
+
+    it('should be able to get review scores', async () => {
+
+        await supertest(app)
+            .get('/')
+            .expect(200);
     });
 });
