@@ -9,12 +9,12 @@ router.get('/', async (req, res) => {
         res.json(await getNews());
 });
 
-router.post('/', upload.none() , async (req, res) => {
-    const title = req.body.title;
-    const publishdate = req.body.publishdate;
-    const article = req.body.article;
-    const account_id = req.body.account_id;
-    const group_id = req.body.group_id;
+router.post('/create/:title/:publishdate/:article/:account_id/:group_id', upload.none() , async (req, res) => {
+    const title = req.params.title;
+    const publishdate = req.params.publishdate;
+    const article = req.params.article;
+    const account_id = req.params.account_id;
+    const group_id = req.params.group_id;
 
 
 

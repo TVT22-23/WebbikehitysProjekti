@@ -11,10 +11,10 @@ router.get('/', async (req, res) => {
         res.json(await getAccount());
 });
 
-router.post('/create', upload.none() , async (req, res) => {
-    const user_name = req.body.user_name;
-    let password = req.body.password;
-    const email = req.body.email;
+router.post('/create/:user_name/:password/:email', upload.none() , async (req, res) => {
+    const user_name = req.params.user_name;
+    let password = req.params.password;
+    const email = req.params.email;
 
     password = await bcrypt.hash(password, 10);
 
