@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
+import { MovieCard } from "./User";
 //require('dotenv').config();
 //const tmdb = require('../tmdb');
 //tmdb.getMovies(tänne url)
@@ -12,7 +13,7 @@ function SearchFilms() {
 
     useEffect(() => {
         axios.get("https://api.themoviedb.org/3/trending/movie/week?api_key=3972673c7c2bf3c70fc1b5593e956b47")
-            .then(resp => setFilms(resp.data.results.map(f => ({ movieID: f.id, Title: f.title, Poster: f.poster_path }))))
+            .then(resp => setFilms(resp.data.results.map(f => ({ Rating: f.vote_average, movieID: f.id, Title: f.title, Poster: f.poster_path }))))
 
             .catch(error => {
                 console.error('error fetching data', error);
@@ -22,7 +23,8 @@ function SearchFilms() {
     useEffect(() => {
         axios.get("https://api.themoviedb.org/3/trending/movie/week?api_key=3972673c7c2bf3c70fc1b5593e956b47")
             .then(resp => {
-                resp.data.results.map(f => console.log(({movieID: f.id, Title: f.title, Poster: f.poster_path})));
+                resp.data.results.map(f => console.log(({ Rating: f.vote_average, movieID: f.id, Title: f.title, Poster: f.poster_path})));
+                console.log(resp.data.results)
             })
     }, [])
 
@@ -35,23 +37,24 @@ function SearchFilms() {
         <div className="ms-2 mt-2">
             <h1>Films</h1>
             <input type="search" placeholder="search movies..." onChange={(e) => setSearchInput(e.target.value)} />
-            <Row>
+            <Row className="gx-0">
                 {showMovies &&
                     filteredMovies.map(f =>
-                        <MovieInfo
+                        <MovieCard
                             ID={f.movieID}
                             Title={f.Title}
                             Poster={f.Poster}
+                            Rating={f.Rating}
                         />)}
             </Row>
         </div>
     );
 }
 
-function MovieInfo({ ID, Title, Poster }) {
-    console.log(ID);
-    console.log(Poster);
-    console.log(Title);
+function MovieInfo({ ID, Title, Poster, Rating }) {
+//     console.log(ID);
+//     console.log(Poster);
+//     console.log(Title);
     const posterURL = 'https://image.tmdb.org/t/p/w500/';
     return (
         <>
