@@ -1,5 +1,5 @@
-import { Button, Col, Form, Row } from "react-bootstrap";
-import { Link, Outlet, Routes } from "react-router-dom";
+import { Col, Form, Row } from "react-bootstrap";
+import { Link, Outlet } from "react-router-dom";
 
 function Settings() {
     return (

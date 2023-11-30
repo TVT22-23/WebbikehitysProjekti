@@ -1,5 +1,5 @@
-import { Link, Outlet, useParams } from "react-router-dom";
-import { Col, Container, Image, Row, Form } from 'react-bootstrap';
+import { useParams } from "react-router-dom";
+import { Col, Container, Image, Row } from 'react-bootstrap';
 import prof_pic from '../testikuvia/prof_pic.jpg';
 import movie_poster from '../testikuvia/movie_poster.jpg';
 import favact1 from '../testikuvia/favact1.jpg'
@@ -18,7 +18,7 @@ function User() {
         <Col lg="auto">
           <ProfPic />
         </Col>
-        <Col className="borders">
+        <Col className="borders m-3">
           <p>this is where the description of this character goes, jorma is ismo laitela salilla</p>
         </Col>
       </Row>
@@ -58,24 +58,20 @@ function ProfPic() {
 //displays movies, 4 in 1 row
 function MovieGrid() {
   return (
-    <div className="borders">
+    <div className="borders movGrid">
       <Container>
         <Row>
-          <Col className="headingColor">
-          movie1
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="my-2" />
+          <Col>
+            <MovieCard />
           </Col>
           <Col>
-          movie2
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="my-2" />
+            <MovieCard />
           </Col>
           <Col>
-          movie3
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="my-2" />
+            <MovieCard />
           </Col>
           <Col>
-          movie4
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="my-2" />
+            <MovieCard />
           </Col>
         </Row>
       </Container>
@@ -91,23 +87,35 @@ function FavActors() {
       <Container>
         <Row>
           <Col>
-          movie1
-          <Image src={favact1} height={114} alt="movie_poster" thumbnail className="my-2" />
+            movie1
+            <Image src={favact1} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
           <Col>
-          movie2
-          <Image src={favact2} height={114} alt="movie_poster" thumbnail className="my-2" />
+            movie2
+            <Image src={favact2} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
           <Col>
-          movie3
-          <Image src={favact3} height={114} alt="movie_poster" thumbnail className="my-2" />
+            movie3
+            <Image src={favact3} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
           <Col>
-          movie4
-          <Image src={favact4} height={114} alt="movie_poster" thumbnail className="my-2" />
+            movie4
+            <Image src={favact4} height={114} alt="movie_poster" thumbnail className="my-2" />
           </Col>
         </Row>
       </Container>
+    </div>
+  )
+}
+function MovieCard() {
+  return (
+    <div className="movie-card">
+      <Image className="movie-card-img-top" src={movie_poster} height={300} alt="Title" />
+      <div className="movie-card-body">
+        <h4 className="movie-card-title mt-0">ballad</h4>
+        <span className="green">8,8</span>
+      </div>
+      
     </div>
   )
 }
