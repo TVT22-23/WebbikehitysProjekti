@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 
 /* Different queries:
     Get trending movies by week: https://api.themoviedb.org/3/trending/movie/week?api_key={api_key}   
@@ -50,10 +52,10 @@ function getTrending(url){
     })
 }
 
-//getMovies("https://api.themoviedb.org/3/search/movie?query=blade runner&api_key=3972673c7c2bf3c70fc1b5593e956b47");
-//getProviders("https://api.themoviedb.org/3/movie/78/watch/providers?api_key=3972673c7c2bf3c70fc1b5593e956b47");
-//getDetails("https://api.themoviedb.org/3/movie/78?api_key=3972673c7c2bf3c70fc1b5593e956b47");
-//getTrending("https://api.themoviedb.org/3/trending/movie/week?api_key=3972673c7c2bf3c70fc1b5593e956b47");
+//getMovies("https://api.themoviedb.org/3/search/movie?query=blade runner&api_key="+process.env.API_KEY);
+//getProviders("https://api.themoviedb.org/3/movie/78/watch/providers?api_key="+process.env.API_KEY);
+//getDetails("https://api.themoviedb.org/3/movie/78?api_key="+process.env.API_KEY);
+//getTrending("https://api.themoviedb.org/3/trending/movie/week?api_key="+process.env.API_KEY);
 
 
 module.exports = {getMovies, getDetails, getProviders, getTrending};

@@ -26,4 +26,6 @@ router.post('/addReview', upload.none() , async (req, res) => {
     }
 });
 
+//getReview();
+
 module.exports = router;

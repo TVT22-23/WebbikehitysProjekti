@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import { Col, Row } from "react-bootstrap";
+require('dotenv').config();
+//const tmdb = require('../tmdb');
+//tmdb.getMovies(tänne url)
 
 function SearchFilms() {
     const [films, setFilms] = useState([]);
@@ -8,6 +11,7 @@ function SearchFilms() {
     const [searchInput, setSearchInput] = useState('')
 
     useEffect(() => {
+        //tmdb.getTrending("https://api.themoviedb.org/3/trending/movie/week?api_key="+process.env.API_KEY)
         axios.get("https://my-json-server.typicode.com/horizon-code-academy/fake-movies-api/movies")
             .then(resp => setFilms(resp.data.map(f => ({ Title: f.Title, Year: f.Year, Poster: f.Poster }))))
             .catch(error => {
