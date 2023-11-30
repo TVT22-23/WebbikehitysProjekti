@@ -9,11 +9,11 @@ router.get('/', async (req, res) => {
         res.json(await getReview());
 });
 
-router.post('/', upload.none() , async (req, res) => {
-    const text_review = req.body.text_review;
-    const rating = req.body.rating;
-    const recommend = req.body.recommend;
-    const movie_id = req.body.movie_id;
+router.post('/addReview/:text_review/:rating/:recommend/:movie_id', upload.none() , async (req, res) => {
+    const text_review = req.params.text_review;
+    const rating = req.params.rating;
+    const recommend = req.params.recommend;
+    const movie_id = req.params.movie_id;
 
 
 
@@ -25,5 +25,7 @@ router.post('/', upload.none() , async (req, res) => {
         res.json({error: error.message}).status(500);
     }
 });
+
+//getReview();
 
 module.exports = router;

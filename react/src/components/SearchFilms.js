@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
+require('dotenv').config();
+//const tmdb = require('../tmdb');
+//tmdb.getMovies(tänne url)
 
 function SearchFilms() {
     const [films, setFilms] = useState([]);
@@ -10,6 +13,7 @@ function SearchFilms() {
     useEffect(() => {
         axios.get("https://api.themoviedb.org/3/trending/movie/week?api_key=3972673c7c2bf3c70fc1b5593e956b47")
             .then(resp => setFilms(resp.data.results.map(f => ({ movieID: f.id, Title: f.title, Poster: f.poster_path }))))
+
             .catch(error => {
                 console.error('error fetching data', error);
             })

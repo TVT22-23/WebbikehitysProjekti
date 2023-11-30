@@ -9,10 +9,10 @@ router.get('/', async (req, res) => {
         res.json(await getGroup());
 });
 
-router.post('/create', upload.none() , async (req, res) => {
-    const group_name = req.body.group_name;
-    const description = req.body.description;
-    const owner = req.body.owner;
+router.post('/create/:group_name/:description/:owner', upload.none() , async (req, res) => {
+    const group_name = req.params.group_name;
+    const description = req.params.description;
+    const owner = req.params.owner;
 
     try {
         await addGroup(group_name, description, owner);
@@ -23,9 +23,9 @@ router.post('/create', upload.none() , async (req, res) => {
     }
 });
 
-router.delete('/delete/:group_name', upload.none() , async (req, res) => {
+router.delete('/delete/:group_id', upload.none() , async (req, res) => {
     try {
-        await deleteGroup(req.params.group_name);
+        await deleteGroup(req.params.group_id);
         res.end();
     } catch (error) {
         console.log(error);

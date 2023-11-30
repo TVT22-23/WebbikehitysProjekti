@@ -10,9 +10,9 @@ router.get('/', async (req, res) => {
         res.json(await getMember());
 });
 
-router.post('/create', upload.none() , async (req, res) => {
-    const account_accountid = req.body.account_accountid;
-    const group_groupid = req.body.group_groupid;
+router.post('/create/:account_accountid/:group_groupid', upload.none() , async (req, res) => {
+    const account_accountid = req.params.account_accountid;
+    const group_groupid = req.params.group_groupid;
 
     try {
         await addMember(account_accountid, group_groupid);
