@@ -1,4 +1,5 @@
 const { pgPool } = require('./connection');
+const axios = require('axios')
 
 const sql = {
     INSERT_ACCOUNT: 'INSERT INTO account (user_name, password, email) VALUES ($1, $2, $3)',
@@ -10,6 +11,13 @@ const sql = {
 //addAccount('poistoAccount', 'poistoPassword', 'poistoEmail');
 //getAccount();
 //deleteAccount('poistoAccount');
+
+/*
+axios.post("//localhost:3001/account/create/testAccount4/testPass4/testEmail4")
+            .catch(error => {
+                console.error('error putting data', error);
+            })
+*/
 
 
 async function addAccount(user_name, password, email) {
