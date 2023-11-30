@@ -250,10 +250,12 @@ textarea {
 }
 
 .popup{
+  position: static;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  display: block;
 }
 
 .popup-inner{
@@ -269,4 +271,16 @@ textarea {
 
 .popup-inner{
   position: relative;
+  color: #CA3E47;
+  text-align: center;
+  padding: 10px;
+}
+
+.member{
+  height: 70px;
+  width: 70px;
+  overflow: hidden;
+  border-radius: 50%;
+  border-color: #CA3E47;
+  border-style: solid;
 }

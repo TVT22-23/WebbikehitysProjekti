@@ -40,7 +40,6 @@ function OwnGroupGrid() {
                       Group name:
                       <input type="text" name="name" />
                     </label>
-                      <input type="submit" value="OK" />
                   </form>
                 </Popup>              
                   <a href="group" class= "groupBox"> {groupID} </a>
