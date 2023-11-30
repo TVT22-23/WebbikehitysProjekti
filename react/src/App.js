@@ -1,7 +1,7 @@
 // import { useEffect, useState } from "react";
 // import axios from "axios";
 import { Route, Routes } from "react-router-dom";
-import { GSettings, USettings, User } from "./components/User";
+import { User } from "./components/User";
 import { Login } from "./components/Auth";
 import { NavbarContext } from "./components/Contexts";
 import { Navbar } from "./components/Navbar";
@@ -11,6 +11,7 @@ import Home from "./components/Home";
 import { Film, Cast, Crew } from "./components/Film";
 import Footer from "./components/Footer";
 import SearchFilms from "./components/SearchFilms";
+import { GSettings, USettings, Settings } from "./components/Settings";
 
 // const persons = [
 //   { fname: 'Reima', lname: 'Raniska' },
@@ -28,7 +29,8 @@ function App() {
       </NavbarContext.Provider>
       <Routes>
         <Route path='' element={<Home />} />
-        <Route path='searchFilms' element={<SearchFilms />} />
+          <Route path='searchFilms' element={<SearchFilms />} />
+          <Route path="/user" element={<User />} />
         <Route path='/film' element={<Film />} >
           <Route path='cast' element={<Cast />} />
           <Route path='crew' element={<Crew />} />
@@ -36,7 +38,7 @@ function App() {
         <Route path='/groups' element={<Groups />} />
         <Route path='/group' element={<Group />} />
         <Route path='/login' element={<Login />} />
-        <Route path="/user" element={<User />} >
+        <Route path='settings' element={<Settings />} >
           <Route path="usettings" element={<USettings />} />
           <Route path="gsettings" element={<GSettings />} />
         </Route>

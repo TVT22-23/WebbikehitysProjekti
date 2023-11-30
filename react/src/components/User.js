@@ -33,51 +33,8 @@ function User() {
           <FavActors />
         </Col>
       </Row>
-      <Row>
-        <Col className="link-style">
-          <Link to={'usettings'} style={{ margin: '2px', color: 'black', font: 'bold' }} className="link-style">User Settings</Link>
-          <Link to={'gsettings'} style={{ margin: '2px', color: 'black', font: 'bold', textDecoration: 'none' }}>Group Settings</Link>
-          <Outlet />
-        </Col>
-      </Row>
     </Container>
   );
-}
-
-
-//Usersettings function to be added to User()
-function USettings() {
-  return (
-    <div>
-
-      <h1>User settings</h1>
-      <Form>
-        <Form.Group className="my-3">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="jorma@maikkimaa.com" />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label> Profile's description</Form.Label>
-          <Form.Control as="textarea" maxLength="200" rows={3} />
-        </Form.Group>
-      </Form>
-      <h2>Remove or add a group</h2>
-      <h2>Change description</h2>
-      <h2>Change profile picture</h2>
-      <Form.Label>Default file input example</Form.Label>
-      <Form.Control type="file" />
-    </div>
-  )
-}
-
-
-//Group settings to be added to User()
-function GSettings() {
-  return (
-    <div>
-      <h2>stuff</h2>
-    </div>
-  )
 }
 
 //profile pic to be added to User();
@@ -156,4 +113,4 @@ function FavActors() {
 }
 
 
-export { User, GSettings, USettings, MovieGrid };
+export { User, MovieGrid };
