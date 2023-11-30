@@ -3,14 +3,14 @@ import { Col, Container, Image, Row, Form, Card } from 'react-bootstrap';
 import { GroupName } from "./Group"
 import { useState } from "react";
 import {Popup} from "./Popup"
+//const tmdb = require("../../../tmdb")
+//tmdb.getDetails()
+//require('dotenv').config();
 
-function Groups(){
-    const [buttonPopup, setButtonPopup] = useState(false);
+function Groups() {
     return(
         <div>
         <Container>
-            jou jou jou, mikäö meininki
-            saatana taistwelu paska
             <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Omat ryhmät</h3>
           <Row>
             <OwnGroupGrid />
@@ -18,30 +18,39 @@ function Groups(){
           <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Etsi ryhmiä</h3>
           <Row>
             <FindGroups />
-          </Row>
+          </Row>        
         </Container>
-        <button onClick={() => setButtonPopup(true)}>open popup</button>
 
-        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-            <h3>my popup</h3>
-        </Popup>
         </div>
     )
 }
 
-function OwnGroupGrid(){
-    const groupID = "name";
+function OwnGroupGrid() {
+    const groupID = "name";    
+    const [buttonPopup, setButtonPopup] = useState(false);
+
     return(
         <div>
             <Row>
-              <a href="" class= "groupBox"> Create group </a>
-              <a href="group" class= "groupBox"> {groupID} </a>
-              <a href="group" class= "groupBox"> {groupID} </a>
-              <a href="group" class= "groupBox"> {groupID} </a>
-              <a href="group" class= "groupBox"> {groupID} </a>
-              <a href="group" class= "groupBox"> {groupID} </a>
-              <a href="group" class= "groupBox"> {groupID} </a>
-              <a href="group" class= "groupBox"> {groupID} </a>
+              <button class="groupBox" onClick={() => setButtonPopup(true)}>Create group</button>
+                <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+                  <h3>create group</h3>
+                  <form>
+                    <label>
+                      Group name:
+                      <input type="text" name="name" />
+                    </label>
+                      <input type="submit" value="OK" />
+                  </form>
+                </Popup>              
+                  <a href="group" class= "groupBox"> {groupID} </a>
+                  <a href="group" class= "groupBox"> {groupID} </a>
+                  <a href="group" class= "groupBox"> {groupID} </a>
+                  <a href="group" class= "groupBox"> {groupID} </a>
+                  <a href="group" class= "groupBox"> {groupID} </a>
+                  <a href="group" class= "groupBox"> {groupID} </a>
+                  <a href="group" class= "groupBox"> {groupID} </a>          
+              
             </Row>
         </div>
     )
