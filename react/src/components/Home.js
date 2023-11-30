@@ -1,4 +1,4 @@
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import { MovieGrid } from "./User";
 import movie_poster from "../testikuvia/movie_poster.jpg"
 import ModalReview from "./Review-modal";
@@ -58,53 +58,53 @@ function ReviewGrid() {
     <Container>
       <Row>
         <Col>
-          <Card style={{ width: '200px' }}>
+          <Card style={{ width: '200px', backgroundColor:'#414141', color:'var(--fourth-color)' }}>
             <Card.Img variant="top" src={movie_poster} />
             <Card.Body>
               <Card.Title>Review Title</Card.Title>
               <Card.Text>
                 This is the firs few sentences of the review. Full review open with the button.
               </Card.Text>
-              <Button variant="primary" onClick={() => handleShow(1)}>Full review</Button>
+              <button style={{padding:'7px', width:'fit-content'}} onClick={() => handleShow(1)}>Full review</button>
               <ModalReview id={reviewID} show={showModal} handleClose={handleClose} />
             </Card.Body>
           </Card>
         </Col>
         <Col>
-          <Card style={{ width: '200px' }}>
+          <Card style={{ width: '200px', backgroundColor:'#414141', color:'var(--fourth-color)' }}>
             <Card.Img variant="top" src={movie_poster} />
             <Card.Body>
               <Card.Title>Review Title</Card.Title>
               <Card.Text>
                 This is the firs few sentences of the review. Full review open with the button.
               </Card.Text>
-              <Button variant="primary" onClick={() => handleShow(2)}>Full review</Button>
+              <button style={{padding:'7px', width:'fit-content'}} onClick={() => handleShow(2)}>Full review</button>
               <ModalReview id={reviewID} showModal={showModal} />
             </Card.Body>
           </Card>
         </Col>
         <Col>
-          <Card style={{ width: '200px' }}>
+          <Card style={{ width: '200px', backgroundColor:'#414141', color:'var(--fourth-color)' }}>
             <Card.Img variant="top" src={movie_poster} />
             <Card.Body>
               <Card.Title>Review Title</Card.Title>
               <Card.Text>
                 This is the firs few sentences of the review. Full review open with the button.
               </Card.Text>
-              <Button variant="primary" onClick={() => handleShow(3)}>Full review</Button>
+              <button style={{padding:'7px', width:'fit-content'}} onClick={() => handleShow(3)}>Full review</button>
               <ModalReview id={reviewID} showModal={showModal} closeModal={() => setShowModal} />
             </Card.Body>
           </Card>
         </Col>
         <Col>
-          <Card style={{ width: '200px' }}>
+          <Card style={{ width: '200px', backgroundColor:'#414141', color:'var(--fourth-color)' }}>
             <Card.Img variant="top" src={movie_poster} />
             <Card.Body>
               <Card.Title>Review Title</Card.Title>
               <Card.Text>
                 This is the firs few sentences of the review. Full review open with the button.
               </Card.Text>
-              <Button variant="primary" onClick={() => handleShow(4)}>Full review</Button>
+              <button style={{padding:'7px', width:'fit-content'}} onClick={() => handleShow(4)}>Full review</button>
               <ModalReview id={reviewID} showModal={showModal} closeModal={() => setShowModal} />
             </Card.Body>
           </Card>

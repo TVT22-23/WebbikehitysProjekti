@@ -1,4 +1,4 @@
-import { Button, Col, Container, Modal, Row } from "react-bootstrap";
+import { Col, Container, Modal, Row } from "react-bootstrap";
 import movie_poster from '../testikuvia/movie_poster.jpg';
 import { useEffect, useState } from "react";
 
@@ -35,7 +35,7 @@ function ModalReview({ id, show, handleClose }) {
 
         return (
             //a modal view of the review when button is clicked
-            <Modal size="lg"
+            <Modal size="lg" className="reviewModal"
             aria-labelledby="contained-modal-title-vcenter"
             centered show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -56,7 +56,7 @@ function ModalReview({ id, show, handleClose }) {
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={handleClose}>Close</Button>
+                    <button className="button" onClick={handleClose}>Close</button>
                 </Modal.Footer>
             </Modal>
         );

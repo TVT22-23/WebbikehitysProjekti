@@ -1,17 +1,24 @@
+:root {
+  --primary-color: #525252;
+  --secondary-color: #414141;
+  --third-color: #313131;
+  --fourth-color: #ca3e47;
+}
+
 .background-size {
   max-width: 1000px;
   min-width: 600px;
   margin: auto;
   background: #525252;
   color: #ffffff;
-  height:100%;
+  height: 100%;
   color: #ffffff;
 }
 
 .topnav {
   display: flexbox;
   overflow: hidden;
-  background-color:  #313131;
+  background-color: #313131;
   box-shadow: 1px 1px 10px 1px black;
   width: 100%;
   margin: auto;
@@ -71,7 +78,10 @@
   .topnav .search-container {
     float: none;
   }
-  .topnav a, .topnav input[type=text], .topnav .search-container button {
+
+  .topnav a,
+  .topnav input[type=text],
+  .topnav .search-container button {
     float: none;
     display: block;
     text-align: left;
@@ -79,12 +89,14 @@
     margin: 0;
     padding: 14px;
   }
+
   .topnav input[type=text] {
-    border: 1px solid #ccc;  
+    border: 1px solid #ccc;
   }
 }
 
-.link-style a , button{
+.link-style a,
+button {
   margin-left: auto;
   margin-right: auto;
   margin-top: 1rem;
@@ -94,22 +106,23 @@
   background-color: #313131;
   text-align: center;
   padding: 20px 16px;
-  font-size: 22px ;
+  font-size: 22px;
   text-decoration: none;
   box-shadow: 2px 3px 4px #000000;
   border: 1px solid #414141;
   border-radius: 10px;
 }
 
-.link-style a:hover, button:hover{
+.link-style a:hover,
+button:hover {
   background-color: #414141;
 }
 
-.headingColor{
-  color: #CA3E47 !important; 
+.headingColor {
+  color: #CA3E47 !important;
 }
 
-.borders{
+.borders {
   color: #CA3E47 !important;
   background-color: #414141;
   border-width: 2px;
@@ -118,16 +131,16 @@
   margin-right: 4px;
 }
 
-.imageframe{
+.imageframe {
   height: auto;
   width: 300px;
   border-width: 2px;
   border-style: solid;
-  border-color: #CA3E47;  
+  border-color: #CA3E47;
   margin: 10px;
 }
 
-.movieInfo{
+.movieInfo {
   float: left;
   color: #ffffff !important;
   background-color: #414141;
@@ -138,7 +151,7 @@
   padding: 10px;
 }
 
-.review{
+.review {
   width: 500px;
   height: auto;
   margin: 10px;
@@ -149,7 +162,7 @@
   padding: 10px;
 }
 
-.people{
+.people {
   color: #ffffff !important;
   background-color: #414141;
   border-width: 2px;
@@ -160,13 +173,13 @@
   height: 150px;
 }
 
-.crew{
+.crew {
   margin-right: 10px;
   float: right;
   color: #ffffff;
 }
 
-.cast{
+.cast {
   margin-left: 10px;
   float: left;
   color: #ffffff;
@@ -186,7 +199,7 @@ textarea {
   resize: none;
 }
 
-.button{
+.button {
   background-color: #525252;
   border-width: 2px;
   border-style: solid;
@@ -201,15 +214,17 @@ textarea {
   margin: 10px;
   cursor: pointer;
 }
-.button:hover{
+
+.button:hover {
   background-color: #313131;
 }
-.button:active{
+
+.button:active {
   background-color: #525252;
 }
 
 
-.whereButton{
+.whereButton {
   background-color: #414141;
   border-radius: 50%;
   border: none;
@@ -220,7 +235,7 @@ textarea {
   width: 70px;
 }
 
-.watch{
+.watch {
   width: auto;
   height: auto;
   margin: 10px;
@@ -230,7 +245,7 @@ textarea {
   border-color: #CA3E47;
 }
 
-.groupBanner{
+.groupBanner {
   margin: 20px;
   padding: 10px;
   overflow: hidden;
@@ -245,7 +260,7 @@ textarea {
   box-shadow: 1px 1px 10px 1px black;
 }
 
-.groupBox{
+.groupBox {
   border-radius: 10px;
   border-color: #CA3E47;
   border-style: solid;
@@ -261,7 +276,7 @@ textarea {
   margin: 20px;
 }
 
-.popup{
+.popup {
   position: static;
   top: 0;
   left: 0;
@@ -270,7 +285,7 @@ textarea {
   display: block;
 }
 
-.popup-inner{
+.popup-inner {
   display: block;
   padding: 10px;
   width: 100%;
@@ -281,18 +296,94 @@ textarea {
   background-color: #313131;
 }
 
-.popup-inner{
+.popup-inner {
   position: relative;
   color: #CA3E47;
   text-align: center;
   padding: 10px;
 }
 
-.member{
+.member {
   height: 70px;
   width: 70px;
   overflow: hidden;
   border-radius: 50%;
   border-color: #CA3E47;
   border-style: solid;
+}
+
+.modal {
+  --bs-modal-bg: #313131;
+  --bs-modal-color: var(--fourth-color);
+  --bs-modal-header-border-color: var(--primary-color);
+  --bs-modal-footer-border-color: var(--primary-color);
+}
+
+.movGrid{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.movie-card{
+  width: 215px;
+  margin: 1rem auto 1rem;
+  border-radius: 3px;
+  box-shadow: 1px 4px 5px rgba(0,0,0,0.1);
+  background-color: var(--secondary-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.movie-card-body{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #313131e8;
+  max-height: 100%;
+  transform: translateY(101%);
+  transition: transform .5s;
+  color: var(--fourth-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  letter-spacing: .5px;
+  overflow: hidden;
+}
+
+.movie-card-title{
+  margin-left: auto;
+  margin-right: auto;
+  font: 20px Tahoma;
+}
+
+.movie-card img{
+  width: 100%;
+}
+
+.movie-card span{
+  width: fit-content;
+  background-color: var(--third-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  margin-left: .5rem;
+  font-weight: bold;
+  font-size: small;
+}
+
+.movie-card span.green{
+  color: lightgreen;
+}
+.movie-card span.orange{
+  color: orange;
+}
+.movie-card span.red{
+  color: orangered;
+}
+
+.movie-card:hover .movie-card-body{
+  transform: translateY(0);
+
 }

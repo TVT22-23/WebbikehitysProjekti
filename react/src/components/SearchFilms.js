@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
-require('dotenv').config();
+//require('dotenv').config();
 //const tmdb = require('../tmdb');
 //tmdb.getMovies(tänne url)
 
@@ -55,7 +55,7 @@ function MovieInfo({ ID, Title, Poster }) {
     const posterURL = 'https://image.tmdb.org/t/p/w500/';
     return (
         <>
-            <Col key={ID}>
+            <Col key={ID} className="mt-2 mx-3">
                 <img src={`${posterURL}${Poster}`}height={200} alt="Poster not available" />
                 <p>{Title}</p>
             </Col>
