@@ -107,18 +107,19 @@ function FavActors() {
     </div>
   )
 }
-function MovieCard() {
+function MovieCard({ID, Title, Poster, Rating}) {
+  const posterURL = 'https://image.tmdb.org/t/p/w500/';
+
   return (
-    <div className="movie-card">
-      <Image className="movie-card-img-top" src={movie_poster} height={300} alt="Title" />
+    <div className="movie-card"  key={ID}>
+      <Image className="movie-card-img-top" src={`${posterURL}${Poster}`} height={300} alt="Title" />
       <div className="movie-card-body">
-        <h4 className="movie-card-title mt-0">ballad</h4>
-        <span className="green">8,8</span>
+        <h4 className="movie-card-title mt-0">{Title}</h4>
+        <span className="green">{Rating}</span>
       </div>
-      
     </div>
   )
 }
 
 
-export { User, MovieGrid };
+export { User, MovieGrid, MovieCard};
