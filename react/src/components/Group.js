@@ -39,8 +39,7 @@ function GroupName() {
 function Members() {
   return(
     <div class="groupBanner">
-        <Image src={prof_pic} rounded className=" my-2" />
-
+        <Image class="member" src={prof_pic} rounded className=" my-2" />
     </div>
   )
 }
