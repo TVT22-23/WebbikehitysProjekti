@@ -84,13 +84,25 @@
   }
 }
 
-.link-style a{
+.link-style a , button{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  width: 200px;
+  display: block;
+  color: #CA3E47;
+  background-color: #313131;
+  text-align: center;
+  padding: 20px 16px;
+  font-size: 22px ;
   text-decoration: none;
-  background-color: lightskyblue;
+  box-shadow: 2px 3px 4px #000000;
+  border: 1px solid #414141;
+  border-radius: 10px;
 }
 
-.link-style a:hover{
-  background-color: rgba(135, 206, 250, 0.800);
+.link-style a:hover, button:hover{
+  background-color: #414141;
 }
 
 .headingColor{

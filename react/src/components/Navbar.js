@@ -1,11 +1,20 @@
+import { Link } from "react-router-dom";
 
 function Navbar() {
 
 return(
 <div className="topnav">
-  <a className="active" href="/" >Home</a>
+  
+  {/* <Link to="/" className="active">Home</Link>
+  <Link to="/user">User</Link>
+  <Link to="/film">Films</Link>
+  <Link to="/group">Group</Link>
+  <Link to="/settings">Settings</Link>
+  <Link to="/login">Login</Link>
+  <Link to="/searchFilms">Search Films</Link> */}
 
-  <a href="user">User</a>
+  <a className="active" href="/" >Home</a>
+   <a href="user">User</a>
   <a href="film">Films</a>
   <a href="group">Group</a>
   <a href="settings">Settings</a>
