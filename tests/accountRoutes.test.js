@@ -8,13 +8,14 @@ const accountTest = require('../postgre/account');
 // describes the test suite
 describe('Creating an account', () => {
     //runs before each test and initiates PostgreSQL transaction using 'BEGIN'
-   beforeEach(async function () {
+   before(async function () {
         await pgPool.query('BEGIN');
     }); 
 
     //Runs after each test and rolls back any changes made in the test by using 'ROLLBACK'.
     // This should protect inserts to the database from testing.
-    afterEach(async function () {
+    after(async function () {
+        console.log("after function rollback");
         await pgPool.query('ROLLBACK');
     }); 
 
@@ -38,16 +39,42 @@ describe('Creating an account', () => {
     });
 });
 /*
+describe('Testing login functionality', () => {
 
-describe('Creating an account', function() {
-    it('should work', async function() {
-        const res = await supertest(app)
-            .post('/account')
-            .send({
-                user_name: 'chaiUser3',
-                password: 'chaiPass3',
-                email: 'chai@email.com3'
-            });
-        expect(res.status).to.equal(200);
+    beforeEach(async function () {
+        await pgPool.query('BEGIN');
+    }); 
+
+    afterEach(async function (done) {
+        await pgPool.query('ROLLBACK');
+        done();
+    }); 
+
+    it('should allow the user to login with the correct credentials', async () => {
+        
+        const loginData = {
+            user_name: 'testAccount',
+            password: 'testPassword',
+            
+        };
+        
+        await supertest(app)
+            
+            .post('/account/login') // make a POST request to the exact endpoint which has been set in the route.
+            .send(loginData)  // send the provided data 
+            .expect(200);
     });
-}); */
+
+    it('should not allow the user to login with the incorrect credentials', async () => {
+        const loginData2 = {
+            user_name: 'testAccount',
+            password: 'test'
+        };
+
+        await supertest(app)
+            .post('/account/login') // make a POST request to the exact endpoint which has been set in the route.
+            .send(loginData2)  // send the provided data 
+            .expect(401);
+    });
+});
+*/
