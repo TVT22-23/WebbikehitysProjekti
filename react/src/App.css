@@ -306,6 +306,7 @@ textarea {
 .member {
   height: 70px;
   width: 70px;
+  margin: 10px;
   overflow: hidden;
   border-radius: 50%;
   border-color: #CA3E47;
