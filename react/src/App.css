@@ -375,14 +375,22 @@ textarea {
 }
 
 .movie-card span.green{
+  color: rgb(0, 163, 0);
+}
+
+.movie-card span.lightgreen{
   color: lightgreen;
+}
+.movie-card span.yellow{
+  color: rgb(211, 255, 124);
 }
 .movie-card span.orange{
   color: orange;
 }
 .movie-card span.red{
-  color: orangered;
+  color: red;
 }
+
 
 .movie-card:hover .movie-card-body{
   transform: translateY(0);

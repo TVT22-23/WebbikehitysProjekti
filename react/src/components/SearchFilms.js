@@ -49,40 +49,55 @@ function SearchFilms() {
     const handleMovieClick = (movieID) => {
         // Use navigate to go to the Film component with the clicked movieID
         navigate(`/film/${movieID}`);
-      };
-    
-      return (
+    };
+
+    return (
         <div>
-          <h1>Films</h1>
-          <input type="search" placeholder="Search movies..." onChange={(e) => setSearchInput(e.target.value)} />
-          <Row style={{ justifyContent:'center'}}>
-            {films.map(f =>
-              <div key={f.movieID} onClick={() => handleMovieClick(f.movieID)} style={{width:'fit-content'}}>
-                <MovieCard
-                  ID={f.movieID}
-                  Title={f.Title}
-                  Poster={f.Poster}
-                  Rating={f.Rating}
-                />
-              </div>
-            )}
-          </Row>
+            <h1>Films</h1>
+            <input type="search" placeholder="Search movies..." onChange={(e) => setSearchInput(e.target.value)} />
+            <Row style={{ justifyContent: 'center' }}>
+                {films.map(f =>
+                    <div key={f.movieID} onClick={() => handleMovieClick(f.movieID)} style={{ width: 'fit-content' }}>
+                        <MovieCard
+                            ID={f.movieID}
+                            Title={f.Title}
+                            Poster={f.Poster}
+                            Rating={f.Rating}
+                        />
+                    </div>
+                )}
+            </Row>
         </div>
-      );
+    );
 }
 
-function MovieCard({ID, Title, Poster, Rating}) {
+function MovieCard({ ID, Title, Poster, Rating }) {
     const posterURL = 'https://image.tmdb.org/t/p/w500/';
-  
-    return (
-      <div className="movie-card"  key={ID}>
-        <Image className="movie-card-img-top" src={`${posterURL}${Poster}`} height={300} alt="Title" />
-        <div className="movie-card-body">
-          <h4 className="movie-card-title mt-0">{Title}</h4>
-          <span className="green">{Rating}</span>
-        </div>
-      </div>
-    )
-  }
+    const oneDecimalRating = Number(Rating.toFixed(1));
+    function getColor(Rating) {
+        if (Rating >= 8.0) {
+            return 'green'
+        } else if (Rating <= 7.9 && Rating >= 6.6) {
+            return 'lightgreen'
+        } else if (Rating <= 6.5 && Rating >= 5.1) {
+            return 'yellow';
+        } else if (Rating <= 5 && Rating >= 3.1) {
+            return 'orange';
+        } else if (Rating < 4) {
+            return 'red'
+        }
+    }
 
-export {SearchFilms, MovieCard};
+    return (
+        <div className="movie-card" key={ID}>
+            <Image className="movie-card-img-top" src={`${posterURL}${Poster}`} height={300} alt="Title" />
+            <div className="movie-card-body">
+                <h4 className="movie-card-title mt-0">{Title}</h4>
+                <span className={getColor(oneDecimalRating)}>{oneDecimalRating}</span>
+            </div>
+        </div>
+    )
+}
+
+
+export { SearchFilms, MovieCard };
