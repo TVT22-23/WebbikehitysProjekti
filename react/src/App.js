@@ -10,7 +10,7 @@ import Group from "./components/Group";
 import Home from "./components/Home";
 import { Film, Cast, Crew } from "./components/Film";
 import Footer from "./components/Footer";
-import SearchFilms from "./components/SearchFilms";
+import {SearchFilms} from "./components/SearchFilms";
 import { GSettings, USettings, Settings } from "./components/Settings";
 
 // const persons = [
