@@ -9,6 +9,7 @@ const movieGroupRoute = require('./Routes/movieGroupRoute')
 const reviewRoute = require('./Routes/reviewRoute')
 const favouriteMovieRoute = require('./Routes/favoriteMovieRoute')
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.static('public'));
 
 app.use('/account', accountRoute);
+//app.use(authenticateToken);
 app.use('/memberRequest', memberRequestRoute);
 app.use('/member', memberRoute);
 app.use('/movieGroup', movieGroupRoute);
@@ -37,5 +39,23 @@ app.get('/', (req, res) => {
 app.get('/user', (req, res) => {
     res.send('Jorma')
 });
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+  
+    console.log("token = "+token);
+    if (token == null) return res.sendStatus(401)
+  
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+      console.log(err)
+  
+      if (err) return res.sendStatus(403)
+  
+      req.user = user
+  
+      next()
+    })
+  }
 
 module.exports = app;
