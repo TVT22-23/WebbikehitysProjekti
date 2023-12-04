@@ -306,6 +306,7 @@ textarea {
 .member {
   height: 70px;
   width: 70px;
+  margin: 10px;
   overflow: hidden;
   border-radius: 50%;
   border-color: #CA3E47;
@@ -386,4 +387,29 @@ textarea {
 .movie-card:hover .movie-card-body{
   transform: translateY(0);
 
+}
+
+.addToGroup{
+  color: #ffffff;
+  margin: 10px;
+  width: 100px;
+  float: right;
+  border-radius: 10px;
+  border-color: #CA3E47;
+  background-color: #525252;
+  border-style: solid;
+}
+
+.groupAdd{
+  color: #CA3E47;
+  text-align: center;
+  font-size: 20px;
+  width: auto;
+  height: auto;
+  padding: 5px;
+  float: right;
+  border-radius: 10px;
+  border-color: #CA3E47;
+  background-color:#313131;
+  border-style: solid;
 }

@@ -11,11 +11,11 @@ function Groups() {
     return(
         <div>
         <Container>
-            <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Omat ryhmät</h3>
+            <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Own groups</h3>
           <Row>
             <OwnGroupGrid />
           </Row>
-          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Etsi ryhmiä</h3>
+          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>find groups</h3>
           <Row>
             <FindGroups />
           </Row>        
@@ -38,7 +38,7 @@ function OwnGroupGrid() {
                   <form>
                     <label>
                       Group name:
-                      <input type="text" name="name" />
+                      <input type="text" name="name"/>
                     </label>
                   </form>
                 </Popup>              

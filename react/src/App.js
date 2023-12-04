@@ -29,9 +29,13 @@ function App() {
       </NavbarContext.Provider>
       <Routes>
         <Route path='' element={<Home />} />
-        <Route path='searchFilms' element={<SearchFilms />} />
+        <Route path='/searchFilms' element={<SearchFilms />} />
         <Route path="/user" element={<User />} />
         <Route path='/film' element={<Film />} >
+          <Route path='cast' element={<Cast />} />
+          <Route path='crew' element={<Crew />} />
+        </Route>
+        <Route path='/film/:filmID' element={<Film />} >
           <Route path='cast' element={<Cast />} />
           <Route path='crew' element={<Crew />} />
         </Route>

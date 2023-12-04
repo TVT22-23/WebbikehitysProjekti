@@ -11,10 +11,10 @@ router.get('/', async (req, res) => {
         res.json(await getAccount());
 });
 
-router.post('/create/:user_name/:password/:email', upload.none() , async (req, res) => {
-    const user_name = req.params.user_name;
-    let password = req.params.password;
-    const email = req.params.email;
+router.post('/create', upload.none() , async (req, res) => {
+    const user_name = req.body.user_name;
+    let password = req.body.password;
+    const email = req.body.email;
 
     password = await bcrypt.hash(password, 10);
 
@@ -37,7 +37,7 @@ router.post('/login', upload.none(), async (req, res) => {
     if (pwHash) {
         const isCorrect = await bcrypt.compare(password, pwHash);
         if (isCorrect) {
-            const token = jwt.sign({user_name: user_name}, '' + process.env.JWT_SECRET_KEY);
+            const token = jwt.sign({user_name: user_name}, '' + process.env.JWT_SECRET_KEY, { expiresIn: '1800s' });
             res.status(200).json({jwtToken: token});
         } else {
             res.status(401).json({error: 'Invalid password'});

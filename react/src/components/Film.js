@@ -1,81 +1,85 @@
-import { useParams } from "react-router-dom";
-import { Col, Container, Image, Row} from 'react-bootstrap';
+import { Link, Outlet, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Col, Container, Image, Row, Form } from 'react-bootstrap';
 import movie_poster from '../testikuvia/movie_poster.jpg';
 import disney from '../testikuvia/disney.png'
 import hbo from '../testikuvia/hbo.png'
 import hulu from '../testikuvia/hulu.png'
 import netflix from '../testikuvia/netflix.png'
 import prime from '../testikuvia/prime.png'
+import { useNavigate } from "react-router-dom";
 
 
 
 
 
 function Film() {
-
   const { filmID } = useParams();
+  const [movie, setMovie] = useState(null);
 
-  return(
+  useEffect(() => {
+    // Fetch movie details using the filmID
+    // Replace this with your actual API endpoint for fetching movie details
+    fetch(`https://api.themoviedb.org/3/movie/${filmID}?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with the fetched movie details
+        setMovie(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching movie details:", error);
+      });
+  }, [filmID]);
+
+  if (!movie) {
+    // Display a loading message or spinner while fetching data
+    return <p>Loading...</p>;
+  }
+
+  return (
     <Container>
-    <Row>
-        <Col >    
-          <Image src={movie_poster} alt="movie_poster" className="imageframe"/>
-            <p class="people">
-              <div class="crew">
-              <li>tää jätkä</li>
-              <li>tää jätkä</li>
-              <li>tää jätkä</li>
-              <li>tää jätkä</li>
-              <li>tää jätkä</li>
-              <li>tää jätkä</li>
-              </div>
-
-              <div class="cast">
-              <li>tää jätkä</li>
-              <li>tää jätkä</li>
-              <li>tää jätkä</li>
-              <li>tää jätkä</li>
-              <li>tää jätkä</li>
-              <li>tää jätkä</li>
-              </div>
-            </p>
+      <Row>
+        <Col>
+          <Image src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="movie_poster" className="imageframe" />
+          <div className="people">
+            <div className="crew">
+              <h4>Director</h4>
+              <li>{movie.director}</li> {/* Replace with actual property from your API */}
+            </div>
+            <div className="cast">
+              <h4>Cast</h4>
+            </div>
+          </div>
         </Col>
-      <Col>
-        <FilmInfo />     
-        <div>leave a review</div>      
-        <Review />            
-        <div>Where to watch</div>          
-        <WhereToWatch />
-      </Col>        
-      <Row> 
+        <Col>
+          <FilmInfo movie={movie} />
+          <div>Leave a review</div>
+          <Review />
+          <div>Where to watch</div>
+          <WhereToWatch />
+        </Col>
+        <Row>
           <Col>
-          similar movies
+            <div>Similar movies</div>
             <MovieGrid />
           </Col>
-        </Row> 
-    </Row>
-  </Container>
-
-  )
+        </Row>
+      </Row>
+    </Container>
+  );
 }
 
-function FilmInfo(){
-  return(
-    <div class="movieInfo" >
-      <h1> _movie name_ </h1>
-      <h> ohjooja </h>
-      <br></br>
-      <h> julukasu vuosj </h>
-      <br></br>
-      <p1>
-      this film is a very big film, the biggest in the world, wow so good, what a great film
-      lkjasldkj lkasjdlkajs dlaksjd alksjdlasdlkajsdlkaskdj alksdj saldjasldkajsld aklsjd 
-      ihaskldja sdlkajsd lkasjd alksdjlaksjd lkasjd alksdjlaksd lkaj sdlkajs ldkja slkdjkasd
-      lasjdlik ajsdlkjasdlkaj sldkjasolkdj alksjd lkajd lkasjd lkajs dlkaj ldks Jaskahkasjdh kashdjkashd kashdjkashd
-      lkasjdlka sdlkj alskdj alksjdol aksjdlkasjd aksd
-      </p1>
+function FilmInfo({ movie }) {
+  return (
+    <div className="movieInfo">
+      <h1>{movie.title}</h1> {/* Replace with actual property from your API */}
+      <h>Director: {movie.director}</h> {/* Replace with actual property from your API */}
+      <br />
+      <h>Release Year: {movie.release_year}</h> {/* Replace with actual property from your API */}
+      <br />
+      <p1>{movie.overview}</p1> {/* Replace with actual property from your API */}
     </div>
-  )
+  );
 }
 
 function WhereToWatch(){
