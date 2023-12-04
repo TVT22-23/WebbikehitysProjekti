@@ -19,7 +19,7 @@ const mockReviews = [
 //         })
 // }, []);
 
-//fetches review data and 
+//fetches review data
 function ModalReview({ id, show, handleClose }) {
 
     const [review, setReview] = useState(null);

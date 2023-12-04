@@ -2,7 +2,7 @@
 // import axios from "axios";
 import { Route, Routes } from "react-router-dom";
 import { User } from "./components/User";
-import { Login } from "./components/Auth";
+import Login from "./components/Login";
 import { NavbarContext } from "./components/Contexts";
 import { Navbar } from "./components/Navbar";
 import Groups from "./components/Groups";

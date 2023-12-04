@@ -85,7 +85,7 @@ function FilmInfo({ movie }) {
 function WhereToWatch(){
   return(
     <div>
-      <p class="watch">
+      <p className="watch">
         <button className="whereButton">           
           <Image src={netflix} height={70}/>
         </button>

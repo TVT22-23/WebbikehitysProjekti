@@ -1,18 +1,29 @@
-// import { useContext } from "react";
-// import { LoginContext} from "./Contexts"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { TokenContext } from "./Contexts";
+import Login from "./Login";
 
-function Login() {
-    // const { login, setLogin } = useContext(LoginContext);
+function Authorization() {
 
-    // const buttonLabel = login ? 'logout' : 'login';
+    //login is controlled by token that is save to session storag.
+    const [token, setToken] = useState(() => {
+        const t = sessionStorage.getItem('token');
+        return t === null || t === 'null' ? '' : t;
+    });
+
+    //Setting token for axios header as deafult.
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+    //Saving the token to session storage if it changes.
+    useEffect(() => {
+        sessionStorage.setItem('token', token);
+    }, [token]);
 
     return (
-        <div>
-            <h1>login</h1>
-            {/* {login ? <h2>Welcome</h2> : <h2>unauthorized</h2>}
-            <button onClick={() => setLogin(prev => !prev)}>{buttonLabel}</button> */}
-        </div>
+        <TokenContext.Provider value={{ token, setToken }}>
+            <Login />
+        </TokenContext.Provider>
     );
 }
 
-export {Login};
+export default Authorization;
