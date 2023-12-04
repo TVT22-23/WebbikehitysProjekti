@@ -1,7 +1,8 @@
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Card, CardText, Col, Container, Row } from "react-bootstrap";
 import { MovieGrid } from "./User";
 import movie_poster from "../testikuvia/movie_poster.jpg"
 import ModalReview from "./Review-modal";
+import ModalToGroup from "./AddToGroup-modal";
 import { useState } from "react";
 
 
@@ -115,6 +116,20 @@ function ReviewGrid() {
 }
 
 function NewsGrid() {
+  const [showModal, setShowModal] = useState(false);
+  const [reviewID, setReviewID] = useState(null);
+
+
+  const handleShow = (id) => {
+    setShowModal(true);
+    setReviewID(id);
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+    setReviewID(null);
+  };
+
   return (
     <Row style={{ alignItems: 'stretch' }}>
       <Col>
@@ -125,17 +140,21 @@ function NewsGrid() {
               Summary of the news.
             </Card.Text>
             <Card.Link href="#" className="position-absolute bottom-0 start-0 m-2 ">News Link</Card.Link>
-          </Card.Body>
+                      <button class="groupAdd" style={{padding:'5px', width:'fit-content'}} onClick={() => handleShow(1)}>Add to group</button>
+              <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
+              </Card.Body>
         </Card>
       </Col>
       <Col>
         <Card className="ms-3 pos" style={{ width: '400px', height: '200px' }}>
-          <Card.Body>
+          <Card.Body>              <button class="groupAdd" onClick={() => handleShow(1)}>Add to group</button>
+              <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
             <Card.Title>News Title</Card.Title>
             <Card.Text>
               This summary is longer and so it will take more space on the card. And so I will write the lorem ipsum dontes rememberum mucheus elsius abutem lorem ipsum.
             </Card.Text>
             <Card.Link href="#" className="position-absolute bottom-0 start-0 m-2">News Link</Card.Link>
+
           </Card.Body>
         </Card>
       </Col>
