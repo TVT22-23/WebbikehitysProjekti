@@ -4,8 +4,6 @@ import { effect, signal } from "@preact/signals-react";
 //token tallennetaan session storageen
 function getSessionToken() {
     const t = sessionStorage.getItem('token');
-    console.log(t)
-    console.log('sakset')
     return t===null || t==='null' ? '' :t;
 }
 

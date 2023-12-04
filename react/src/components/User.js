@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import prof_pic from '../testikuvia/prof_pic.jpg';
-import movie_poster from '../testikuvia/movie_poster.jpg';
 import favact1 from '../testikuvia/favact1.jpg'
 import favact2 from '../testikuvia/favact2.jpg'
 import favact3 from '../testikuvia/favact3.jpg'
 import favact4 from '../testikuvia/favact4.jpg'
+import { MovieCard } from "./SearchFilms";
 
 
 //Profile/user page
@@ -107,19 +107,5 @@ function FavActors() {
     </div>
   )
 }
-function MovieCard({ID, Title, Poster, Rating}) {
-  const posterURL = 'https://image.tmdb.org/t/p/w500/';
 
-  return (
-    <div className="movie-card"  key={ID}>
-      <Image className="movie-card-img-top" src={`${posterURL}${Poster}`} height={300} alt="Title" />
-      <div className="movie-card-body">
-        <h4 className="movie-card-title mt-0">{Title}</h4>
-        <span className="green">{Rating}</span>
-      </div>
-    </div>
-  )
-}
-
-
-export { User, MovieGrid, MovieCard};
+export { User, MovieGrid};
