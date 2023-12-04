@@ -1,5 +1,5 @@
-import { Link, Outlet, useParams } from "react-router-dom";
-import { Col, Container, Image, Row, Form } from 'react-bootstrap';
+import { useParams } from "react-router-dom";
+import { Col, Container, Image, Row} from 'react-bootstrap';
 import movie_poster from '../testikuvia/movie_poster.jpg';
 import disney from '../testikuvia/disney.png'
 import hbo from '../testikuvia/hbo.png'
@@ -81,7 +81,7 @@ function FilmInfo(){
 function WhereToWatch(){
   return(
     <div>
-      <p class="watch">
+      <p className="watch">
         <button className="whereButton">           
           <Image src={netflix} height={70}/>
         </button>

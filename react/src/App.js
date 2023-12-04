@@ -2,7 +2,7 @@
 // import axios from "axios";
 import { Route, Routes } from "react-router-dom";
 import { User } from "./components/User";
-import { Login } from "./components/Auth";
+import Login from "./components/Login";
 import { NavbarContext } from "./components/Contexts";
 import { Navbar } from "./components/Navbar";
 import Groups from "./components/Groups";
@@ -29,8 +29,8 @@ function App() {
       </NavbarContext.Provider>
       <Routes>
         <Route path='' element={<Home />} />
-          <Route path='searchFilms' element={<SearchFilms />} />
-          <Route path="/user" element={<User />} />
+        <Route path='searchFilms' element={<SearchFilms />} />
+        <Route path="/user" element={<User />} />
         <Route path='/film' element={<Film />} >
           <Route path='cast' element={<Cast />} />
           <Route path='crew' element={<Crew />} />
