@@ -98,9 +98,8 @@ function Film() {
         </Col>
         <Row>
           <Col>
-            <div>Similar movies
+            <div>
             <h4>Similar Movies</h4>
-            {/* Use the SimilarMovieGrid component */}
             <MovieGrid similarMovies={similarMovies} />
             </div>
             <MovieGrid />
@@ -204,7 +203,7 @@ function Crew(){
 function MovieGrid({ similarMovies }) {
   // Add a guard clause to check if similarMovies is defined
   if (!similarMovies || similarMovies.length === 0) {
-    return <p>No similar movies available.</p>;
+    return;
   }
 
   // Limit the display to only 5 similar movies
