@@ -16,23 +16,45 @@ import { useNavigate } from "react-router-dom";
 function Film() {
   const { filmID } = useParams();
   const [movie, setMovie] = useState(null);
+  const getActors = (url) => {
+    return fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const actors = data.cast.slice(0, 5);
+        const director = data.crew.find(crew => crew.job === 'Director');
 
+        return {
+          actors,
+          director: director ? director.name : null
+        };
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+  };
   useEffect(() => {
     // Fetch movie details using the filmID
-    // Replace this with your actual API endpoint for fetching movie details
     fetch(`https://api.themoviedb.org/3/movie/${filmID}?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
       .then((response) => response.json())
       .then((data) => {
-        // Update state with the fetched movie details
         setMovie(data);
+        getActors(`https://api.themoviedb.org/3/movie/${filmID}/credits?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
+        .then(({ actors, director }) => {
+          setMovie(prevState => ({
+            ...prevState,
+            actors,
+            director
+          }));
+        });
       })
+
       .catch((error) => {
         console.error("Error fetching movie details:", error);
       });
   }, [filmID]);
 
   if (!movie) {
-    // Display a loading message or spinner while fetching data
+
     return <p>Loading...</p>;
   }
 
@@ -44,10 +66,15 @@ function Film() {
           <div className="people">
             <div className="crew">
               <h4>Director</h4>
-              <li>{movie.director}</li> {/* Replace with actual property from your API */}
+              <li>{movie.director}</li>
             </div>
             <div className="cast">
-              <h4>Cast</h4>
+            <h4>Cast</h4>
+          <ul>
+            {movie.actors && movie.actors.map(actor => (
+              <li key={actor.id}>{actor.name}</li>
+            ))}
+          </ul>
             </div>
           </div>
         </Col>
