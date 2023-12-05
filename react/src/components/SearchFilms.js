@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Col, Row, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Row, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import missing_poster from "../testikuvia/poster_missing.jpg"
 
 function SearchFilms() {
     const [films, setFilms] = useState([]);
@@ -71,9 +71,10 @@ function SearchFilms() {
     );
 }
 
+//Results from api call are shown here, also ratings are color coded
 function MovieCard({ ID, Title, Poster, Rating }) {
     const posterURL = 'https://image.tmdb.org/t/p/w500/';
-    const oneDecimalRating = Number(Rating.toFixed(1));
+    const oneDecimalRating = Rating.toFixed(1);
     function getColor(Rating) {
         if (Rating >= 8.0) {
             return 'green'
@@ -87,10 +88,13 @@ function MovieCard({ ID, Title, Poster, Rating }) {
             return 'red'
         }
     }
+    if (Poster === null) {
+        Poster = 'tGX3YyPaYMbjiRwR5PjRsJW7GtM.jpg'
+    }
 
     return (
         <div className="movie-card" key={ID}>
-            <Image className="movie-card-img-top" src={`${posterURL}${Poster}`} height={300} alt="Title" />
+            <Image className="movie-card-img-top" src={`${posterURL}${Poster}`} height={300} alt='missing_poster' />
             <div className="movie-card-body">
                 <h4 className="movie-card-title mt-0">{Title}</h4>
                 <span className={getColor(oneDecimalRating)}>{oneDecimalRating}</span>

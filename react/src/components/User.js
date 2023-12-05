@@ -6,6 +6,7 @@ import favact2 from '../testikuvia/favact2.jpg'
 import favact3 from '../testikuvia/favact3.jpg'
 import favact4 from '../testikuvia/favact4.jpg'
 import { MovieCard } from "./SearchFilms";
+import movie_poster from "../testikuvia/movie_poster.jpg"
 
 
 //Profile/user page
@@ -57,21 +58,38 @@ function ProfPic() {
 
 //displays movies, 4 in 1 row
 function MovieGrid() {
+  const movieID = 1;
+  const Poster = 'aAXit9k1rTBmmVbj6Zzm2nF5TDR.jpg';
+  const Title = 'Decision to Leave';
+  const Rating = 10;
+
   return (
     <div className="borders movGrid">
       <Container>
         <Row>
           <Col>
-            <MovieCard />
+            <MovieCard    ID={movieID}
+                            Title={Title}
+                            Poster={Poster}
+                            Rating={Rating}/>
           </Col>
           <Col>
-            <MovieCard />
+          <MovieCard    ID={movieID}
+                            Title={Title}
+                            Poster={Poster}
+                            Rating={Rating}/>
           </Col>
           <Col>
-            <MovieCard />
+          <MovieCard    ID={movieID}
+                            Title={Title}
+                            Poster={Poster}
+                            Rating={Rating}/>
           </Col>
           <Col>
-            <MovieCard />
+          <MovieCard    ID={movieID}
+                            Title={Title}
+                            Poster={Poster}
+                            Rating={Rating}/>
           </Col>
         </Row>
       </Container>
