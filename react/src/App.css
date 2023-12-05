@@ -149,10 +149,12 @@ button:hover {
   border-color: #CA3E47;
   margin: 10px;
   padding: 10px;
+  max-width: 500px;
+  overflow: hidden;
 }
 
 .review {
-  width: 500px;
+  max-width: 500px;
   height: auto;
   margin: 10px;
   background-color: #414141;
@@ -169,20 +171,22 @@ button:hover {
   border-style: solid;
   border-color: #CA3E47;
   margin: 10px;
-  width: 300px;
-  height: 150px;
+  width: auto;
+  height: 170px;
 }
 
 .crew {
   margin-right: 10px;
   float: right;
   color: #ffffff;
+  padding: 10px;
 }
 
 .cast {
   margin-left: 10px;
   float: left;
   color: #ffffff;
+  padding: 10px;
 }
 
 textarea {

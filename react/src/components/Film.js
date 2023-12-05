@@ -7,6 +7,7 @@ import hbo from '../testikuvia/hbo.png'
 import hulu from '../testikuvia/hulu.png'
 import netflix from '../testikuvia/netflix.png'
 import prime from '../testikuvia/prime.png'
+import ModalToGroup from "./AddToGroup-modal";
 import { useNavigate } from "react-router-dom";
 
 
@@ -156,9 +157,24 @@ function SubmitButton(){
 }
 
 function AddToGroupButton(){
+  const [showModal, setShowModal] = useState(false);
+  const [reviewID, setReviewID] = useState(null);
+
+
+  const handleShow = (id) => {
+    setShowModal(true);
+    setReviewID(id);
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+    setReviewID(null);
+  };
+
   return(
     <div>
-        <input type="button" class="button" value="add to a group"></input>
+        <button class="button" onClick={() => handleShow(1)}>Add to a group</button>
+            <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
     </div>
   )
 }
