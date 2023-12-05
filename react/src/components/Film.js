@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 function Film() {
   const { filmID } = useParams();
   const [movie, setMovie] = useState(null);
+  const [similarMovies, setSimilarMovies] = useState([]);
   const getActors = (url) => {
     return fetch(url)
       .then(res => res.json())
@@ -47,9 +48,19 @@ function Film() {
           }));
         });
       })
-
       .catch((error) => {
         console.error("Error fetching movie details:", error);
+      });
+
+      fetch(`https://api.themoviedb.org/3/movie/${filmID}/similar?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with the fetched similar movies
+        setSimilarMovies(data.results);
+        
+      })
+      .catch((error) => {
+        console.error("Error fetching similar movies:", error);
       });
   }, [filmID]);
 
@@ -87,7 +98,11 @@ function Film() {
         </Col>
         <Row>
           <Col>
-            <div>Similar movies</div>
+            <div>Similar movies
+            <h4>Similar Movies</h4>
+            {/* Use the SimilarMovieGrid component */}
+            <MovieGrid similarMovies={similarMovies} />
+            </div>
             <MovieGrid />
           </Col>
         </Row>
@@ -185,31 +200,36 @@ function Crew(){
   )
 }
 
-function MovieGrid() {
+
+function MovieGrid({ similarMovies }) {
+  // Add a guard clause to check if similarMovies is defined
+  if (!similarMovies || similarMovies.length === 0) {
+    return <p>No similar movies available.</p>;
+  }
+
+  // Limit the display to only 5 similar movies
+  const limitedSimilarMovies = similarMovies.slice(0, 5);
+
   return (
     <div className="borders">
       <Container>
         <Row>
-          <Col className="headingColor">
-          movie1
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
-          </Col>
-          <Col>
-          movie2
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
-          </Col>
-          <Col>
-          movie3
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
-          </Col>
-          <Col>
-          movie4
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
-          </Col>
+          {limitedSimilarMovies.map((movie) => (
+            <Col key={movie.id} className="headingColor">
+              {movie.title}
+              <Image
+                src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                height={114}
+                alt={movie.title}
+                thumbnail
+                className="mr-2 my-2"
+              />
+            </Col>
+          ))}
         </Row>
       </Container>
     </div>
-  )
+  );
 }
 
 export {Film, Crew, Cast};
