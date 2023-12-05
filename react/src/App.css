@@ -411,4 +411,7 @@ textarea {
   background-color:#313131;
   color: #CA3E47;
   border-style: solid;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
