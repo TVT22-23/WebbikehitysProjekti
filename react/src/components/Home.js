@@ -133,29 +133,30 @@ function NewsGrid() {
   return (
     <Row style={{ alignItems: 'stretch' }}>
       <Col>
-        <Card className="ms-3" style={{ width: '400px', height: '200px' }}>
+        <Card className="ms-3" style={{ width: '400px', height: '240px' }}>
           <Card.Body>
             <Card.Title>News Title</Card.Title>
             <Card.Text>
               Summary of the news.
             </Card.Text>
             <Card.Link href="#" className="position-absolute bottom-0 start-0 m-2 ">News Link</Card.Link>
-                      <button class="groupAdd" style={{padding:'5px', width:'fit-content'}} onClick={() => handleShow(1)}>Add to group</button>
-              <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
+            <button class="groupAdd" onClick={() => handleShow(1)}>Add to group</button>
+            <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />  
               </Card.Body>
         </Card>
       </Col>
       <Col>
-        <Card className="ms-3 pos" style={{ width: '400px', height: '200px' }}>
-          <Card.Body>              <button class="groupAdd" onClick={() => handleShow(1)}>Add to group</button>
-              <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
+        <Card className="ms-3 pos" style={{ width: '400px', height: '240px' }}>
+          <Card.Body>             
             <Card.Title>News Title</Card.Title>
             <Card.Text>
               This summary is longer and so it will take more space on the card. And so I will write the lorem ipsum dontes rememberum mucheus elsius abutem lorem ipsum.
             </Card.Text>
             <Card.Link href="#" className="position-absolute bottom-0 start-0 m-2">News Link</Card.Link>
-
-          </Card.Body>
+            <Row></Row>
+            <button class="groupAdd" onClick={() => handleShow(1)}>Add to group</button>
+            <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
+            </Card.Body>
         </Card>
       </Col>
     </Row>

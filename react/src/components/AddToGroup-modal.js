@@ -15,7 +15,7 @@ function ModalToGroup({ show, handleClose }) {
                 <Modal.Body>
                     <Container>
                         <Row>
-                            <button class="addToGroup" onClick={alert}>ryhmä mihinkä kuulun</button>
+                            <button class="addToGroup">ryhmä mihinkä kuulun</button>
                             <button class="addToGroup">tääl sama</button>
                             <button class="addToGroup">ja tääl</button>
                         </Row>
