@@ -70,10 +70,16 @@ function getActors(url) {
         });
 }
 
+function getSimilar(url){
+    fetch(url).then(res=>res.json()).then(data=> {
+        console.log(data);  
+    })
+}
 
-getActors('https://api.themoviedb.org/3/movie/78/credits?api_key=3972673c7c2bf3c70fc1b5593e956b47')
+getSimilar("https://api.themoviedb.org/3/movie/78/similar?api_key=3972673c7c2bf3c70fc1b5593e956b47");
+//getActors('https://api.themoviedb.org/3/movie/78/credits?api_key=3972673c7c2bf3c70fc1b5593e956b47')
 //getMovies("https://api.themoviedb.org/3/search/movie?query=blade runner&api_key="+process.env.API_KEY);
-//getProviders("https://api.themoviedb.org/3/movie/78/watch/providers?api_key="+process.env.API_KEY);
+//getProviders("https://api.themoviedb.org/3/movie/78/watch/providers?api_key=3972673c7c2bf3c70fc1b5593e956b47");
 //getDetails("https://api.themoviedb.org/3/movie/78?api_key=3972673c7c2bf3c70fc1b5593e956b47");
 //getTrending("https://api.themoviedb.org/3/trending/movie/week?api_key="+process.env.API_KEY);
 //getCast('https://api.themoviedb.org/3/movie/78/credits?api_key=3972673c7c2bf3c70fc1b5593e956b47');
