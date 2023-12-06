@@ -6,9 +6,8 @@ return(
 <div className="topnav">
   
   <Link to="/" className="active">Home</Link>
-  <Link to="/user">User</Link>
-  <Link to="/film">Films</Link>
-  <Link to="/group">Group</Link>
+  <Link to="/user">Profile</Link>
+  <Link to="/groups">Groups</Link>
   <Link to="/settings">Settings</Link>
   <Link to="/login">Login</Link>
   <Link to="/searchFilms">Search Films</Link>

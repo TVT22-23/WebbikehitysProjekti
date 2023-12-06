@@ -149,10 +149,12 @@ button:hover {
   border-color: #CA3E47;
   margin: 10px;
   padding: 10px;
+  max-width: 500px;
+  overflow: hidden;
 }
 
 .review {
-  width: 500px;
+  max-width: 500px;
   height: auto;
   margin: 10px;
   background-color: #414141;
@@ -169,20 +171,23 @@ button:hover {
   border-style: solid;
   border-color: #CA3E47;
   margin: 10px;
-  width: 300px;
-  height: 150px;
+  padding: 10px;
+  width: auto;
+  height: 190px;
 }
 
 .crew {
   margin-right: 10px;
   float: right;
   color: #ffffff;
+  padding: 10px;
 }
 
 .cast {
   margin-left: 10px;
   float: left;
   color: #ffffff;
+  padding: 10px;
 }
 
 textarea {
@@ -409,7 +414,6 @@ textarea {
 }
 
 .groupAdd{
-  color: #CA3E47;
   text-align: center;
   font-size: 20px;
   width: auto;
@@ -419,7 +423,11 @@ textarea {
   border-radius: 10px;
   border-color: #CA3E47;
   background-color:#313131;
+  color: #CA3E47;
   border-style: solid;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 #tags{
@@ -483,3 +491,4 @@ textarea {
   background-color: var(--secondary-color);
   border-color: var(--fourth-color);
 }
+=======

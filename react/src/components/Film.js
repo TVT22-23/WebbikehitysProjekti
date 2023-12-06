@@ -7,6 +7,7 @@ import hbo from '../testikuvia/hbo.png'
 import hulu from '../testikuvia/hulu.png'
 import netflix from '../testikuvia/netflix.png'
 import prime from '../testikuvia/prime.png'
+import ModalToGroup from "./AddToGroup-modal";
 import { useNavigate } from "react-router-dom";
 
 
@@ -16,23 +17,74 @@ import { useNavigate } from "react-router-dom";
 function Film() {
   const { filmID } = useParams();
   const [movie, setMovie] = useState(null);
+  const [similarMovies, setSimilarMovies] = useState([]);
+  const [watchProviders, setWatchProviders] =useState(null);
+  const getActors = (url) => {
+    return fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const actors = data.cast.slice(0, 5);
+        const director = data.crew.find(crew => crew.job === 'Director');
 
+        return {
+          actors,
+          director: director ? director.name : null
+        };
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+  };
+  const getWatchProviders = (url) => {
+    fetch(url).then(res=>res.json()).then(data=> {
+      if ("FI" in data.results){
+          const fiData = data.results.FI;
+          setWatchProviders(fiData.flatrate);
+      }
+      else{
+          console.log("no data awailable");
+      }
+  })
+  .catch(error => {
+    console.error("Error fetching providers:", error);
+  });
+
+  }
   useEffect(() => {
     // Fetch movie details using the filmID
-    // Replace this with your actual API endpoint for fetching movie details
     fetch(`https://api.themoviedb.org/3/movie/${filmID}?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
       .then((response) => response.json())
       .then((data) => {
-        // Update state with the fetched movie details
         setMovie(data);
+        getWatchProviders(`https://api.themoviedb.org/3/movie/${filmID}/watch/providers?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
+        getActors(`https://api.themoviedb.org/3/movie/${filmID}/credits?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
+        .then(({ actors, director }) => {
+          setMovie(prevState => ({
+            ...prevState,
+            actors,
+            director
+          }));
+        });
       })
       .catch((error) => {
         console.error("Error fetching movie details:", error);
       });
+    
+      fetch(`https://api.themoviedb.org/3/movie/${filmID}/similar?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Update state with the fetched similar movies
+        setSimilarMovies(data.results);
+        
+      })
+      .catch((error) => {
+        console.error("Error fetching similar movies:", error);
+      });
+      
   }, [filmID]);
 
   if (!movie) {
-    // Display a loading message or spinner while fetching data
+
     return <p>Loading...</p>;
   }
 
@@ -44,10 +96,15 @@ function Film() {
           <div className="people">
             <div className="crew">
               <h4>Director</h4>
-              <li>{movie.director}</li> {/* Replace with actual property from your API */}
+              <li>{movie.director}</li>
             </div>
             <div className="cast">
-              <h4>Cast</h4>
+            <h4>Cast</h4>
+          <ul>
+            {movie.actors && movie.actors.map(actor => (
+              <li key={actor.id}>{actor.name}</li>
+            ))}
+          </ul>
             </div>
           </div>
         </Col>
@@ -55,12 +112,23 @@ function Film() {
           <FilmInfo movie={movie} />
           <div>Leave a review</div>
           <Review />
-          <div>Where to watch</div>
-          <WhereToWatch />
+          <div>
+            <h4>Where to watch</h4>
+            <p className="watch">
+            {watchProviders && watchProviders.map(provider => (
+              <button key={provider.provider_id} className="whereButton">
+                <Image src={`https://image.tmdb.org/t/p/original${provider.logo_path}`} height={70} alt={provider.provider_name} />
+              </button>
+            ))}
+          </p>
+          </div>
         </Col>
         <Row>
           <Col>
-            <div>Similar movies</div>
+            <div>
+            <h4>Similar Movies</h4>
+            <MovieGrid similarMovies={similarMovies} />
+            </div>
             <MovieGrid />
           </Col>
         </Row>
@@ -129,9 +197,24 @@ function SubmitButton(){
 }
 
 function AddToGroupButton(){
+  const [showModal, setShowModal] = useState(false);
+  const [reviewID, setReviewID] = useState(null);
+
+
+  const handleShow = (id) => {
+    setShowModal(true);
+    setReviewID(id);
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+    setReviewID(null);
+  };
+
   return(
     <div>
-        <input type="button" class="button" value="add to a group"></input>
+        <button class="button" onClick={() => handleShow(1)}>Add to a group</button>
+            <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
     </div>
   )
 }
@@ -158,31 +241,36 @@ function Crew(){
   )
 }
 
-function MovieGrid() {
+
+function MovieGrid({ similarMovies }) {
+  // Add a guard clause to check if similarMovies is defined
+  if (!similarMovies || similarMovies.length === 0) {
+    return;
+  }
+
+  // Limit the display to only 5 similar movies
+  const limitedSimilarMovies = similarMovies.slice(0, 5);
+
   return (
     <div className="borders">
       <Container>
         <Row>
-          <Col className="headingColor">
-          movie1
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
-          </Col>
-          <Col>
-          movie2
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
-          </Col>
-          <Col>
-          movie3
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
-          </Col>
-          <Col>
-          movie4
-          <Image src={movie_poster} height={114} alt="movie_poster" thumbnail className="mr-2 my-2" />
-          </Col>
+          {limitedSimilarMovies.map((movie) => (
+            <Col key={movie.id} className="headingColor">
+              {movie.title}
+              <Image
+                src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                height={114}
+                alt={movie.title}
+                thumbnail
+                className="mr-2 my-2"
+              />
+            </Col>
+          ))}
         </Row>
       </Container>
     </div>
-  )
+  );
 }
 
 export {Film, Crew, Cast};
