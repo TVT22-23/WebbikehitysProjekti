@@ -429,3 +429,66 @@ textarea {
   bottom: 10px;
   right: 10px;
 }
+
+#tags{
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+}
+
+.tag{
+  font: 16px Tahoma;
+  color: var(--fourth-color);
+  padding: 5px 8px;
+  background-color: var(--third-color);
+  border-radius: 10%;
+  margin: 5px;
+  display: inline-block;
+  cursor: pointer;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.541);
+  transition: all 0.3s ease-in-out;
+}
+
+.tag.highlighted{
+  box-shadow: inset 2px 2px rgba(0, 0, 0, 0.541);
+}
+
+
+.tag:hover{
+  background-color: var(--secondary-color);
+}
+
+.tag:active{
+  box-shadow: var(--secondary-color);
+}
+
+.btn-primary{
+    margin-top: 3rem;
+    width: fit-content;
+    display: block;
+    color: #CA3E47;
+    background-color: #313131;
+    text-align: center;
+    padding: 10px 15px;
+    font-size: 22px;
+    text-decoration: none;
+    box-shadow: 2px 3px 4px #000000;
+    border: 1px solid #414141;
+    border-radius: 10px;
+}
+
+.btn:hover{
+  color: var(--fourth-color);
+  background-color: var(--secondary-color);
+  border-color: var(--fourth-color);
+}
+
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+  color: var(--fourth-color);
+  background-color: var(--secondary-color);
+  border-color: var(--fourth-color);
+}
+=======

@@ -35,7 +35,7 @@ function LoginForm() {
     }
     return (
         <div>
-                <div className="link-style">
+                <div className="link-style login-page">
                     <input onChange={e => setUser_name(e.target.value)}></input>
                     <input onChange={e => setPassword(e.target.value)}></input>
                     <button onClick={login} >Login</button>
