@@ -280,4 +280,4 @@ function MovieGrid({ similarMovies }) {
   );
 }
 
-export {Film, Crew, Cast};
+export {Film, Crew, Cast, MovieGrid};

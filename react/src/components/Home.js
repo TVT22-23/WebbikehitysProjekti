@@ -4,16 +4,39 @@ import movie_poster from "../testikuvia/movie_poster.jpg"
 import ModalReview from "./Review-modal";
 import ModalToGroup from "./AddToGroup-modal";
 import { useState } from "react";
+import { MovieCard } from "./SearchFilms";
+import { useNavigate } from "react-router";
 
 
 //home page
 function Home() {
+  const [movie] = useState(null);
+  const [films, setFilms] = useState([]);
+
+  const navigate = useNavigate();
+  const handleMovieClick = (movieID) => {
+    // Use navigate to go to the Film component with the clicked movieID
+    navigate(`/film/${movieID}`);
+  };
+
   return (
     <div>
       <Container>
-        <h1 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Tervetuloa</h1>
+        <h1 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Welcome</h1>
         <Row>
           <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>New</h3>
+          
+          {films.map(f =>
+                    <div key={f.movieID} onClick={() => handleMovieClick(f.movieID)} style={{ width: 'fit-content' }}>
+                        <MovieCard
+                            ID={f.movieID}
+                            Title={f.Title}
+                            Poster={f.Poster}
+                            Rating={f.Rating}
+                        />
+                    </div>
+                )}
+
           <MovieGrid isDraggable={false} id="homeNew"/>
         </Row>
         <Row>
