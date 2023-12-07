@@ -9,7 +9,7 @@ import netflix from '../testikuvia/netflix.png'
 import prime from '../testikuvia/prime.png'
 import ModalToGroup from "./AddToGroup-modal";
 import { useNavigate } from "react-router-dom";
-
+import { MovieCard } from "./SearchFilms";
 
 
 
@@ -243,28 +243,35 @@ function Crew(){
 
 
 function MovieGrid({ similarMovies }) {
+  const navigate = useNavigate();
+  const handleMovieClick = (movieID) => {
+    // Use navigate to go to the Film component with the clicked movieID
+    navigate(`/film/${movieID}`);
+  };
   // Add a guard clause to check if similarMovies is defined
   if (!similarMovies || similarMovies.length === 0) {
     return;
   }
 
-  // Limit the display to only 5 similar movies
-  const limitedSimilarMovies = similarMovies.slice(0, 5);
+  // Limit the display to only 4 similar movies
+  const limitedSimilarMovies = similarMovies.slice(0, 4);
 
   return (
     <div className="borders">
       <Container>
         <Row>
           {limitedSimilarMovies.map((movie) => (
-            <Col key={movie.id} className="headingColor">
-              {movie.title}
-              <Image
-                src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                height={114}
-                alt={movie.title}
-                thumbnail
-                className="mr-2 my-2"
+            <Col key={movie.id} onClick={() => handleMovieClick(movie.id)} style={{ width: 'fit-content' }} className="headingColor">
+
+              <MovieCard
+                ID={movie.id}
+                Title={movie.title}
+                Poster={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                Rating={movie.vote_average}
+                
               />
+              
+              
             </Col>
           ))}
         </Row>
