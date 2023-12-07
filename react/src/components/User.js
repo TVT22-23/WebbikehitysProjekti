@@ -7,31 +7,59 @@ import favact3 from '../testikuvia/favact3.jpg'
 import favact4 from '../testikuvia/favact4.jpg'
 import { MovieCard } from "./SearchFilms";
 import movie_poster from "../testikuvia/movie_poster.jpg"
+import Draggable from 'react-draggable';
+import React, {useEffect, useState} from "react";
+import MovieGrid from "./movieGrid";
 
 
 //Profile/user page
+
+
 function User() {
+  const [position, setPosition] = useState({});
+  const [isDraggable, setIsDraggable] = useState(true);
+  const toggleDraggable = () => {
+    setIsDraggable((prevIsDraggable) => !prevIsDraggable); // Toggle the draggable state
+  };
 
+  useEffect(() => {
+    const savedPosition = JSON.parse(localStorage.getItem('textBoxPosition')) || {};
+    setPosition(savedPosition);
+  }, []);
 
+  const handleDrag = (e, data) => {
+    // Update position state while dragging
+    setPosition({ x: data.x, y: data.y });
+  };
+  useEffect(() => {
+    // Save position data to local storage
+    localStorage.setItem('textBoxPosition', JSON.stringify(position));
+  }, [position]);
   return (
     <Container>
       <Row>
-        <Col lg="auto">
-          <ProfPic />
+        <Col >
+          <button onClick={toggleDraggable}>Edit profile</button>
         </Col>
+      </Row>
+      <Row>
+        <Col lg="auto">
+          <ProfPic isDraggable={isDraggable} />
+        </Col>
+        <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
         <Col className="borders m-3">
           <p>this is where the description of this character goes, jorma is ismo laitela salilla</p>
         </Col>
+        </Draggable>
       </Row>
       <Row>
         <Col >
-          <MovieGrid />
-          <p>here is where the users add favourite movies, such as all uunaturhapuros and maybe an anime movie and maybe the 7th harry potter film and 8th star wars movie</p>
+          <MovieGrid isDraggable={isDraggable} id="userMovieGrid"/>
         </Col>
       </Row>
       <Row>
         <Col >
-          <FavActors />
+          <ExtraBox isDraggable={isDraggable}/>
         </Col>
       </Row>
     </Container>
@@ -39,11 +67,26 @@ function User() {
 }
 
 //profile pic to be added to User();
-function ProfPic() {
-
+function ProfPic({ isDraggable }) {
+  const [position, setPosition] = useState({});
   const { userID } = useParams();
 
+  useEffect(() => {
+    const savedPosition = JSON.parse(localStorage.getItem('profPicPosition')) || {};
+    setPosition(savedPosition);
+  }, []);
+
+  const handleDrag = (e, data) => {
+    // Update position state while dragging
+    setPosition({ x: data.x, y: data.y });
+  };
+  useEffect(() => {
+    // Save position data to local storage
+    localStorage.setItem('profPicPosition', JSON.stringify(position));
+  }, [position]);
+
   return (
+    <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
     <div>
       <div>
         <Image src={prof_pic} height={200} rounded className=" my-2" />
@@ -52,55 +95,31 @@ function ProfPic() {
         <h4 className="profpic-heading">userid {userID} Jorma's Profilepic</h4>
       </div>
     </div>
+    </Draggable>
   )
 }
 
 
 //displays movies, 4 in 1 row
-function MovieGrid() {
-  const movieID = 1;
-  const Poster = 'aAXit9k1rTBmmVbj6Zzm2nF5TDR.jpg';
-  const Title = 'Decision to Leave';
-  const Rating = 10;
+
+function ExtraBox({ isDraggable }) {
+  const [position, setPosition] = useState({});
+  useEffect(() => {
+    const savedPosition = JSON.parse(localStorage.getItem('extraBoxPosition')) || {};
+    setPosition(savedPosition);
+  }, []);
+
+  const handleDrag = (e, data) => {
+    // Update position state while dragging
+    setPosition({ x: data.x, y: data.y });
+  };
+  useEffect(() => {
+    // Save position data to local storage
+    localStorage.setItem('extraBoxPosition', JSON.stringify(position));
+  }, [position]);
 
   return (
-    <div className="borders movGrid">
-      <Container>
-        <Row>
-          <Col>
-            <MovieCard    ID={movieID}
-                            Title={Title}
-                            Poster={Poster}
-                            Rating={Rating}/>
-          </Col>
-          <Col>
-          <MovieCard    ID={movieID}
-                            Title={Title}
-                            Poster={Poster}
-                            Rating={Rating}/>
-          </Col>
-          <Col>
-          <MovieCard    ID={movieID}
-                            Title={Title}
-                            Poster={Poster}
-                            Rating={Rating}/>
-          </Col>
-          <Col>
-          <MovieCard    ID={movieID}
-                            Title={Title}
-                            Poster={Poster}
-                            Rating={Rating}/>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  )
-}
-
-//displays actors, 4 in 1 row
-function FavActors() {
-  return (
-
+    <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
     <div className="borders">
       <Container>
         <Row>
@@ -123,7 +142,7 @@ function FavActors() {
         </Row>
       </Container>
     </div>
+    </Draggable>
   )
 }
-
-export { User, MovieGrid};
+export { User };
