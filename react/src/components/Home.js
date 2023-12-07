@@ -1,22 +1,23 @@
 import { Card, CardText, Col, Container, Row } from "react-bootstrap";
-import { MovieGrid } from "./User";
+//import { MovieGrid } from "./User";
 import movie_poster from "../testikuvia/movie_poster.jpg"
 import ModalReview from "./Review-modal";
 import ModalToGroup from "./AddToGroup-modal";
 import { useState } from "react";
 import { MovieCard } from "./SearchFilms";
 import { useNavigate } from "react-router";
-//import { MovieGrid } from "./Film";
+import { Film } from "./Film";
+import { MovieGrid } from "./Film";
 
 
 //home page
 function Home() {
-  const [movie, setMovie] = useState(null);
+  const [movie] = useState(null);
 
   const navigate = useNavigate();
   const handleMovieClick = (movieID) => {
     // Use navigate to go to the Film component with the clicked movieID
-    navigate(`/home/${movieID}`);
+    navigate(`/film/${movieID}`);
   };
 
   return (
