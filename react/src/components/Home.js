@@ -1,18 +1,17 @@
 import { Card, CardText, Col, Container, Row } from "react-bootstrap";
-//import { MovieGrid } from "./User";
+import { MovieGrid } from "./User";
 import movie_poster from "../testikuvia/movie_poster.jpg"
 import ModalReview from "./Review-modal";
 import ModalToGroup from "./AddToGroup-modal";
 import { useState } from "react";
 import { MovieCard } from "./SearchFilms";
 import { useNavigate } from "react-router";
-import { Film } from "./Film";
-import { MovieGrid } from "./Film";
 
 
 //home page
 function Home() {
   const [movie] = useState(null);
+  const [films, setFilms] = useState([]);
 
   const navigate = useNavigate();
   const handleMovieClick = (movieID) => {
@@ -27,16 +26,17 @@ function Home() {
         <Row>
           <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>New</h3>
           
-            <Col key={movie.id} onClick={() => handleMovieClick(movie.id)} style={{ width: 'fit-content' }} className="headingColor">
+          {films.map(f =>
+                    <div key={f.movieID} onClick={() => handleMovieClick(f.movieID)} style={{ width: 'fit-content' }}>
+                        <MovieCard
+                            ID={f.movieID}
+                            Title={f.Title}
+                            Poster={f.Poster}
+                            Rating={f.Rating}
+                        />
+                    </div>
+                )}
 
-              <MovieCard
-                ID={movie.id}
-                Title={movie.title}
-                Poster={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                Rating={movie.vote_average}
-                
-              />
-            </Col>
         </Row>
         <Row>
           <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Most popular</h3>
