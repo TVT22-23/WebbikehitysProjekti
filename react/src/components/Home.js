@@ -1,5 +1,5 @@
 import { Card, CardText, Col, Container, Row } from "react-bootstrap";
-import { MovieGrid } from "./User";
+import MovieGrid from "./movieGrid";
 import movie_poster from "../testikuvia/movie_poster.jpg"
 import ModalReview from "./Review-modal";
 import ModalToGroup from "./AddToGroup-modal";
@@ -14,11 +14,11 @@ function Home() {
         <h1 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Tervetuloa</h1>
         <Row>
           <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>New</h3>
-          <MovieGrid />
+          <MovieGrid isDraggable={false} id="homeNew"/>
         </Row>
         <Row>
           <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Most popular</h3>
-          <MovieGrid />
+          <MovieGrid isDraggable={false} id="homePopular"/>
         </Row>
         <Row>
           <h3 className="my-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>New reviews</h3>
