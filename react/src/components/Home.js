@@ -11,60 +11,13 @@ import axios from "axios";
 
 //home page
 function Home() {
-  const [films, setFilms] = useState([]);
-
-  const navigate = useNavigate();
-  const handleMovieClick = (movieID) => {
-    // Use navigate to go to the Film component with the clicked movieID
-    navigate(`/home/${movieID}`);
-  };
-  axios.get("https://api.themoviedb.org/3/trending/movie/week?api_key=3972673c7c2bf3c70fc1b5593e956b47")
-                    .then(resp =>
-                        setFilms(resp.data.results.map(movie => ({
-                            Rating: movie.vote_average,
-                            movieID: movie.id,
-                            Title: movie.title,
-                            Poster: movie.poster_path
-                        }))))
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                    });
   return (
     <div>
       <Container>
         <h1 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Welcome</h1>
-        <Row>
-          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>New</h3>
-          
-          {films.map(movie =>
-                    <Col key={movie.movieID} onClick={() => handleMovieClick(movie.movieID)} style={{ width: 'fit-content' }}>
-                        <MovieCard
-                            movieID={movie.movieID}
-                            Title={movie.Title}
-                            Poster={`https://image.tmdb.org/t/p/original${movie.Poster}`}
-                            Rating={movie.Rating}
-                        />
-                    </Col>
-                )}
-
-        </Row>
-        <Row>
-          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Most popular</h3>
-          {films.map(movie =>
-              <Col key={movie.movieID} onClick={() => handleMovieClick(movie.movieID)} style={{ width: 'fit-content' }}>
-                <MovieCard
-                ID={movie.movieID}
-                Title={movie.Title}
-                Poster={`https://image.tmdb.org/t/p/original${movie.Poster}`}
-                Rating={movie.Rating}
-              />      
-              </Col>  
-            )}
-              </Row>
-        <Row>
+        <Movies />
           <h3 className="my-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>New reviews</h3>
           <ReviewGrid />
-        </Row>
         <Row>
           <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>News</h3>
           <NewsGrid />
@@ -76,7 +29,66 @@ function Home() {
   )
 }
 
+function Movies({ movie }){
+  const [films, setFilms] = useState([]);
 
+  const navigate = useNavigate();
+  const handleMovieClick = (movieID) => {
+    // Use navigate to go to the Film component with the clicked movieID
+    navigate(`/home/${movieID}`);
+    };      
+    // Add a guard clause to check if similarMovies is defined
+    //if (!movie || movie.length === 0) {
+    //  return;
+    //}
+    // Limit the display to only 5 similar movies
+    //const limitedMovies = movie.slice(0, 5);
+  
+
+  axios.get("https://api.themoviedb.org/3/trending/movie/week?api_key=3972673c7c2bf3c70fc1b5593e956b47")
+                    .then(resp =>
+                        setFilms(resp.data.results.map(movie => ({
+                            Rating: movie.vote_average,
+                            movieID: movie.id,
+                            Title: movie.title,
+                            Poster: movie.poster_path
+                        }))))
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+  return(
+    <div>
+      <Container>
+        <Row>
+          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>New</h3>
+          {films.map(movie =>
+            <Col key={movie.movieID} onClick={() => handleMovieClick(movie.movieID)} style={{ width: 'fit-content' }}>
+              <MovieCard
+                movieID={movie.movieID}
+                Title={movie.Title}
+                Poster={`https://image.tmdb.org/t/p/original${movie.Poster}`}
+                Rating={movie.Rating}
+              />
+            </Col>
+          )}
+        </Row>
+        <Row>
+          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Most popular</h3>
+          {films.map(movie =>
+            <Col key={movie.movieID} onClick={() => handleMovieClick(movie.movieID)} style={{ width: 'fit-content' }}>
+              <MovieCard
+                ID={movie.movieID}
+                Title={movie.Title}
+                Poster={`https://image.tmdb.org/t/p/original${movie.Poster}`}
+                Rating={movie.Rating}
+              />      
+            </Col>  
+          )}
+        </Row>
+      </Container>
+    </div>
+  )
+}
 
 
 //review grid, displays reviews
