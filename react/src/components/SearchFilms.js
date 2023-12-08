@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Row, Image, Dropdown, Col, Pagination } from "react-bootstrap";
+import { Row, Image, Dropdown, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function SearchFilms() {
