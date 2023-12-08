@@ -10,6 +10,7 @@ import movie_poster from "../testikuvia/movie_poster.jpg"
 import Draggable from 'react-draggable';
 import React, {useEffect, useState} from "react";
 import MovieGrid from "./movieGrid";
+import { getArticle } from "../finnkino";
 
 
 //Profile/user page
@@ -17,7 +18,8 @@ import MovieGrid from "./movieGrid";
 
 function User() {
   const [position, setPosition] = useState({});
-  const [isDraggable, setIsDraggable] = useState(true);
+  const [isDraggable, setIsDraggable] = useState(false);
+  const [newsData, setNewsData] = useState([]);
   const toggleDraggable = () => {
     setIsDraggable((prevIsDraggable) => !prevIsDraggable); // Toggle the draggable state
   };
@@ -25,10 +27,16 @@ function User() {
   useEffect(() => {
     const savedPosition = JSON.parse(localStorage.getItem('textBoxPosition')) || {};
     setPosition(savedPosition);
-  }, []);
+    getArticle("https://www.finnkino.fi/xml/News")
+    .then((data) => {
+      console.log('Fetched News Data:', data);
+      setNewsData(data);
+    })
+    .catch((error) => console.error("Error fetching news:", error));
+}, []);
+
 
   const handleDrag = (e, data) => {
-    // Update position state while dragging
     setPosition({ x: data.x, y: data.y });
   };
   useEffect(() => {
@@ -59,7 +67,7 @@ function User() {
       </Row>
       <Row>
         <Col >
-          <ExtraBox isDraggable={isDraggable}/>
+          <ExtraBox ExtraBox isDraggable={isDraggable} newsData={newsData} />
         </Col>
       </Row>
     </Container>
@@ -102,10 +110,10 @@ function ProfPic({ isDraggable }) {
 
 //displays movies, 4 in 1 row
 
-function ExtraBox({ isDraggable }) {
+function ExtraBox({ isDraggable, newsData }) {
   const [position, setPosition] = useState({});
   useEffect(() => {
-    const savedPosition = JSON.parse(localStorage.getItem('extraBoxPosition')) || {};
+    const savedPosition = JSON.parse(localStorage.getItem("extraBoxPosition")) || {};
     setPosition(savedPosition);
   }, []);
 
@@ -113,36 +121,45 @@ function ExtraBox({ isDraggable }) {
     // Update position state while dragging
     setPosition({ x: data.x, y: data.y });
   };
+
   useEffect(() => {
     // Save position data to local storage
-    localStorage.setItem('extraBoxPosition', JSON.stringify(position));
+    localStorage.setItem("extraBoxPosition", JSON.stringify(position));
   }, [position]);
+
+  // Show only the 4 newest news articles
+  const latestNews = newsData.slice(0, 4);
+
+  // Handle image click
+  const handleImageClick = (articleURL) => {
+    // Open the third-party URL in a new tab
+    window.open(articleURL, '_blank');
+  };
 
   return (
     <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
-    <div className="borders">
-      <Container>
-        <Row>
-          <Col>
-            movie1
-            <Image src={favact1} height={114} alt="movie_poster" thumbnail className="my-2" />
-          </Col>
-          <Col>
-            movie2
-            <Image src={favact2} height={114} alt="movie_poster" thumbnail className="my-2" />
-          </Col>
-          <Col>
-            movie3
-            <Image src={favact3} height={114} alt="movie_poster" thumbnail className="my-2" />
-          </Col>
-          <Col>
-            movie4
-            <Image src={favact4} height={114} alt="movie_poster" thumbnail className="my-2" />
-          </Col>
-        </Row>
-      </Container>
-    </div>
+      <div className="borders">
+        <Container>
+          <Row>
+            {latestNews.map((newsItem, index) => (
+              <Col key={index}>
+                <Image
+                  src={newsItem.imageURL}
+                  alt="News Image"
+                  thumbnail
+                  className="my-2"
+                  onClick={() => handleImageClick(newsItem.articleUrl)}
+                  style={{ cursor: "pointer" }}
+                />
+                <h5>{newsItem.title}</h5>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </div>
     </Draggable>
-  )
+  );
 }
+
+
 export { User };
