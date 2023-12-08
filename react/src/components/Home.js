@@ -1,5 +1,5 @@
 import { Card, CardText, Col, Container, Row } from "react-bootstrap";
-import { MovieGrid } from "./User";
+import MovieGrid from "./movieGrid";
 import movie_poster from "../testikuvia/movie_poster.jpg"
 import ModalReview from "./Review-modal";
 import ModalToGroup from "./AddToGroup-modal";
