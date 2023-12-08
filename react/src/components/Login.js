@@ -10,8 +10,8 @@ function Login() {
 
 
     return (
-        
-        <div className="link-style">
+
+        <div className="link-style login-page">
             {jwtToken.value.length === 0 ? <LoginForm /> :
                 <button onClick={() => jwtToken.value = ''}>Logout</button>}
         </div>
@@ -22,25 +22,27 @@ function Login() {
 function LoginForm() {
     const [user_name, setUser_name] = useState('');
     const [password, setPassword] = useState('');
-    
+
     function login() {
         //send user_name and password as formdata
-        const formData = new FormData();
-        formData.append('user_name', user_name);
-        formData.append('password', password);
-        
-        axios.post('/account/login', formData)
-        .then(resp => jwtToken.value = resp.data.jwtToken)
-        .catch(error => console.log(error.response.data));
+        const loginData = new FormData();
+        loginData.append('user_name', user_name);
+        loginData.append('password', password);
+
+        axios.post('/account/login', loginData)
+            .then(resp => jwtToken.value = resp.data.jwtToken)
+            .catch(error => console.log(error.response));
     }
     return (
-        <div>
-                <div className="link-style login-page">
-                    <input onChange={e => setUser_name(e.target.value)}></input>
-                    <input onChange={e => setPassword(e.target.value)}></input>
-                    <button onClick={login} >Login</button>
-                </div>
-            
+
+        <div className="login-page">
+            <div className="link-style login-inputs">
+                <h2 style={{ textAlign: 'center', color: '#CA3E47', margin: '2rem 1rem 1rem 1rem' }}>enter username and password</h2>
+                <input onChange={e => setUser_name(e.target.value)} placeholder="jyyseri"></input>
+                <input type="password" onChange={e => setPassword(e.target.value)} placeholder="passu"></input>
+                <button onClick={login}>Login</button>
+            </div>
+
         </div>
     );
 }

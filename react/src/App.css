@@ -325,13 +325,13 @@ textarea {
   --bs-modal-footer-border-color: var(--primary-color);
 }
 
-.movGrid{
+.movGrid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.movie-card{
+.movie-card {
   width: 200px;
   margin: 1rem auto 1rem;
   border-radius: 3px;
@@ -341,7 +341,7 @@ textarea {
   overflow: hidden;
 }
 
-.movie-card-body{
+.movie-card-body {
   position: absolute;
   left: 0;
   right: 0;
@@ -359,17 +359,17 @@ textarea {
   transition: transform .5s;
 }
 
-.movie-card-title{
+.movie-card-title {
   font: 20px Tahoma;
   margin-left: auto;
   margin-right: auto;
 }
 
-.movie-card img{
+.movie-card img {
   width: 100%;
 }
 
-.movie-card span{
+.movie-card span {
   width: fit-content;
   background-color: var(--third-color);
   padding: 0.25rem 0.5rem;
@@ -379,30 +379,33 @@ textarea {
   font-size: small;
 }
 
-.movie-card span.green{
+.movie-card span.green {
   color: rgb(0, 163, 0);
 }
 
-.movie-card span.lightgreen{
+.movie-card span.lightgreen {
   color: lightgreen;
 }
-.movie-card span.yellow{
+
+.movie-card span.yellow {
   color: rgb(211, 255, 124);
 }
-.movie-card span.orange{
+
+.movie-card span.orange {
   color: orange;
 }
-.movie-card span.red{
+
+.movie-card span.red {
   color: red;
 }
 
 
-.movie-card:hover .movie-card-body{
+.movie-card:hover .movie-card-body {
   transform: translateY(0);
 
 }
 
-.addToGroup{
+.addToGroup {
   color: #ffffff;
   margin: 10px;
   width: 100px;
@@ -413,7 +416,7 @@ textarea {
   border-style: solid;
 }
 
-.groupAdd{
+.groupAdd {
   text-align: center;
   font-size: 20px;
   width: auto;
@@ -422,7 +425,7 @@ textarea {
   float: right;
   border-radius: 10px;
   border-color: #CA3E47;
-  background-color:#313131;
+  background-color: #313131;
   color: #CA3E47;
   border-style: solid;
   position: absolute;
@@ -430,7 +433,7 @@ textarea {
   right: 10px;
 }
 
-#tags{
+#tags {
   width: 80%;
   display: flex;
   flex-wrap: wrap;
@@ -439,7 +442,7 @@ textarea {
   margin: 10px auto;
 }
 
-.tag{
+.tag {
   font: 16px Tahoma;
   color: var(--fourth-color);
   padding: 5px 8px;
@@ -452,59 +455,63 @@ textarea {
   transition: all 0.3s ease-in-out;
 }
 
-.tag.highlighted{
+.tag.highlighted {
   box-shadow: inset 2px 2px rgba(0, 0, 0, 0.541);
 }
 
 
-.tag:hover{
+.tag:hover {
   background-color: var(--secondary-color);
 }
 
-.tag:active{
+.tag:active {
   box-shadow: var(--secondary-color);
 }
 
-.btn-primary{
-    margin-top: 3rem;
-    width: fit-content;
-    display: block;
-    color: #CA3E47;
-    background-color: #313131;
-    text-align: center;
-    padding: 10px 15px;
-    font-size: 22px;
-    text-decoration: none;
-    box-shadow: 2px 3px 4px #000000;
-    border: 1px solid #414141;
-    border-radius: 10px;
+.btn-primary {
+  margin-top: 3rem;
+  width: fit-content;
+  display: block;
+  color: #CA3E47;
+  background-color: #313131;
+  text-align: center;
+  padding: 10px 15px;
+  font-size: 22px;
+  text-decoration: none;
+  box-shadow: 2px 3px 4px #000000;
+  border: 1px solid #414141;
+  border-radius: 10px;
 }
 
-.btn:hover{
+.btn:hover {
   color: var(--fourth-color);
   background-color: var(--secondary-color);
   border-color: var(--fourth-color);
 }
 
-.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+.btn-check:checked+.btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check)+.btn:active {
   color: var(--fourth-color);
   background-color: var(--secondary-color);
   border-color: var(--fourth-color);
 }
 
-.page-selection{
+.page-selection {
   display: flex;
   justify-content: center;
   user-select: none;
 }
 
-.page-selection-hidden{
+.page-selection-hidden {
   display: flex;
   justify-content: center;
   visibility: hidden;
 }
 
-.select-page{
+.select-page {
   margin: 3rem 1rem 0rem 1rem;
   width: 100px;
   display: block;
@@ -520,7 +527,7 @@ textarea {
   cursor: pointer;
 }
 
-.current-page{
+.current-page {
   margin: 3rem 1rem 0rem 1rem;
   width: 50px;
   display: block;
@@ -534,11 +541,11 @@ textarea {
   border-radius: 10px;
 }
 
-.select-page:hover{
+.select-page:hover {
   background-color: var(--secondary-color);
 }
 
-.select-page-disabled{
+.select-page-disabled {
   cursor: pointer;
   pointer-events: none;
   margin: 3rem 1rem 0rem 1rem;
@@ -555,3 +562,16 @@ textarea {
   border-radius: 10px;
 }
 
+
+.login-page {
+  display: flex;
+  justify-content: center;
+}
+
+.login-inputs input{
+  margin: 0rem 1rem 1rem 0rem;
+  padding: 2px;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+}
