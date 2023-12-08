@@ -562,7 +562,6 @@ textarea {
   border-radius: 10px;
 }
 
-
 .login-page {
   display: flex;
   justify-content: center;
@@ -574,4 +573,15 @@ textarea {
   border: none;
   border-radius: 3px;
   outline: none;
+}
+
+.create-account-link{
+  margin: auto;
+  color: #2b2b2b;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.create-account-link:hover{
+  color: #1b1b1b;
 }
