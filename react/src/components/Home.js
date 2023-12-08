@@ -3,44 +3,22 @@ import { MovieGrid } from "./User";
 import movie_poster from "../testikuvia/movie_poster.jpg"
 import ModalReview from "./Review-modal";
 import ModalToGroup from "./AddToGroup-modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MovieCard } from "./SearchFilms";
 import { useNavigate } from "react-router";
+import axios from "axios";
+
 
 
 //home page
 function Home() {
-  const [movie] = useState(null);
-  const [films, setFilms] = useState([]);
-
-  const navigate = useNavigate();
-  const handleMovieClick = (movieID) => {
-    // Use navigate to go to the Film component with the clicked movieID
-    navigate(`/film/${movieID}`);
-  };
 
   return (
     <div>
       <Container>
         <h1 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Welcome</h1>
         <Row>
-          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>New</h3>
-          
-          {films.map(f =>
-                    <div key={f.movieID} onClick={() => handleMovieClick(f.movieID)} style={{ width: 'fit-content' }}>
-                        <MovieCard
-                            ID={f.movieID}
-                            Title={f.Title}
-                            Poster={f.Poster}
-                            Rating={f.Rating}
-                        />
-                    </div>
-                )}
-
-        </Row>
-        <Row>
-          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Most popular</h3>
-          <MovieGrid />
+          <Movies />
         </Row>
         <Row>
           <h3 className="my-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>New reviews</h3>
@@ -58,7 +36,68 @@ function Home() {
 }
 
 
+function Movies({movie}){
+  const [films, setFilms] = useState([]);
 
+  const navigate = useNavigate();
+  const handleMovieClick = (movieID) => {
+    // Use navigate to go to the Film component with the clicked movieID
+    navigate(`/film/${movieID}`);
+  };
+   // Add a guard clause to check if cutMovies is defined
+   //if (!movie || movie.length === 0) {
+  //  return;
+  //}
+  //const limitedMovies = movie.slice(0, 5);
+
+  axios.get("https://api.themoviedb.org/3/trending/movie/week?api_key=3972673c7c2bf3c70fc1b5593e956b47")
+                    .then(resp =>
+                        setFilms(resp.data.results.map(movie => ({
+                            Rating: movie.vote_average,
+                            movieID: movie.id,
+                            Title: movie.title,
+                            Poster: movie.poster_path
+                        }))))
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                    });
+
+  return(
+    <div>
+      <Container>
+        <Row>          
+          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>New</h3>
+            {films.map((movie) => (
+            //{films.map(movie =>
+              <Col key={movie.movieID} onClick={() => handleMovieClick(movie.movieID)} style={{ width: 'fit-content' }}>
+                <MovieCard
+                  movieID={movie.movieID}
+                  Title={movie.Title}
+                  Poster={`https://image.tmdb.org/t/p/original${movie.Poster}`}
+                  Rating={movie.Rating}
+                />
+              </Col>
+              //)}
+            ))}
+            
+        </Row>
+        <Row>
+          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Most popular</h3>
+            {films.map(movie =>
+              <Col key={movie.movieID} onClick={() => handleMovieClick(movie.movieID)} style={{ width: 'fit-content' }}>
+                <MovieCard
+                  ID={movie.movieID}
+                  Title={movie.Title}
+                  Poster={`https://image.tmdb.org/t/p/original${movie.Poster}`}
+                  Rating={movie.Rating}
+                />      
+              </Col>  
+            )}
+          </Row>
+      </Container>
+    </div>
+  )
+}
 
 //review grid, displays reviews
 function ReviewGrid() {
@@ -161,7 +200,7 @@ function NewsGrid() {
             <Card.Text>
               Summary of the news.
             </Card.Text>            
-            <button class="groupAdd" style={{padding:'5px', width:'fit-content'}} onClick={() => handleShow(1)}>Add to group</button>
+            <button className="groupAdd" style={{padding:'5px', width:'fit-content'}} onClick={() => handleShow(1)}>Add to group</button>
             <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
             <Card.Link href="#" className="position-absolute bottom-0 start-0 m-2 ">News Link</Card.Link>
               </Card.Body>
@@ -174,7 +213,7 @@ function NewsGrid() {
             <Card.Text>
               This summary is longer and so it will take more space on the card. And so I will write the lorem ipsum dontes rememberum mucheus elsius abutem lorem ipsum.
             </Card.Text>            
-            <button class="groupAdd" onClick={() => handleShow(1)}>Add to group</button>
+            <button className="groupAdd" onClick={() => handleShow(1)}>Add to group</button>
             <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
             <Card.Link href="#" className="position-absolute bottom-0 start-0 m-2">News Link</Card.Link>
           </Card.Body>

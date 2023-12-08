@@ -262,16 +262,12 @@ function MovieGrid({ similarMovies }) {
         <Row>
           {limitedSimilarMovies.map((movie) => (
             <Col key={movie.id} onClick={() => handleMovieClick(movie.id)} style={{ width: 'fit-content' }} className="headingColor">
-
               <MovieCard
                 ID={movie.id}
                 Title={movie.title}
                 Poster={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
                 Rating={movie.vote_average}
-                
               />
-              
-              
             </Col>
           ))}
         </Row>
