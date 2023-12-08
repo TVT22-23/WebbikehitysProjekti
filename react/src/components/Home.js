@@ -3,7 +3,7 @@ import MovieGrid from "./movieGrid";
 import movie_poster from "../testikuvia/movie_poster.jpg"
 import ModalReview from "./Review-modal";
 import ModalToGroup from "./AddToGroup-modal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MovieCard } from "./SearchFilms";
 import { useNavigate } from "react-router";
 import axios from "axios";
