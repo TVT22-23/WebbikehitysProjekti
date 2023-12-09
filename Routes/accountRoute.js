@@ -36,8 +36,14 @@ router.post('/login', upload.none(), async (req, res) => {
 
     if (pwHash) {
         const isCorrect = await bcrypt.compare(password, pwHash);
+        const user = await getUserDetails(user_name);
         if (isCorrect) {
             const token = jwt.sign({user_name: user_name}, '' + process.env.JWT_SECRET_KEY, { expiresIn: '1800s' });
+            req.session.user = {
+                user_name: user.user_name,
+                account_id: user.account_id,
+            };
+            console.log(req.session.user); //Delete this later
             res.status(200).json({jwtToken: token});
         } else {
             res.status(401).json({error: 'Invalid password'});
@@ -46,6 +52,17 @@ router.post('/login', upload.none(), async (req, res) => {
         res.status(401).json({error: 'Account not found'});
     }
 });
+async function getUserDetails(user_name) {
+    const users = await getAccount(user_name);
+    if (users.length > 0) {
+        return {
+            user_name: users[0].user_name,
+            account_id: users[0].account_id,
+        };
+    } else {
+        return null;
+    }
+}
 
 router.delete('/delete/:user_name', upload.none() , async (req, res) => {
     try {

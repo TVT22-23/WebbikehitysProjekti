@@ -3,7 +3,7 @@ const axios = require('axios')
 
 const sql = {
     INSERT_ACCOUNT: 'INSERT INTO account (user_name, password, email) VALUES ($1, $2, $3)',
-    GET_ACCOUNT: 'SELECT user_name, email FROM account',
+    GET_ACCOUNT: 'SELECT account_id, user_name, email FROM account WHERE user_name=$1',
     GET_PASSWORD: 'SELECT password FROM account WHERE user_name=$1',
     DELETE_ACCOUNT: 'DELETE FROM account WHERE user_name=$1'
 }
@@ -24,8 +24,8 @@ async function addAccount(user_name, password, email) {
     await pgPool.query(sql.INSERT_ACCOUNT, [user_name,password,email])
 }
 
-async function getAccount(){
-    const result = await pgPool.query(sql.GET_ACCOUNT);
+async function getAccount(user_name){
+    const result = await pgPool.query(sql.GET_ACCOUNT,[user_name]);
     const rows = result.rows;
     return rows;
 }
