@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const session = require('express-session');
 //const multer = require('multer');
 //const upload = multer({dest: 'upload/'});
 const accountRoute = require('./Routes/accountRoute')
@@ -17,6 +18,14 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors());
 app.use(express.static('public'));
+
+app.use(
+  session({
+    secret: 'secret', //This needs to be changed later
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 app.use('/account', accountRoute);
 //app.use(authenticateToken);
