@@ -10,15 +10,38 @@ import prime from '../testikuvia/prime.png'
 import ModalToGroup from "./AddToGroup-modal";
 import { useNavigate } from "react-router-dom";
 import { MovieCard } from "./SearchFilms";
-
-
-
+import axios from "axios";
 
 function Film() {
   const { filmID } = useParams();
   const [movie, setMovie] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [watchProviders, setWatchProviders] =useState(null);
+  const [reviewText, setReviewText] = useState('');
+
+  const handleReviewChange = (event) => {
+    setReviewText(event.target.value);
+  };
+  const handleSaveReview = () => {
+    const reviewData = {
+      text_review: reviewText,
+      rating: 8.5,
+      recommend: null,
+      movie_id: filmID,
+      user_name: null,
+    };
+
+    // Use Axios to make a POST request
+    axios.post('/review/addReview', reviewData)
+      .then((response) => {
+        // Handle success or show a notification to the user
+        console.log('Review saved successfully:', response.data);
+      })
+      .catch((error) => {
+        // Handle error or show an error message to the user
+        console.error('Error saving review:', error);
+      });
+  };
   const getActors = (url) => {
     return fetch(url)
       .then(res => res.json())
@@ -111,7 +134,15 @@ function Film() {
         <Col>
           <FilmInfo movie={movie} />
           <div>Leave a review</div>
-          <Review />
+          <div className="review">
+        <form>
+          <textarea value={reviewText} onChange={handleReviewChange}></textarea>
+        </form>
+        <Row>
+          <SubmitButton onSaveReview={handleSaveReview} />
+          <AddToGroupButton />
+        </Row>
+      </div>
           <div>
             <h4>Where to watch</h4>
             <p className="watch">
@@ -188,13 +219,19 @@ function Review(){
   )
 }
 
-function SubmitButton(){
-  return(
+function SubmitButton({ onSaveReview }) {
+  return (
     <div>
-        <input type="button" class="button" value="save review"></input>
+      <input
+        type="button"
+        className="button"
+        value="Save Review"
+        onClick={onSaveReview}
+      />
     </div>
-  )
+  );
 }
+
 
 function AddToGroupButton(){
   const [showModal, setShowModal] = useState(false);
