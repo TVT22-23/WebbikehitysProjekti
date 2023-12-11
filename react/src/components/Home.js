@@ -85,7 +85,7 @@ function UpcomingMovies({ movie }){
   const navigate = useNavigate();
   const handleMovieClick = (movieID) => {
     // Use navigate to go to the Film component with the clicked movieID
-    navigate(`/home/${movieID}`);
+    navigate(`/Film/${movieID}`);
     };      
     // Add a guard clause to check if similarMovies is defined
     //if (!movie || movie.length === 0) {
@@ -93,7 +93,7 @@ function UpcomingMovies({ movie }){
     //}
     // Limit the display to only 5 similar movies
     //const limitedMovies = movie.slice(0, 5);
-  
+
 
   axios.get("https://api.themoviedb.org/3/movie/upcoming?api_key=3972673c7c2bf3c70fc1b5593e956b47")
                     .then(resp =>

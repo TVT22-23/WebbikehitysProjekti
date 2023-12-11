@@ -45,7 +45,6 @@ function User() {
         <Container>
           <Row>
             <Col >
-              <button onClick={toggleDraggable}>Edit profile</button>
             </Col>
           </Row>
           <Row>
@@ -66,6 +65,8 @@ function User() {
           <Row>
             <Col >
               <ExtraBox ExtraBox isDraggable={isDraggable} newsData={newsData} />
+              
+              <button class="editProfile" onClick={toggleDraggable}>edit profile</button>
             </Col>
           </Row>
         </Container>
