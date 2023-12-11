@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const multer = require('multer');
 const upload = multer({dest: 'upload/'});
-
+const jwt = require('jsonwebtoken');
 const {addGroup, getGroup, deleteGroup, changeOwner} = require('../postgre/movieGroup');
 
 router.get('/', async (req, res) => {
@@ -9,13 +9,19 @@ router.get('/', async (req, res) => {
         res.json(await getGroup());
 });
 
-router.post('/create/:group_name/:description/:owner', upload.none() , async (req, res) => {
-    const group_name = req.params.group_name;
-    const description = req.params.description;
-    const owner = req.params.owner;
-
+router.post('/create', upload.none() , async (req, res) => {
+    const { group_name, description,} = req.body;
+    console.log("Got to create group");
     try {
-        await addGroup(group_name, description, owner);
+        const authorizationHeader = req.headers.authorization;
+        const jwtToken = authorizationHeader.split(' ')[1];
+        const decodedToken = jwt.decode(jwtToken);
+
+        if (!decodedToken || !decodedToken.account_id) {
+            throw new Error('Invalid JWT token or missing user_name');
+        }
+
+        await addGroup(group_name, description, decodedToken.account_id);
         res.end();
     } catch (error) {
         console.log(error);
