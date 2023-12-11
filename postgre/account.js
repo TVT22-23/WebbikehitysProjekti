@@ -6,7 +6,8 @@ const sql = {                                                                   
     GET_ACCOUNT: 'SELECT account_id, user_name, email FROM account WHERE user_name=$1',
     GET_PASSWORD: 'SELECT password FROM account WHERE user_name=$1',
     DELETE_ACCOUNT: 'DELETE FROM account WHERE user_name=$1',
-    UPDATE_ACCOUNT: 'UPDATE account SET user_name = $1, description = $2, profile_picture = $3 WHERE account_id=$4'
+    UPDATE_ACCOUNT: 'UPDATE account SET user_name = $1, description = $2, profile_picture = $3 WHERE account_id=$4',
+    UPDATE_LAYOUT: 'UPDATE account SET layout = $1 WHERE account_id=$2'
 }
 
 //addAccount('poistoAccount', 'poistoPassword', 'poistoEmail');                                         //testing
@@ -49,4 +50,8 @@ async function updateAccount(user_name, description, profile_picture, account_id
     await pgPool.query(sql.UPDATE_ACCOUNT, [user_name, description, profile_picture, account_id]);
 }
 
-module.exports = {addAccount, getAccount, checkUser, deleteAccount, updateAccount};                     //exporting functions to be used in Route-files - included in every postgre file
+async function updateLayout(layout, account_id) {
+    await pgPool.query(sql.UPDATE_LAYOUT, [layout, account_id]);
+}
+
+module.exports = {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout};       //exporting functions to be used in Route-files - included in every postgre file

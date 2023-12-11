@@ -4,7 +4,7 @@ const upload = multer({dest: 'upload/'});
 const bcrypt = require('bcrypt');                                                           //used to hash our account informarion
 const jwt = require('jsonwebtoken');                                                        //used for login webtoken
 
-const {addAccount, getAccount, checkUser, deleteAccount, updateAccount} = require('../postgre/account');   //getting functions from postgre file - included in every route file
+const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout} = require('../postgre/account');   //getting functions from postgre file - included in every route file
 
 router.get('/', async (req, res) => {                                                       //GET-endpoint - included in every route file
 
@@ -80,5 +80,18 @@ router.post('/update', upload.none() , async (req, res) => {
         res.json({error: error.message}).status(500);
     }
 });
+
+router.post('/updateLayout', upload.none() , async (req, res) => {
+    const { layout, account_id } = req.body;
+
+    try {
+        await updateLayout(layout, account_id);
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.json({error: error.message}).status(500);
+    }
+});
+
 
 module.exports = router;
