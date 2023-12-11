@@ -3,7 +3,7 @@ const axios = require('axios')                                                  
 
 const sql = {                                                                                           //contains sql-queries for functions used in the postgre folder
     INSERT_ACCOUNT: 'INSERT INTO account (user_name, password, email) VALUES ($1, $2, $3)',             //included at the top of every postgre file
-    GET_ACCOUNT: 'SELECT account_id, user_name, email FROM account WHERE user_name=$1',
+    GET_ACCOUNT: 'SELECT account_id, email, description, layout, profile_picture FROM account WHERE user_name=$1',
     GET_PASSWORD: 'SELECT password FROM account WHERE user_name=$1',
     DELETE_ACCOUNT: 'DELETE FROM account WHERE user_name=$1',
     UPDATE_ACCOUNT: 'UPDATE account SET user_name = $1, description = $2, profile_picture = $3 WHERE account_id=$4',
