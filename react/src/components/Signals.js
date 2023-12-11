@@ -16,3 +16,4 @@ export const jwtToken = signal(getSessionToken());
 effect(() => {
     sessionStorage.setItem('token', jwtToken.value);
 });
+
