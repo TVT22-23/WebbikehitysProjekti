@@ -2,7 +2,7 @@ const router = require('express').Router();
 const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 
-const {addGroup, getGroup, deleteGroup} = require('../postgre/movieGroup');
+const {addGroup, getGroup, deleteGroup, changeOwner} = require('../postgre/movieGroup');
 
 router.get('/', async (req, res) => {
 
@@ -26,6 +26,16 @@ router.post('/create/:group_name/:description/:owner', upload.none() , async (re
 router.delete('/delete/:group_id', upload.none() , async (req, res) => {
     try {
         await deleteGroup(req.params.group_id);
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.json({error: error.message}).status(500);
+    }
+});
+
+router.post('/changeOwner/:owner/:group_id', upload.none() , async (req, res) => {
+    try {
+        await changeOwner(req.params.owner ,req.params.group_id);
         res.end();
     } catch (error) {
         console.log(error);

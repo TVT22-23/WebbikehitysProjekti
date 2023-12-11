@@ -2,23 +2,40 @@ const router = require('express').Router();
 const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 
-const {addReview, getReview} = require('../postgre/review');
+const {userData} = require('./accountRoute');
+const jwt = require('jsonwebtoken');
+const {addReview, getReview, deleteReview} = require('../postgre/review');
+
 
 router.get('/', async (req, res) => {
 
         res.json(await getReview());
 });
 
-router.post('/addReview/:text_review/:rating/:recommend/:movie_id', upload.none() , async (req, res) => {
-    const text_review = req.params.text_review;
-    const rating = req.params.rating;
-    const recommend = req.params.recommend;
-    const movie_id = req.params.movie_id;
-
-
+router.post('/addReview', upload.none(), async (req, res) => {
+    const { text_review, rating, recommend, movie_id } = req.body;
 
     try {
-        await addReview(text_review, rating, recommend, movie_id);
+        const authorizationHeader = req.headers.authorization;
+        const jwtToken = authorizationHeader.split(' ')[1];
+        const decodedToken = jwt.decode(jwtToken);
+
+        if (!decodedToken || !decodedToken.user_name) {
+            throw new Error('Invalid JWT token or missing user_name');
+        }
+
+        await addReview(text_review, rating, recommend, movie_id, decodedToken.user_name);
+        res.json({ success: true });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+router.delete('/delete/:review_id', upload.none() , async (req, res) => {
+    try {
+        await deleteReview(req.params.review_id);
         res.end();
     } catch (error) {
         console.log(error);
