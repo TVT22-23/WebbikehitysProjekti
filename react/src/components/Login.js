@@ -45,7 +45,7 @@ function LoginForm() {
         // Inputs to username and password to login. On button click run login().
         <div className="login-page">
             <div className="link-style login-inputs">
-                <h2 style={{ textAlign: 'center', color: '#CA3E47', margin: '2rem 1rem 2rem 1rem' }}>enter username and password</h2>
+                <h2 style={{ textAlign: 'center', margin: '2rem 1rem 2rem 1rem' }}>enter username and password</h2>
                 <input onChange={e => setUser_name(e.target.value)} placeholder="jyyseri"></input>
                 <input type="password" onChange={e => setPassword(e.target.value)} placeholder="passu"></input>
                 <p className="create-account-link" onClick={handleShow}> New user? Click here to create an account</p>
@@ -59,7 +59,7 @@ function LoginForm() {
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={event => {
-                        event.preventDefault()
+                        event.preventDefault();
                     }}>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Email address</Form.Label>
@@ -118,7 +118,7 @@ function Login() {
         <div className="link-style login-page">
             {jwtToken.value.length === 0 ? <LoginForm /> :
                 <div>
-                    <h2 className="my-5" style={{ color: 'var(--fourth-color)' }}>Welcome our dearly beloved </h2>
+                    <h2 className="my-5" >Welcome our dearly beloved user</h2>
                     <button onClick={() => jwtToken.value = ''}>Logout</button>
                 </div>}
         </div>

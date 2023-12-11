@@ -106,7 +106,7 @@ function SearchFilms() {
                 <Col lg={2}>
                 </Col>
                 <Col lg={4}>
-                    <h2 className="mt-3" style={{ color: '#Ca3e47' }}>Search for a movie</h2>
+                    <h2 className="mt-3">Search for a movie</h2>
                     <p className="text-muted" style={{ fontSize: '15px' }}>Search by name or by genre</p>
                     <input className="mb-2 w-75 rounded " style={{border:'none', outline:'none'}} type="search" placeholder="Search..." onChange={(e) => setSearchInput(e.target.value)} />
                 </Col>
