@@ -10,6 +10,7 @@ import prime from '../testikuvia/prime.png'
 import ModalToGroup from "./AddToGroup-modal";
 import { useNavigate } from "react-router-dom";
 import { MovieCard } from "./SearchFilms";
+import { FaStar } from 'react-icons/fa'
 import axios from "axios";
 import { jwtToken } from "./Signals";
 
@@ -120,7 +121,8 @@ function Film() {
       <Row>
         <Col>
           <Image src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="movie_poster" className="imageframe" />
-          <div className="people">
+          <Rating />
+            <div className="people">
             <div className="crew">
               <h4>Director</h4>
               <li>{movie.director}</li>
@@ -135,6 +137,7 @@ function Film() {
             </div>
           </div>
         </Col>
+          
         <Col>
           <FilmInfo movie={movie} />
           <div>Leave a review</div>
@@ -170,6 +173,35 @@ function Film() {
       </Row>
     </Container>
   );
+}
+
+function Rating() {
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
+  return(
+    <div className="">
+      {[...Array(5)].map((star, index) => {
+        const currentRating = index + 1;
+        return(
+          <label>
+            <input
+              type="radio"
+              name="rating"
+              value = {currentRating}
+              onClick={() => setRating(currentRating)}
+            />
+            <FaStar 
+              className='star' 
+              size={50}
+              color={currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+              onMouseEnter={() => setHover(currentRating)}
+              onMouseLeave={() => setHover(null)}
+            />
+          </label>
+        );
+      })}
+    </div>
+  )
 }
 
 function FilmInfo({ movie }) {

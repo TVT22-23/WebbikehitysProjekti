@@ -585,3 +585,11 @@ textarea {
 .create-account-link:hover{
   color: #1b1b1b;
 }
+
+input[type=radio]{
+  display: none;
+}
+
+.star{
+  cursor: pointer;
+}
