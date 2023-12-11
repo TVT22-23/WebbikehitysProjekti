@@ -1,6 +1,6 @@
 import { Col, Form, Row, Button } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
-import { jwtToken } from "./Signals";
+import { accountId, jwtToken } from "./Signals";
 import { NotLoggedIn } from "./User";
 import { useState } from "react";
 import axios from 'axios';
@@ -13,9 +13,7 @@ function Settings() {
             {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
             {jwtToken.value.length === 0 ? <NotLoggedIn /> :
                 <Row className="m-2">
-                    <Col className="link-style">
-                        <Link to={'usettings'} >User Settings</Link>
-                    </Col>
+                    <USettings />
                     <Col className="link-style">
                         <Link to={'gsettings'} >Group Settings</Link>
                     </Col>
@@ -33,6 +31,14 @@ function USettings() {
     const [description, setDescription] = useState('');
     const [profpic, setProfpic] = useState(null);
 
+    function handleDeleteUser() {
+        // const userNameData = new FormData()
+        // userNameData.append(account)
+        const userNameData = new FormData();
+            // .then(resp => setUser_name(resp.data.user_name))
+        axios.post('account/delete/', userNameData)
+    }
+
     function handleSettingChanges() {
         const reader = new FileReader();
         reader.onload = function (event) {
@@ -43,9 +49,9 @@ function USettings() {
             newUserSettings.append('user_name', user_name);
             newUserSettings.append('description', description);
             newUserSettings.append('profile_picture', byteArray);
-            // newUserSettings.append('account_id'), accountId;
+            newUserSettings.append('account_id', accountId);
 
-            axios.post('account/update', newUserSettings)
+            // axios.post('account/update', newUserSettings);
 
             console.log([...newUserSettings]);
         };
@@ -80,7 +86,7 @@ function USettings() {
                             type="file"
                             placeholder="profile picture"
                             autoFocus
-                            accept="image/*"
+                            accept=".jpg, .jpeg, .png"
                             onChange={e => setProfpic(e.target.files[0])}
                         />
                     </Col>
@@ -98,6 +104,7 @@ function USettings() {
                         />
                     </Form.Group>
                     <Button variant="primary" className="mt-1" onClick={handleSettingChanges}> Save Changes</Button>
+                    <Button onClick={handleDeleteUser}>Delete user</Button>
                 </Row>
             </Form>
         </div >
