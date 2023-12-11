@@ -6,9 +6,16 @@ const jwt = require('jsonwebtoken');                                            
 
 const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout} = require('../postgre/account');   //getting functions from postgre file - included in every route file
 
-router.get('/', async (req, res) => {                                                       //GET-endpoint - included in every route file
+router.get('/get', async (req, res) => {                                                       //GET-endpoint - included in every route file
+    const { user_name } = req.body;
 
-        res.json(await getAccount());
+    try {
+        res.json(await getAccount(user_name));
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.json({error: error.message}).status(500);
+    }
 });
 
 router.post('/create', upload.none() , async (req, res) => {                                //creating a new account POST-endpoint
