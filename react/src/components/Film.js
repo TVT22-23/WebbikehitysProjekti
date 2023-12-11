@@ -11,15 +11,42 @@ import { useNavigate } from "react-router-dom";
 import { MovieCard } from "./SearchFilms";
 import { jwtToken } from "./Signals";
 import { NotLoggedIn } from "./User";
-
-
-
+import { FaStar } from 'react-icons/fa'
+import axios from "axios";
 
 function Film() {
   const { filmID } = useParams();
   const [movie, setMovie] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
-  const [watchProviders, setWatchProviders] = useState(null);
+  const [watchProviders, setWatchProviders] =useState(null);
+  const [reviewText, setReviewText] = useState('');
+
+  const handleReviewChange = (event) => {
+    setReviewText(event.target.value);
+  };
+  const handleSaveReview = () => {
+    console.log("Value: " , jwtToken.value);
+    const reviewData = {
+      text_review: reviewText,
+      rating: 8.5,
+      recommend: null,
+      movie_id: filmID,
+    };
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+  };
+    
+    axios.post('/review/addReview', reviewData,{ headers })
+      .then((response) => {
+        
+        console.log('Review saved successfully:', response.data);
+      })
+      .catch((error) => {
+        
+        console.error('Error saving review:', error);
+      });
+  };
+  
   const getActors = (url) => {
     return fetch(url)
       .then(res => res.json())
@@ -94,7 +121,8 @@ function Film() {
       <Row>
         <Col>
           <Image src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="movie_poster" className="imageframe" />
-          <div className="people">
+          <Rating />
+            <div className="people">
             <div className="crew">
               <h4>Director</h4>
               <li>{movie.director}</li>
@@ -109,10 +137,19 @@ function Film() {
             </div>
           </div>
         </Col>
+          
         <Col>
           <FilmInfo movie={movie} />
           <div>Leave a review</div>
-          <Review />
+          <div className="review">
+        <form>
+          <textarea value={reviewText} onChange={handleReviewChange}></textarea>
+        </form>
+        <Row>
+          <SubmitButton onSaveReview={handleSaveReview} />
+          <AddToGroupButton />
+        </Row>
+      </div>
           <div>
             <h4>Where to watch</h4>
             <p className="watch">
@@ -136,6 +173,35 @@ function Film() {
       </Row>
     </Container>
   );
+}
+
+function Rating() {
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
+  return(
+    <div className="">
+      {[...Array(5)].map((star, index) => {
+        const currentRating = index + 1;
+        return(
+          <label>
+            <input
+              type="radio"
+              name="rating"
+              value = {currentRating}
+              onClick={() => setRating(currentRating)}
+            />
+            <FaStar 
+              className='star' 
+              size={50}
+              color={currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+              onMouseEnter={() => setHover(currentRating)}
+              onMouseLeave={() => setHover(null)}
+            />
+          </label>
+        );
+      })}
+    </div>
+  )
 }
 
 function FilmInfo({ movie }) {
@@ -194,15 +260,22 @@ function Review() {
   )
 }
 
-function SubmitButton() {
+
+function SubmitButton({ onSaveReview }) {
   return (
     <div>
-      <input type="button" class="button" value="save review"></input>
+      <input
+        type="button"
+        className="button"
+        value="Save Review"
+        onClick={onSaveReview}
+      />
     </div>
-  )
+  );
 }
 
-function AddToGroupButton() {
+
+function AddToGroupButton(){
   const [showModal, setShowModal] = useState(false);
   const [reviewID, setReviewID] = useState(null);
 

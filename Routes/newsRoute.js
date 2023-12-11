@@ -2,7 +2,7 @@ const router = require('express').Router();
 const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 
-const {addNews, getNews} = require('../postgre/news');
+const {addNews, getNews, deleteNews} = require('../postgre/news');
 
 router.get('/', async (req, res) => {
 
@@ -19,7 +19,17 @@ router.post('/create/:title/:publishdate/:article/:account_id/:group_id', upload
 
 
     try {
-        await addReview(title, publishdate, article, account_id, group_id);
+        await addNews(title, publishdate, article, account_id, group_id);
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.json({error: error.message}).status(500);
+    }
+});
+
+router.delete('/delete/:news_id', upload.none() , async (req, res) => {
+    try {
+        await deleteNews(req.params.news_id);
         res.end();
     } catch (error) {
         console.log(error);
