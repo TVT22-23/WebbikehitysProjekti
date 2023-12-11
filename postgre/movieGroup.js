@@ -7,11 +7,11 @@ const sql = {
     CHANGE_OWNER: 'UPDATE moviegroup SET owner = $1 WHERE group_id=$2'
 }
 
-async function addGroup(group_name, description, owner) {
+async function addGroup(group_name, description, owner) {                           //adding a group to the moviegroup-table in database
     await pgPool.query(sql.INSERT_GROUP, [group_name, description, owner])
 }
 
-//addGroup('testGroup', 'testDescription', '1');
+//addGroup('testGroup', 'testDescription', '1');                                    //testing
 //getGroup();
 //changeOwner(75, 3);
 
@@ -25,7 +25,7 @@ async function deleteGroup(group_id) {
     await pgPool.query(sql.DELETE_GROUP, [group_id]);
 }
 
-async function changeOwner(owner, group_id) {
+async function changeOwner(owner, group_id) {                                       //changing the group owner in moviegroup table based on group_id
     await pgPool.query(sql.CHANGE_OWNER, [owner, group_id]);
 }
 

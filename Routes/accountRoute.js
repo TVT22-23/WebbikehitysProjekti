@@ -1,26 +1,26 @@
 const router = require('express').Router();
 const multer = require('multer');
 const upload = multer({dest: 'upload/'});
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');                                                           //used to hash our account informarion
+const jwt = require('jsonwebtoken');                                                        //used for login webtoken
 
-const {addAccount, getAccount, checkUser, deleteAccount} = require('../postgre/account');
+const {addAccount, getAccount, checkUser, deleteAccount} = require('../postgre/account');   //getting functions from postgre file - included in every route file
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res) => {                                                       //GET-endpoint - included in every route file
 
         res.json(await getAccount());
 });
 
-router.post('/create', upload.none() , async (req, res) => {
-    const user_name = req.body.user_name;
-    let password = req.body.password;
-    const email = req.body.email;
+router.post('/create', upload.none() , async (req, res) => {                                //creating a new account POST-endpoint
+    const user_name = req.body.user_name;                                                   //.
+    let password = req.body.password;                                                       //.
+    const email = req.body.email;                                                           //.data used for the addAccount function
 
-    password = await bcrypt.hash(password, 10);
+    password = await bcrypt.hash(password, 10);                                             //hashing the password with bcrypt before passing it to the database
 
 
     try {
-        await addAccount(user_name, password, email);
+        await addAccount(user_name, password, email);                                       //sending the data with postgre function, commonly used in our endpoints
         res.end();
     } catch (error) {
         console.log(error);
@@ -28,11 +28,11 @@ router.post('/create', upload.none() , async (req, res) => {
     }
 });
 
-router.post('/login', upload.none(), async (req, res) => {
-    const user_name = req.body.user_name;
-    let password = req.body.password;
+router.post('/login', upload.none(), async (req, res) => {                                  //login POST-endpoint
+    const user_name = req.body.user_name;                                                   //.
+    let password = req.body.password;                                                       //.login data
 
-    const pwHash = await checkUser(user_name);
+    const pwHash = await checkUser(user_name);                                              //getting the hashed password from database
 
     if (pwHash) {
         const isCorrect = await bcrypt.compare(password, pwHash);
@@ -41,10 +41,10 @@ router.post('/login', upload.none(), async (req, res) => {
             const token = jwt.sign({user_name: user_name, account_id: user.account_id }, '' + process.env.JWT_SECRET_KEY, { expiresIn: '1800s' });
             console.log(token);
             res.status(200).json({jwtToken: token});
-        } else {
+        } else {                                                                            //incorrect password
             res.status(401).json({error: 'Invalid password'});
         }
-    } else {
+    } else {                                                                                //incorrect user
         res.status(401).json({error: 'Account not found'});
     }
 });

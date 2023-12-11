@@ -5,18 +5,15 @@ const sql = {
     GET_MEMBERREQUEST: 'SELECT * FROM memberrequest JOIN moviegroup ON group_groupid = moviegroup.group_id WHERE group_id = ($1)',
     DELETE_MEMBERREQUEST: 'DELETE FROM memberrequest WHERE request_id=$1',
     ACCEPT_MEMBERREQUEST: 'INSERT INTO member(account_accountid, group_groupid) SELECT account_accountid, group_groupid FROM memberrequest WHERE request_id=$1'
-    
-    // tänne accept ja rejectit vielä!!!
-
 }
 
-//addMemberRequest('', '', '');
+//addMemberRequest('', '', '');                                                                     //testing
 //getMemberRequest();
 //deleteMemberRequest('3');
 //handleMemberRequest('6', 'rejct');
 
 
-async function addMemberRequest(account_accountid, group_groupid, member) {
+async function addMemberRequest(account_accountid, group_groupid, member) {                         //adding a request to the memberrequest-table in database
     await pgPool.query(sql.INSERT_MEMBERREQUEST, [account_accountid,group_groupid,member])
 }
 
@@ -30,8 +27,8 @@ async function deleteMemberRequest(request_id) {
     await pgPool.query(sql.DELETE_MEMBERREQUEST, [request_id]);
 }
 
-async function handleMemberRequest(request_id, text) {
-    if (text === 'accept') {
+async function handleMemberRequest(request_id, text) {                                              //accept/reject function to handle member requests
+    if (text === 'accept') {                                                                        //accept adds memberrequest to member-table and deletes the request, reject just deletes request
         await pgPool.query(sql.ACCEPT_MEMBERREQUEST, [request_id]);
         deleteMemberRequest(request_id);
     } else if (text === 'reject') {
