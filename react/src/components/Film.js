@@ -178,7 +178,7 @@ function Film() {
 function Rating() {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
-  return(
+   return(
     <div className="">
       {[...Array(5)].map((star, index) => {
         const currentRating = index + 1;

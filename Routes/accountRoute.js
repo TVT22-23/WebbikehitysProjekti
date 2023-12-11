@@ -39,7 +39,6 @@ router.post('/login', upload.none(), async (req, res) => {
         const user = await getUserDetails(user_name);
         if (isCorrect) {
             const token = jwt.sign({user_name: user_name, account_id: user.account_id }, '' + process.env.JWT_SECRET_KEY, { expiresIn: '1800s' });
-            console.log(token);
             res.status(200).json({jwtToken: token});
         } else {
             res.status(401).json({error: 'Invalid password'});

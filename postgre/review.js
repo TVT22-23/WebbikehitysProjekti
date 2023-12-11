@@ -3,15 +3,14 @@ const { pgPool } = require('./connection');
 const sql = {
 
     INSERT_REVIEW: 'INSERT INTO review (text_review, rating, recommend, movie_id, user_name) VALUES ($1, $2, $3, $4, $5)',
-    GET_REVIEW: 'SELECT * FROM review'
+    GET_REVIEW: 'SELECT * FROM review',
+    GET_REVIEWS_BY_ID: 'SELECT * FROM review WHERE movie_id = $1',
     DELETE_REVIEW: 'DELETE FROM review WHERE review_id=$1'
 
 }
 
 //addReview('katsomattaHuono', '3', 'false');
 getReview();
-
-
 
 async function addReview(text_review, rating, recommend, movie_id, user_name) {
     await pgPool.query(sql.INSERT_REVIEW, [text_review, rating, recommend, movie_id, user_name])
@@ -23,8 +22,14 @@ async function getReview(){
     return rows;
 }
 
+async function getReviewsByMovieId(movie_id) {
+    const result = await pgPool.query(sql.GET_REVIEWS_BY_MOVIE_ID, [movie_id]);
+    const rows = result.rows;
+    return rows;
+}
+
 async function deleteReview(review_id) {
     await pgPool.query(sql.DELETE_REVIEW, [review_id]);
 }
 
-module.exports = {addReview, getReview, deleteReview};
+module.exports = {addReview, getReview, deleteReview, getReviewsByMovieId};

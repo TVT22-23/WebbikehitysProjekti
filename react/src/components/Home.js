@@ -84,7 +84,7 @@ function UpcomingMovies({ movie }){
   const navigate = useNavigate();
   const handleMovieClick = (movieID) => {
     // Use navigate to go to the Film component with the clicked movieID
-    navigate(`/home/${movieID}`);
+    navigate(`/Film/${movieID}`);
     };      
     // Add a guard clause to check if similarMovies is defined
     //if (!movie || movie.length === 0) {
