@@ -6,10 +6,10 @@ const sql = {
     DELETE_MEMBER: 'DELETE FROM member WHERE member_id=$1'
 }
 
-//addMember('1', '1');
-getMember();
+//addMember('1', '1');                                                                      //testing
+//getMember();
 
-async function addMember(account_accountid, group_groupid) {
+async function addMember(account_accountid, group_groupid) {                                //adding a member to the member-table in database
     await pgPool.query(sql.INSERT_MEMBER, [account_accountid, group_groupid])
 }
 
