@@ -1,7 +1,6 @@
-import { Link, Outlet, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Col, Container, Image, Row, Form } from 'react-bootstrap';
-import movie_poster from '../testikuvia/movie_poster.jpg';
 import disney from '../testikuvia/disney.png'
 import hbo from '../testikuvia/hbo.png'
 import hulu from '../testikuvia/hulu.png'
@@ -10,6 +9,8 @@ import prime from '../testikuvia/prime.png'
 import ModalToGroup from "./AddToGroup-modal";
 import { useNavigate } from "react-router-dom";
 import { MovieCard } from "./SearchFilms";
+import { jwtToken } from "./Signals";
+import { NotLoggedIn } from "./User";
 
 
 
@@ -18,7 +19,7 @@ function Film() {
   const { filmID } = useParams();
   const [movie, setMovie] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
-  const [watchProviders, setWatchProviders] =useState(null);
+  const [watchProviders, setWatchProviders] = useState(null);
   const getActors = (url) => {
     return fetch(url)
       .then(res => res.json())
@@ -36,18 +37,18 @@ function Film() {
       });
   };
   const getWatchProviders = (url) => {
-    fetch(url).then(res=>res.json()).then(data=> {
-      if ("FI" in data.results){
-          const fiData = data.results.FI;
-          setWatchProviders(fiData.flatrate);
+    fetch(url).then(res => res.json()).then(data => {
+      if ("FI" in data.results) {
+        const fiData = data.results.FI;
+        setWatchProviders(fiData.flatrate);
       }
-      else{
-          console.log("no data awailable");
+      else {
+        console.log("no data awailable");
       }
-  })
-  .catch(error => {
-    console.error("Error fetching providers:", error);
-  });
+    })
+      .catch(error => {
+        console.error("Error fetching providers:", error);
+      });
 
   }
   useEffect(() => {
@@ -58,29 +59,29 @@ function Film() {
         setMovie(data);
         getWatchProviders(`https://api.themoviedb.org/3/movie/${filmID}/watch/providers?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
         getActors(`https://api.themoviedb.org/3/movie/${filmID}/credits?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
-        .then(({ actors, director }) => {
-          setMovie(prevState => ({
-            ...prevState,
-            actors,
-            director
-          }));
-        });
+          .then(({ actors, director }) => {
+            setMovie(prevState => ({
+              ...prevState,
+              actors,
+              director
+            }));
+          });
       })
       .catch((error) => {
         console.error("Error fetching movie details:", error);
       });
-    
-      fetch(`https://api.themoviedb.org/3/movie/${filmID}/similar?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
+
+    fetch(`https://api.themoviedb.org/3/movie/${filmID}/similar?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
       .then((response) => response.json())
       .then((data) => {
         // Update state with the fetched similar movies
         setSimilarMovies(data.results);
-        
+
       })
       .catch((error) => {
         console.error("Error fetching similar movies:", error);
       });
-      
+
   }, [filmID]);
 
   if (!movie) {
@@ -99,12 +100,12 @@ function Film() {
               <li>{movie.director}</li>
             </div>
             <div className="cast">
-            <h4>Cast</h4>
-          <ul>
-            {movie.actors && movie.actors.map(actor => (
-              <li key={actor.id}>{actor.name}</li>
-            ))}
-          </ul>
+              <h4>Cast</h4>
+              <ul>
+                {movie.actors && movie.actors.map(actor => (
+                  <li key={actor.id}>{actor.name}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </Col>
@@ -115,19 +116,19 @@ function Film() {
           <div>
             <h4>Where to watch</h4>
             <p className="watch">
-            {watchProviders && watchProviders.map(provider => (
-              <button key={provider.provider_id} className="whereButton">
-                <Image src={`https://image.tmdb.org/t/p/original${provider.logo_path}`} height={70} alt={provider.provider_name} />
-              </button>
-            ))}
-          </p>
+              {watchProviders && watchProviders.map(provider => (
+                <button key={provider.provider_id} className="whereButton">
+                  <Image src={`https://image.tmdb.org/t/p/original${provider.logo_path}`} height={70} alt={provider.provider_name} />
+                </button>
+              ))}
+            </p>
           </div>
         </Col>
         <Row>
           <Col>
             <div>
-            <h4>Similar Movies</h4>
-            <MovieGrid similarMovies={similarMovies} />
+              <h4>Similar Movies</h4>
+              <MovieGrid similarMovies={similarMovies} />
             </div>
             <MovieGrid />
           </Col>
@@ -150,33 +151,36 @@ function FilmInfo({ movie }) {
   );
 }
 
-function WhereToWatch(){
-  return(
+function WhereToWatch() {
+  return (
     <div>
       <p className="watch">
-        <button className="whereButton">           
-          <Image src={netflix} height={70}/>
+        <button className="whereButton">
+          <Image src={netflix} height={70} />
         </button>
         <button className="whereButton">
-          <Image src={disney} height={70}/>
+          <Image src={disney} height={70} />
         </button>
         <button className="whereButton">
-          <Image src={prime} height={70}/>
+          <Image src={prime} height={70} />
         </button>
-        <button className="whereButton"> 
-          <Image src={hbo} height={70}/>
+        <button className="whereButton">
+          <Image src={hbo} height={70} />
         </button>
-        <button className="whereButton"> 
-          <Image src={hulu} height={70}/>
+        <button className="whereButton">
+          <Image src={hulu} height={70} />
         </button>
       </p>
     </div>
   )
 }
 
-function Review(){
-  return(
-      <div class="review">
+function Review() {
+  return (
+    <div>
+      {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
+      {jwtToken.value.length === 0 ? <NotLoggedIn /> :
+    <div class="review">
         <form>
           <textarea></textarea>
         </form>
@@ -184,19 +188,21 @@ function Review(){
         <SubmitButton />
         <AddToGroupButton />
         </Row>
-    </div>
+        </div>
+      }
+      </div>
   )
 }
 
-function SubmitButton(){
-  return(
+function SubmitButton() {
+  return (
     <div>
-        <input type="button" class="button" value="save review"></input>
+      <input type="button" class="button" value="save review"></input>
     </div>
   )
 }
 
-function AddToGroupButton(){
+function AddToGroupButton() {
   const [showModal, setShowModal] = useState(false);
   const [reviewID, setReviewID] = useState(null);
 
@@ -211,16 +217,16 @@ function AddToGroupButton(){
     setReviewID(null);
   };
 
-  return(
+  return (
     <div>
-        <button class="button" onClick={() => handleShow(1)}>Add to a group</button>
-            <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
+      <button class="button" onClick={() => handleShow(1)}>Add to a group</button>
+      <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
     </div>
   )
 }
 
-function Cast(){
-  return(
+function Cast() {
+  return (
     <div>
       <h4>People who acted in the movie</h4>
       <li>Kasper</li>
@@ -230,8 +236,8 @@ function Cast(){
   )
 }
 
-function Crew(){
-  return(
+function Crew() {
+  return (
     <div>
       <h4>People Who made the movie</h4>
       <li>MAtti</li>
@@ -268,10 +274,10 @@ function MovieGrid({ similarMovies }) {
                 Title={movie.title}
                 Poster={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
                 Rating={movie.vote_average}
-                
+
               />
-              
-              
+
+
             </Col>
           ))}
         </Row>
@@ -280,4 +286,4 @@ function MovieGrid({ similarMovies }) {
   );
 }
 
-export {Film, Crew, Cast, MovieGrid};
+export { Film, Crew, Cast, MovieGrid };

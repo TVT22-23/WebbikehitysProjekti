@@ -1,17 +1,24 @@
 import { Col, Form, Row } from "react-bootstrap";
 import { Link, Outlet } from "react-router-dom";
+import { jwtToken } from "./Signals";
+import { NotLoggedIn } from "./User";
 
 function Settings() {
     return (
-        <Row className="m-2">
-            <Col className="link-style">
-                <Link to={'usettings'} >User Settings</Link>
-            </Col>
-            <Col className="link-style">
-                <Link to={'gsettings'} >Group Settings</Link>
-            </Col>
-            <Outlet />
-        </Row>
+        <div>
+            {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
+            {jwtToken.value.length === 0 ? <NotLoggedIn /> :
+                <Row className="m-2">
+                    <Col className="link-style">
+                        <Link to={'usettings'} >User Settings</Link>
+                    </Col>
+                    <Col className="link-style">
+                        <Link to={'gsettings'} >Group Settings</Link>
+                    </Col>
+                    <Outlet />
+                </Row>
+            }
+        </div>
     )
 }
 
