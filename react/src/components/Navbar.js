@@ -12,12 +12,6 @@ return(
   <Link to="/login">Login</Link>
   <Link to="/searchFilms">Search Films</Link>
 
-  <div className="search-container">
-    <form action="/action_page.php">
-      <input type="text" placeholder="Search.." name="search"></input>
-      <button type="submit">search</button>
-    </form>
-  </div>
 </div>
     );
 }
