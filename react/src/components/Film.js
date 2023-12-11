@@ -1,6 +1,7 @@
 import { Link, Outlet, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Col, Container, Image, Row, Form } from 'react-bootstrap';
+import { Col, Container, Image, Row, Form, Card } from 'react-bootstrap';
+import ModalReview from "./Review-modal";
 import movie_poster from '../testikuvia/movie_poster.jpg';
 import disney from '../testikuvia/disney.png'
 import hbo from '../testikuvia/hbo.png'
@@ -22,7 +23,23 @@ function Film() {
   const [similarMovies, setSimilarMovies] = useState([]);
   const [watchProviders, setWatchProviders] = useState(null);
   const [reviewText, setReviewText] = useState('');
+  const [reviews, setReviews] = useState([]);
+  const [selectedReviewId, setSelectedReviewId] = useState(null);
+  const [selectedReview, setSelectedReview] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const openModal = (reviewId, reviewData) => {
+    setSelectedReviewId(reviewId);
+    setSelectedReview(reviewData);
+    setIsModalOpen(true);
+  };
+
+
+  const closeModal = () => {
+    setSelectedReviewId(null);
+    setSelectedReview(null);
+    setIsModalOpen(false);
+  };
   const handleReviewChange = (event) => {
     setReviewText(event.target.value);
   };
@@ -80,6 +97,10 @@ function Film() {
 
   }
   useEffect(() => {
+    if (!filmID) {
+      return; // Don't proceed if filmID is undefined
+    }
+    console.log("Fetching reviews for film ID:", filmID);
     // Fetch movie details using the filmID
     fetch(`https://api.themoviedb.org/3/movie/${filmID}?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
       .then((response) => response.json())
@@ -108,6 +129,14 @@ function Film() {
       })
       .catch((error) => {
         console.error("Error fetching similar movies:", error);
+      });
+    axios.get(`/review/movie/${filmID}`)
+      .then((response) => {
+        console.log("Reviews:", response.data);
+        setReviews(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching reviews:", error);
       });
 
   }, [filmID]);
@@ -180,6 +209,13 @@ function Film() {
             <MovieGrid />
           </Col>
         </Row>
+        <Col>
+          <div>
+            <h4>Reviews</h4>
+            <ReviewGrid openModal={openModal} reviews={reviews} />
+            <ModalReview id={selectedReviewId} show={isModalOpen} handleClose={closeModal} review={selectedReview} />
+          </div>
+        </Col>
       </Row>
     </Container>
   );
@@ -188,7 +224,7 @@ function Film() {
 function Rating() {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
-  
+
   return (
 
     <div className="">
@@ -362,6 +398,49 @@ function MovieGrid({ similarMovies }) {
         </Row>
       </Container>
     </div>
+  );
+}
+
+function ReviewGrid({ reviews }) {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedReview, setSelectedReview] = useState(null);
+
+  const handleShow = (review) => {
+    setSelectedReview(review);
+    setShowModal(true);
+  };
+
+  const handleClose = () => {
+    setSelectedReview(null);
+    setShowModal(false);
+  };
+
+  return (
+    <Container>
+      <Row>
+        {reviews && reviews.length > 0 ? (
+          reviews.map((review) => (
+            <Col key={review.review_id}>
+              <Card style={{ width: '200px', backgroundColor: '#414141', color: 'var(--fourth-color)' }}>
+                {/* Use correct property names */}
+                <Card.Title>{review.user_name}</Card.Title>
+                <Card.Text>{review.text_review}</Card.Text>
+                <button style={{ padding: '7px', width: 'fit-content' }} onClick={() => handleShow(review)}>
+                  Full review
+                </button>
+              </Card>
+            </Col>
+          ))
+        ) : (
+          <Col>
+            <p>No reviews available.</p>
+          </Col>
+        )}
+      </Row>
+      {selectedReview && (
+        <ModalReview id={selectedReview.review_id} show={showModal} handleClose={handleClose} review={selectedReview} />
+      )}
+    </Container>
   );
 }
 

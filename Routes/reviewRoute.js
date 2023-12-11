@@ -12,10 +12,11 @@ router.get('/', async (req, res) => {
         res.json(await getReview());
 });
 
-router.get('/movie/:movie_id', async (req, res) => {
-    const movieId = req.params.movie_id;
+router.get('/movie/:movieID', async (req, res) => {
+    let movieId = req.params.movieID;
 
     try {
+        console.log("Got to review");
         const reviews = await getReviewsByMovieId(movieId);
         res.json(reviews);
     } catch (error) {
