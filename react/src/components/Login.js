@@ -9,6 +9,7 @@ function LoginForm() {
     const [user_name, setUser_name] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [reviews, setReviews] = useState([]);
     
     //show or close the account creation modal
     const handleClose = () => setShow(false);
