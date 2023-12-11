@@ -212,8 +212,10 @@ function Film() {
         <Col>
           <div>
             <h4>Reviews</h4>
+            <div class="reviews">
             <ReviewGrid openModal={openModal} reviews={reviews} />
             <ModalReview id={selectedReviewId} show={isModalOpen} handleClose={closeModal} review={selectedReview} />
+          </div>
           </div>
         </Col>
       </Row>
