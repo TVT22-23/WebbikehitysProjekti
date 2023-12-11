@@ -593,3 +593,22 @@ input[type=radio]{
 .star{
   cursor: pointer;
 }
+
+.editProfile{
+  border-radius: 10px;
+  border-color: #CA3E47;
+  border-style: solid;
+  background-color: #414141;
+  color: #ffffff;
+  height: 40px;
+  width: auto;
+  margin: 10px;
+}
+
+.editProfile:hover{
+  background-color: #525252;
+}
+
+.editProfile:active{
+  background-color: #525252;
+}
