@@ -123,6 +123,7 @@ function Film() {
         <Col>
           <Image src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="movie_poster" className="imageframe" />
           <div className="people">
+
             <div className="crew">
               <h4>Director</h4>
               <li>{movie.director}</li>
@@ -141,6 +142,7 @@ function Film() {
         <Col>
           <FilmInfo movie={movie} />
           <div>Leave a review</div>
+
           <div>
             {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
             {jwtToken.value.length === 0 ? <NotLoggedIn /> :
@@ -157,6 +159,7 @@ function Film() {
               </div>
             }
           </div>
+
           <div>
             <h4>Where to watch</h4>
             <p className="watch">
@@ -185,7 +188,9 @@ function Film() {
 function Rating() {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
+  
   return (
+
     <div className="">
       {[...Array(5)].map((star, index) => {
         const currentRating = index + 1;
