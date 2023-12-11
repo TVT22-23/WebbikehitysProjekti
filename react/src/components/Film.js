@@ -121,7 +121,7 @@ function Film() {
       <Row>
         <Col>
           <Image src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="movie_poster" className="imageframe" />
-          <Rating />
+          
             <div className="people">
             <div className="crew">
               <h4>Director</h4>
@@ -141,7 +141,7 @@ function Film() {
         <Col>
           <FilmInfo movie={movie} />
           <div>Leave a review</div>
-          <div className="review">
+          <div className="review"><Rating />
         <form>
           <textarea value={reviewText} onChange={handleReviewChange}></textarea>
         </form>
