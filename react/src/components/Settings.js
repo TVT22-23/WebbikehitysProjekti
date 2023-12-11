@@ -43,6 +43,9 @@ function USettings() {
             newUserSettings.append('user_name', user_name);
             newUserSettings.append('description', description);
             newUserSettings.append('profile_picture', byteArray);
+            // newUserSettings.append('account_id'), accountId;
+
+            axios.post('account/update', newUserSettings)
 
             console.log([...newUserSettings]);
         };
@@ -50,98 +53,98 @@ function USettings() {
             reader.readAsArrayBuffer(profpic);
         }
     }
-        return (
-            <div className="link-style">
+    return (
+        <div className="link-style">
 
-                <h1 className="mt-3">User settings</h1>
-                <Form onSubmit={event => {
-                    event.preventDefault();
-                }}>
-                    <Row>
-                        <Col>
-                            <Form.Group>
-                                <Form.Label> Change username</Form.Label>
-                                <Form.Control
-                                    type="username"
-                                    placeholder={user_name}
-                                    autoFocus
-                                    value={user_name}
-                                    onChange={e => setUser_name(e.target.value)}
-                                />
-
-                            </Form.Group>
-                        </Col>
-                        <Col>
-                            <Form.Label>Change profile picture</Form.Label>
-                            <Form.Control
-                                type="file"
-                                placeholder="profile picture"
-                                autoFocus
-                                accept="image/*"
-                                onChange={e => setProfpic(e.target.files[0])}
-                            />
-                        </Col>
-                    </Row>
-                    <Row className="mt-2">
-
+            <h1 className="mt-3">User settings</h1>
+            <Form onSubmit={event => {
+                event.preventDefault();
+            }}>
+                <Row>
+                    <Col>
                         <Form.Group>
-                            <Form.Label>Change profile's description</Form.Label>
-                            <Form.Control className="m-0 mb-3 borders" style={{ background: '#414141', color: 'white' }}
-                                as="textarea"
-                                maxLength="200" rows={3}
-                                value={description}
+                            <Form.Label> Change username</Form.Label>
+                            <Form.Control
+                                type="username"
+                                placeholder={user_name}
                                 autoFocus
-                                onChange={e => setDescription(e.target.value)}
+                                value={user_name}
+                                onChange={e => setUser_name(e.target.value)}
                             />
+
                         </Form.Group>
-                        <Button variant="primary" className="mt-1" onClick={handleSettingChanges}> Save Changes</Button>
-                    </Row>
-                </Form>
-            </div >
-        )
-    
-}
-
-    //Group settings to be added to User()
-    function GSettings() {
-
-        const handleSubmit = (e) => {
-            console.log(e);
-            //form save to database?
-        }
-
-        return (
-            <div className="link-style">
-                <h1 className="mt-3"> Groups settings</h1>
-                <Form onSubmit={handleSubmit}>
+                    </Col>
+                    <Col>
+                        <Form.Label>Change profile picture</Form.Label>
+                        <Form.Control
+                            type="file"
+                            placeholder="profile picture"
+                            autoFocus
+                            accept="image/*"
+                            onChange={e => setProfpic(e.target.files[0])}
+                        />
+                    </Col>
+                </Row>
+                <Row className="mt-2">
 
                     <Form.Group>
-                        <Form.Label> Profile's description</Form.Label>
-                        <Form.Control className="m-0 borders" as="textarea" maxLength="200" rows={3} />
+                        <Form.Label>Change profile's description</Form.Label>
+                        <Form.Control className="m-0 mb-3 borders" style={{ background: '#414141', color: 'white' }}
+                            as="textarea"
+                            maxLength="200" rows={3}
+                            value={description}
+                            autoFocus
+                            onChange={e => setDescription(e.target.value)}
+                        />
                     </Form.Group>
-                    <Row>
-                        <Col>
-                            <button >Create  group</button>
-                        </Col>
-                        <Col>
-                            <button >Remove  group</button>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <button >Join  group</button>
-                        </Col>
-                        <Col>
-                            <button >Leave  group</button>
-                        </Col>
-                        <Col>
-                            <button >Invite user to group</button>
-                        </Col>
-                    </Row>
-                    <button type="submit" >Save changes</button>
-                </Form>
-            </div>
-        )
+                    <Button variant="primary" className="mt-1" onClick={handleSettingChanges}> Save Changes</Button>
+                </Row>
+            </Form>
+        </div >
+    )
+
+}
+
+//Group settings to be added to User()
+function GSettings() {
+
+    const handleSubmit = (e) => {
+        console.log(e);
+        //form save to database?
     }
 
-    export { GSettings, USettings, Settings };
+    return (
+        <div className="link-style">
+            <h1 className="mt-3"> Groups settings</h1>
+            <Form onSubmit={handleSubmit}>
+
+                <Form.Group>
+                    <Form.Label> Profile's description</Form.Label>
+                    <Form.Control className="m-0 borders" as="textarea" maxLength="200" rows={3} />
+                </Form.Group>
+                <Row>
+                    <Col>
+                        <button >Create  group</button>
+                    </Col>
+                    <Col>
+                        <button >Remove  group</button>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <button >Join  group</button>
+                    </Col>
+                    <Col>
+                        <button >Leave  group</button>
+                    </Col>
+                    <Col>
+                        <button >Invite user to group</button>
+                    </Col>
+                </Row>
+                <button type="submit" >Save changes</button>
+            </Form>
+        </div>
+    )
+}
+
+export { GSettings, USettings, Settings };

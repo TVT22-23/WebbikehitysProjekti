@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { jwtToken } from "./Signals";
+import { jwtToken, accountId } from "./Signals";
 import { Button, Form, Modal } from "react-bootstrap";
 
 function LoginForm() {
@@ -20,6 +20,11 @@ function LoginForm() {
         loginData.append('user_name', user_name);
         loginData.append('password', password);
 
+        axios.get('account')
+        .then(resp => {
+            console.log('account data: ' + resp);
+        })
+
         axios.post('/account/login', loginData)
         .then(resp => {
             jwtToken.value = resp.data.jwtToken;
@@ -36,7 +41,7 @@ function LoginForm() {
         newAccountData.append('password', password);
         newAccountData.append('email', email);
 
-        axios.post('/account/create', newAccountData,);
+        axios.post('/account/create', newAccountData);
 
         console.log(newAccountData);
     }
