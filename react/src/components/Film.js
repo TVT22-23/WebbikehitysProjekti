@@ -1,6 +1,7 @@
-import { useParams } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Col, Container, Image, Row, Form } from 'react-bootstrap';
+import movie_poster from '../testikuvia/movie_poster.jpg';
 import disney from '../testikuvia/disney.png'
 import hbo from '../testikuvia/hbo.png'
 import hulu from '../testikuvia/hulu.png'
@@ -9,23 +10,24 @@ import prime from '../testikuvia/prime.png'
 import ModalToGroup from "./AddToGroup-modal";
 import { useNavigate } from "react-router-dom";
 import { MovieCard } from "./SearchFilms";
-import { jwtToken } from "./Signals";
-import { NotLoggedIn } from "./User";
 import { FaStar } from 'react-icons/fa'
 import axios from "axios";
+import { jwtToken } from "./Signals";
+import { NotLoggedIn } from "./User";
+
 
 function Film() {
   const { filmID } = useParams();
   const [movie, setMovie] = useState(null);
   const [similarMovies, setSimilarMovies] = useState([]);
-  const [watchProviders, setWatchProviders] =useState(null);
+  const [watchProviders, setWatchProviders] = useState(null);
   const [reviewText, setReviewText] = useState('');
 
   const handleReviewChange = (event) => {
     setReviewText(event.target.value);
   };
   const handleSaveReview = () => {
-    console.log("Value: " , jwtToken.value);
+    console.log("Value: ", jwtToken.value);
     const reviewData = {
       text_review: reviewText,
       rating: 8.5,
@@ -34,19 +36,18 @@ function Film() {
     };
     const headers = {
       Authorization: `Bearer ${jwtToken}`,
-  };
-    
-    axios.post('/review/addReview', reviewData,{ headers })
+    };
+
+    axios.post('/review/addReview', reviewData, { headers })
       .then((response) => {
-        
+
         console.log('Review saved successfully:', response.data);
       })
       .catch((error) => {
-        
+
         console.error('Error saving review:', error);
       });
   };
-  
   const getActors = (url) => {
     return fetch(url)
       .then(res => res.json())
@@ -121,8 +122,8 @@ function Film() {
       <Row>
         <Col>
           <Image src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="movie_poster" className="imageframe" />
-          
-            <div className="people">
+          <div className="people">
+
             <div className="crew">
               <h4>Director</h4>
               <li>{movie.director}</li>
@@ -137,19 +138,28 @@ function Film() {
             </div>
           </div>
         </Col>
-          
+
         <Col>
           <FilmInfo movie={movie} />
           <div>Leave a review</div>
-          <div className="review"><Rating />
-        <form>
-          <textarea value={reviewText} onChange={handleReviewChange}></textarea>
-        </form>
-        <Row>
-          <SubmitButton onSaveReview={handleSaveReview} />
-          <AddToGroupButton />
-        </Row>
-      </div>
+
+          <div>
+            {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
+            {jwtToken.value.length === 0 ? <NotLoggedIn /> :
+              <div className="review">
+                <form>
+                  <textarea value={reviewText} onChange={handleReviewChange}></textarea>
+                </form>
+                <Row>
+                  <Rating />
+                  <SubmitButton onSaveReview={handleSaveReview} />
+                  <AddToGroupButton />
+                  <Col />
+                </Row>
+              </div>
+            }
+          </div>
+
           <div>
             <h4>Where to watch</h4>
             <p className="watch">
@@ -178,20 +188,22 @@ function Film() {
 function Rating() {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
-   return(
+  
+  return (
+
     <div className="">
       {[...Array(5)].map((star, index) => {
         const currentRating = index + 1;
-        return(
-          <label>
+        return (
+          <label key={index}>
             <input
               type="radio"
               name="rating"
-              value = {currentRating}
+              value={currentRating}
               onClick={() => setRating(currentRating)}
             />
-            <FaStar 
-              className='star' 
+            <FaStar
+              className='star'
               size={50}
               color={currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
               onMouseEnter={() => setHover(currentRating)}
@@ -243,23 +255,17 @@ function WhereToWatch() {
 
 function Review() {
   return (
-    <div>
-      {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
-      {jwtToken.value.length === 0 ? <NotLoggedIn /> :
     <div class="review">
-        <form>
-          <textarea></textarea>
-        </form>
-        <Row>
+      <form>
+        <textarea></textarea>
+      </form>
+      <Row>
         <SubmitButton />
         <AddToGroupButton />
-        </Row>
-        </div>
-      }
-      </div>
+      </Row>
+    </div>
   )
 }
-
 
 function SubmitButton({ onSaveReview }) {
   return (
@@ -275,7 +281,7 @@ function SubmitButton({ onSaveReview }) {
 }
 
 
-function AddToGroupButton(){
+function AddToGroupButton() {
   const [showModal, setShowModal] = useState(false);
   const [reviewID, setReviewID] = useState(null);
 

@@ -44,11 +44,6 @@ function User() {
       {jwtToken.value.length === 0 ? <NotLoggedIn /> :
         <Container>
           <Row>
-            <Col >
-              <button onClick={toggleDraggable}>Edit profile</button>
-            </Col>
-          </Row>
-          <Row>
             <Col lg="auto">
               <ProfPic isDraggable={isDraggable} />
             </Col>
@@ -66,6 +61,11 @@ function User() {
           <Row>
             <Col >
               <ExtraBox ExtraBox isDraggable={isDraggable} newsData={newsData} />
+            </Col>
+          </Row>
+          <Row>
+            <Col className="link-style mt-4">
+              <button  onClick={toggleDraggable}>Edit profile</button>
             </Col>
           </Row>
         </Container>
