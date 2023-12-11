@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const multer = require('multer');
 const upload = multer({dest: 'upload/'});
+
 const {userData} = require('./accountRoute');
-const {addReview, getReview} = require('../postgre/review');
 const jwt = require('jsonwebtoken');
+const {addReview, getReview, deleteReview} = require('../postgre/review');
 
 
 router.get('/', async (req, res) => {
@@ -31,6 +32,16 @@ router.post('/addReview', upload.none(), async (req, res) => {
     }
 });
 
+
+router.delete('/delete/:review_id', upload.none() , async (req, res) => {
+    try {
+        await deleteReview(req.params.review_id);
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.json({error: error.message}).status(500);
+    }
+});
 
 //getReview();
 
