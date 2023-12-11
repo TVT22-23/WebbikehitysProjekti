@@ -6,11 +6,11 @@ const sql = {
     DELETE_FAVORITE: 'DELETE FROM favoritemovie WHERE fav_id=$1'
 }
 
-//getFavorite();
+//getFavorite();                                                                                    //testing
 //addFavorite(2,37);
 //deleteFavorite(1);
 
-async function addFavorite(fav_account_id, movie_id) {
+async function addFavorite(fav_account_id, movie_id) {                                              //adding a favorite movie to the favoritemovie-table in database
     await pgPool.query(sql.INSERT_FAVORITE, [fav_account_id, movie_id])
 }
 

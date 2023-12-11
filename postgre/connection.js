@@ -1,7 +1,7 @@
-require('dotenv').config();
+require('dotenv').config();                                         //dotenv includes our database connection information (database in render)
 const {Pool} = require('pg');
 
-const pgPool = new Pool({
+const pgPool = new Pool({                                           //creating the connection to our database
     host: process.env.PG_HOST,
     port: process.env.PG_PORT,
     database: process.env.PG_DB,
@@ -10,7 +10,7 @@ const pgPool = new Pool({
     ssl: true
 });
 
-pgPool.connect((err)=> {
+pgPool.connect((err)=> {                                            //creating the connection to our database
     if(err){
         console.log(err.message);
     }

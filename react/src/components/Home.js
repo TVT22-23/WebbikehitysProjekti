@@ -6,6 +6,7 @@ import { useState } from "react";
 import { MovieCard } from "./SearchFilms";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { jwtToken } from "./Signals";
 
 
 

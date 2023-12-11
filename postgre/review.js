@@ -4,6 +4,7 @@ const sql = {
 
     INSERT_REVIEW: 'INSERT INTO review (text_review, rating, recommend, movie_id, user_name) VALUES ($1, $2, $3, $4, $5)',
     GET_REVIEW: 'SELECT * FROM review',
+
     GET_REVIEWS_BY_ID: 'SELECT * FROM review WHERE movie_id = $1',
     DELETE_REVIEW: 'DELETE FROM review WHERE review_id=$1'
 
