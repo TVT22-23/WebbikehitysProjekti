@@ -4,12 +4,25 @@ const upload = multer({dest: 'upload/'});
 
 const {userData} = require('./accountRoute');
 const jwt = require('jsonwebtoken');
-const {addReview, getReview, deleteReview} = require('../postgre/review');
+const {addReview, getReview, deleteReview, getReviewsByMovieId} = require('../postgre/review');
 
 
 router.get('/', async (req, res) => {
 
         res.json(await getReview());
+});
+
+router.get('/movie/:movieID', async (req, res) => {
+    let movieId = req.params.movieID;
+
+    try {
+        console.log("Got to review");
+        const reviews = await getReviewsByMovieId(movieId);
+        res.json(reviews);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
 });
 
 router.post('/addReview', upload.none(), async (req, res) => {

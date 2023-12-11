@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { jwtToken } from "./Signals";
+import { jwtToken, accountId } from "./Signals";
 import { Button, Form, Modal } from "react-bootstrap";
 
 function LoginForm() {
@@ -9,6 +9,7 @@ function LoginForm() {
     const [user_name, setUser_name] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
+    const [reviews, setReviews] = useState([]);
     
     //show or close the account creation modal
     const handleClose = () => setShow(false);
@@ -19,6 +20,11 @@ function LoginForm() {
         const loginData = new FormData();
         loginData.append('user_name', user_name);
         loginData.append('password', password);
+
+        axios.get('account')
+        .then(resp => {
+            console.log('account data: ' + resp);
+        })
 
         axios.post('/account/login', loginData)
         .then(resp => {
@@ -36,7 +42,7 @@ function LoginForm() {
         newAccountData.append('password', password);
         newAccountData.append('email', email);
 
-        axios.post('/account/create', newAccountData,);
+        axios.post('/account/create', newAccountData);
 
         console.log(newAccountData);
     }
@@ -45,7 +51,7 @@ function LoginForm() {
         // Inputs to username and password to login. On button click run login().
         <div className="login-page">
             <div className="link-style login-inputs">
-                <h2 style={{ textAlign: 'center', color: '#CA3E47', margin: '2rem 1rem 2rem 1rem' }}>enter username and password</h2>
+                <h2 style={{ textAlign: 'center', margin: '2rem 1rem 2rem 1rem' }}>enter username and password</h2>
                 <input onChange={e => setUser_name(e.target.value)} placeholder="jyyseri"></input>
                 <input type="password" onChange={e => setPassword(e.target.value)} placeholder="passu"></input>
                 <p className="create-account-link" onClick={handleShow}> New user? Click here to create an account</p>
@@ -59,7 +65,7 @@ function LoginForm() {
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={event => {
-                        event.preventDefault()
+                        event.preventDefault();
                     }}>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Email address</Form.Label>
@@ -118,7 +124,7 @@ function Login() {
         <div className="link-style login-page">
             {jwtToken.value.length === 0 ? <LoginForm /> :
                 <div>
-                    <h2 className="my-5" style={{ color: 'var(--fourth-color)' }}>Welcome our dearly beloved </h2>
+                    <h2 className="my-5" >Welcome our dearly beloved user</h2>
                     <button onClick={() => jwtToken.value = ''}>Logout</button>
                 </div>}
         </div>

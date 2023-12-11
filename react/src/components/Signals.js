@@ -16,3 +16,20 @@ export const jwtToken = signal(getSessionToken());
 effect(() => {
     sessionStorage.setItem('token', jwtToken.value);
 });
+
+//accountId tallennetaan session storageen
+function getSessionAccountID() {
+    const a = sessionStorage.getItem('accountId');
+    return a===null || a==='null' ? '' :a;
+}
+
+
+//accountId haetaan session storagesta
+export const accountId = signal(getSessionAccountID());
+
+
+//aina kun accountId muuttuu, päivitetään sen arvo session storagessa 
+effect(() => {
+    sessionStorage.setItem('accountId', accountId.value);
+});
+
