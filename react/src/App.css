@@ -242,7 +242,7 @@ textarea {
 
 .watch {
   width: auto;
-  height: auto;
+  height: 95px;
   margin: 10px;
   background-color: #414141;
   border-width: 2px;
