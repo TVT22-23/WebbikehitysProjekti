@@ -8,7 +8,8 @@ const memberRequestRoute = require('./Routes/memberRequestRoute')
 const memberRoute = require('./Routes/memberRoute')
 const movieGroupRoute = require('./Routes/movieGroupRoute')
 const reviewRoute = require('./Routes/reviewRoute')
-const favouriteMovieRoute = require('./Routes/favoriteMovieRoute')
+const favoriteMovieRoute = require('./Routes/favoriteMovieRoute')
+const newsRoute = require('./Routes/newsRoute')
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 
@@ -33,7 +34,8 @@ app.use('/memberRequest', memberRequestRoute);
 app.use('/member', memberRoute);
 app.use('/movieGroup', movieGroupRoute);
 app.use('/review', reviewRoute);
-app.use('/favouriteMovie', favouriteMovieRoute);
+app.use('/favoriteMovie', favoriteMovieRoute);
+app.use('/news', newsRoute);
 
 const PORT = process.env.PORT || 3001;
 
