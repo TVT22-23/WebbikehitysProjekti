@@ -3,6 +3,7 @@ const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 const {userData} = require('./accountRoute');
 const {addReview, getReview} = require('../postgre/review');
+const jwt = require('jsonwebtoken');
 
 
 router.get('/', async (req, res) => {
@@ -11,19 +12,25 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/addReview', upload.none(), async (req, res) => {
-    const { text_review, rating, recommend, movie_id, user_name } = req.body;
-
-
-
+    const { text_review, rating, recommend, movie_id } = req.body;
 
     try {
-        console.log("testingTesting");
-        await addReview(text_review, rating, recommend, movie_id, user_name);
+        const authorizationHeader = req.headers.authorization;
+        const jwtToken = authorizationHeader.split(' ')[1];
+        const decodedToken = jwt.decode(jwtToken);
+
+        if (!decodedToken || !decodedToken.user_name) {
+            throw new Error('Invalid JWT token or missing user_name');
+        }
+
+        await addReview(text_review, rating, recommend, movie_id, decodedToken.user_name);
+        res.json({ success: true });
     } catch (error) {
         console.log(error);
-        res.json({error: error.message}).status(500);
+        res.status(500).json({ error: error.message });
     }
 });
+
 
 //getReview();
 

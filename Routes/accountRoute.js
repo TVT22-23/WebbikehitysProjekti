@@ -38,12 +38,8 @@ router.post('/login', upload.none(), async (req, res) => {
         const isCorrect = await bcrypt.compare(password, pwHash);
         const user = await getUserDetails(user_name);
         if (isCorrect) {
-            const token = jwt.sign({user_name: user_name}, '' + process.env.JWT_SECRET_KEY, { expiresIn: '1800s' });
-            req.session.user = {
-                user_name: user.user_name,
-                account_id: user.account_id,
-            };
-            console.log(req.session.user); //Delete this later
+            const token = jwt.sign({user_name: user_name, account_id: user.account_id }, '' + process.env.JWT_SECRET_KEY, { expiresIn: '1800s' });
+            console.log(token);
             res.status(200).json({jwtToken: token});
         } else {
             res.status(401).json({error: 'Invalid password'});

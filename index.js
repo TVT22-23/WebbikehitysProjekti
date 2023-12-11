@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 //const multer = require('multer');
 //const upload = multer({dest: 'upload/'});
 const accountRoute = require('./Routes/accountRoute')
@@ -11,21 +12,36 @@ const reviewRoute = require('./Routes/reviewRoute')
 const favouriteMovieRoute = require('./Routes/favoriteMovieRoute')
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-
 const app = express();
 
-app.use(express.urlencoded({extended: true}));
-app.use(express.json());
-app.use(cors());
-app.use(express.static('public'));
+
+
+app.use(cookieParser());
 
 app.use(
   session({
-    secret: 'secret', //This needs to be changed later
-    resave: false,
+    secret: 'lolol', // replace with your own secret key
+    resave: true,
     saveUninitialized: true,
+    cookie: {
+      sameSite: "None",
+      secure: false, // set to true if using HTTPS
+    },
   })
 );
+
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(cors({
+  credentials: true,
+  origin: "http://localhost:3000",
+}))
+app.use(express.static('public'));
+
+app.use((req, res, next) => {
+  console.log('Session ID:', req.sessionID);
+  next();
+});
 
 app.use('/account', accountRoute);
 //app.use(authenticateToken);
@@ -43,6 +59,7 @@ app.listen(PORT, function(){
 
 app.get('/', (req, res) => {
     res.send('Home page')
+    // Store user information in the session
 });
 
 app.get('/user', (req, res) => {

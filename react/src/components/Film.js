@@ -11,6 +11,8 @@ import ModalToGroup from "./AddToGroup-modal";
 import { useNavigate } from "react-router-dom";
 import { MovieCard } from "./SearchFilms";
 import axios from "axios";
+import { jwtToken } from "./Signals";
+
 
 function Film() {
   const { filmID } = useParams();
@@ -23,22 +25,24 @@ function Film() {
     setReviewText(event.target.value);
   };
   const handleSaveReview = () => {
+    console.log("Value: " , jwtToken.value);
     const reviewData = {
       text_review: reviewText,
       rating: 8.5,
       recommend: null,
       movie_id: filmID,
-      user_name: null,
     };
-
-    // Use Axios to make a POST request
-    axios.post('/review/addReview', reviewData)
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+  };
+    
+    axios.post('/review/addReview', reviewData,{ headers })
       .then((response) => {
-        // Handle success or show a notification to the user
+        
         console.log('Review saved successfully:', response.data);
       })
       .catch((error) => {
-        // Handle error or show an error message to the user
+        
         console.error('Error saving review:', error);
       });
   };

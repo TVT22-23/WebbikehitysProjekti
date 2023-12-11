@@ -21,8 +21,11 @@ function LoginForm() {
         loginData.append('password', password);
 
         axios.post('/account/login', loginData)
-            .then(resp => jwtToken.value = resp.data.jwtToken)
-            .catch(error => console.log(error.data));
+        .then(resp => {
+            jwtToken.value = resp.data.jwtToken;
+            console.log("JWT Token:", jwtToken.value); // Log the JWT token value
+        })
+        .catch(error => console.log(error.data));
     };
 
     // post new accounts uname, pass and email to endpoint as FormData
@@ -33,7 +36,7 @@ function LoginForm() {
         newAccountData.append('password', password);
         newAccountData.append('email', email);
 
-        axios.post('/account/create', newAccountData);
+        axios.post('/account/create', newAccountData,);
 
         console.log(newAccountData);
     }
