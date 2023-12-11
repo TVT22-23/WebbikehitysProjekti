@@ -5,26 +5,76 @@ import { useState } from "react";
 import { Popup } from "./Popup"
 import { jwtToken } from "./Signals";
 import { NotLoggedIn } from "./User";
+import axios from "axios";
+ 
+const Groups = () => {
+  const [buttonPopup, setButtonPopup] = useState(false);
+  const [groupName, setGroupName] = useState('');
+  const [description, setDescription] = useState('');
 
-function Groups() {
-  return (
-    <div>
-      {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
-      {jwtToken.value.length === 0 ? <NotLoggedIn /> :
-        <Container>
-          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>Own groups</h3>
-          <Row>
-            <OwnGroupGrid />
-          </Row>
-          <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>find groups</h3>
-          <Row>
-            <FindGroups />
-          </Row>
-        </Container>
+  const handleCreateGroup = async () => {
+      // You should include your secret key in the headers
+      const headers = {
+        Authorization: `Bearer ${jwtToken}`,
+      };
+
+      try {
+        await axios.post('/movieGroup/create', {
+          group_name: groupName,
+          description: description,
+        }, { headers });
+
+          // Add any additional logic after creating the group (e.g., closing the popup)
+          setButtonPopup(false);
+      } catch (error) {
+          console.error('Error creating group:', error);
       }
-    </div>
-  )
-}
+  };
+
+  return (
+      <div>
+          <Row>
+              <button className="groupBox" onClick={() => setButtonPopup(true)}>
+                  Create group
+              </button>
+              <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+                  <h3>Create group</h3>
+                  <form>
+                      <label>
+                          Group name:
+                          <input
+                              type="text"
+                              name="name"
+                              value={groupName}
+                              onChange={(e) => setGroupName(e.target.value)}
+                          />
+                      </label>
+                      <Row>
+                          <textarea
+                              value={description}
+                              onChange={(e) => setDescription(e.target.value)}
+                          >
+                              Description
+                          </textarea>
+                      </Row>
+                      <button type="button" onClick={handleCreateGroup}>
+                          Create Group
+                      </button>
+                  </form>
+              </Popup>
+          </Row>
+          <Row>
+          <OwnGroupGrid/>
+          </Row>
+          <Row>
+          <FindGroups/>
+          </Row>
+          
+      </div>
+  );
+};
+
+
 
 function OwnGroupGrid() {
   const groupID = "name";
@@ -33,16 +83,6 @@ function OwnGroupGrid() {
   return (
     <div>
       <Row>
-        <button class="groupBox" onClick={() => setButtonPopup(true)}>Create group</button>
-        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-          <h3>create group</h3>
-          <form>
-            <label>
-              Group name:
-              <input type="text" name="name" />
-            </label>
-          </form>
-        </Popup>
         <a href="group" class="groupBox"> {groupID} </a>
         <a href="group" class="groupBox"> {groupID} </a>
         <a href="group" class="groupBox"> {groupID} </a>
@@ -50,7 +90,7 @@ function OwnGroupGrid() {
         <a href="group" class="groupBox"> {groupID} </a>
         <a href="group" class="groupBox"> {groupID} </a>
         <a href="group" class="groupBox"> {groupID} </a>
-
+        <a href="group" class="groupBox"> {groupID} </a>
       </Row>
     </div>
   )
