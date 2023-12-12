@@ -8,14 +8,12 @@ const {addMember, getMember, deleteMember, getMemberByAccount} = require('../pos
 router.get('/', async (req, res) => {
 
         res.json(await getMember());
-});
+}); 
 router.get('/groups', async (req, res) => {
     try {
-        console.log("Got to groups");
         const authorizationHeader = req.headers.authorization;
         const jwtToken = authorizationHeader.split(' ')[1];
         const decodedToken = jwt.decode(jwtToken);
-        console.log(decodedToken);
         const groups = await getMemberByAccount(decodedToken.account_id);
         res.json(groups);
     } catch (error) {

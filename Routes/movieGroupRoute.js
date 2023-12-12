@@ -2,12 +2,18 @@ const router = require('express').Router();
 const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 const jwt = require('jsonwebtoken');
-const {addGroup, getGroup, deleteGroup, changeOwner} = require('../postgre/movieGroup');
+const {addGroup, getGroup, deleteGroup, changeOwner, getGroupById} = require('../postgre/movieGroup');
 
 router.get('/', async (req, res) => {
         console.log("Got to group get");
         res.json(await getGroup());
 });
+router.get('/:group_id', async (req, res) => {
+    console.log("Got to group_id");
+    const id = req.params.group_id;
+    res.json(await getGroupById(id));
+});
+
 
 router.post('/create', upload.none() , async (req, res) => {
     const { group_name, description,} = req.body;

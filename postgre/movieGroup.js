@@ -3,6 +3,7 @@ const { pgPool } = require('./connection');
 const sql = {
     INSERT_GROUP: 'INSERT INTO moviegroup (group_name, description, owner) VALUES ($1, $2, $3)',
     GET_GROUP: 'SELECT group_id, group_name, description, owner FROM moviegroup',
+    GET_GROUP_BY_ID:'SELECT * FROM moviegroup WHERE group_id = $1',
     DELETE_GROUP: 'DELETE FROM movieGroup WHERE group_id=$1',
     CHANGE_OWNER: 'UPDATE moviegroup SET owner = $1 WHERE group_id=$2'
 }
@@ -20,6 +21,11 @@ async function getGroup(){
     const rows = result.rows;
     return rows;
 }
+async function getGroupById(group_id){
+    const result = await pgPool.query(sql.GET_GROUP_BY_ID, [group_id]);
+    const rows = result.rows;
+    return rows;
+}
 
 async function deleteGroup(group_id) {
     await pgPool.query(sql.DELETE_GROUP, [group_id]);
@@ -29,4 +35,4 @@ async function changeOwner(owner, group_id) {                                   
     await pgPool.query(sql.CHANGE_OWNER, [owner, group_id]);
 }
 
-module.exports = {addGroup, getGroup, deleteGroup, changeOwner};
+module.exports = {addGroup, getGroup, deleteGroup, changeOwner, getGroupById};

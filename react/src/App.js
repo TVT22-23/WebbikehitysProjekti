@@ -28,19 +28,19 @@ function App() {
         <Navbar />
       </NavbarContext.Provider>
       <Routes>
+      
         <Route path='' element={<Home />} />
         <Route path='/searchFilms' element={<SearchFilms />} />
         <Route path="/user" element={<User />} />
         <Route path='/film' element={<Film />} >
           <Route path='cast' element={<Cast />} />
-          <Route path='crew' element={<Crew />} />
         </Route>
         <Route path='/film/:filmID' element={<Film />} >
           <Route path='cast' element={<Cast />} />
           <Route path='crew' element={<Crew />} />
         </Route>
         <Route path='/groups' element={<Groups />} />
-        <Route path='/group' element={<Group />} />
+        <Route path='/group/:groupId' element={<Group />} />
         <Route path='/login' element={<Login />} />
         <Route path='settings' element={<Settings />} >
           <Route path="usettings" element={<USettings />} />
