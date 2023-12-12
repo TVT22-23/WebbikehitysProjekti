@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { jwtToken, accountId } from "./Signals";
+import { jwtToken, accountId, Uname } from "./Signals";
 import { Button, Form, Modal } from "react-bootstrap";
 
 function LoginForm() {
@@ -21,11 +21,18 @@ function LoginForm() {
         loginData.append('user_name', user_name);
         loginData.append('password', password);
 
-        axios.get('account')
+        //set Uname to signals to pass it to other components
+        Uname.value = user_name
+        //get accountId with username
+        axios.get('/account/get?user_name=' + user_name)
         .then(resp => {
-            console.log('account data: ' + resp);
+            accountId.value = resp.data[0].account_id;
+            console.log(accountId.value);
         })
-
+        .catch(error => {
+            console.error('Error:', error.data);
+        });
+  
         axios.post('/account/login', loginData)
         .then(resp => {
             jwtToken.value = resp.data.jwtToken;
@@ -124,7 +131,7 @@ function Login() {
         <div className="link-style login-page">
             {jwtToken.value.length === 0 ? <LoginForm /> :
                 <div>
-                    <h2 className="my-5" >Welcome our dearly beloved user</h2>
+                    <h2 className="my-5" >Welcome our dearly beloved {Uname}</h2>
                     <button onClick={() => jwtToken.value = ''}>Logout</button>
                 </div>}
         </div>

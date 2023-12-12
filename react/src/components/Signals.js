@@ -33,3 +33,23 @@ effect(() => {
     sessionStorage.setItem('accountId', accountId.value);
 });
 
+
+function getSessionUname() {
+    const a = sessionStorage.getItem('Uname');
+    return a===null || a==='null' ? '' :a;
+}
+export const Uname = signal(getSessionUname());
+
+effect(() => {
+    sessionStorage.setItem('Uname', Uname.value);
+});
+// function getSessionProfileImage() {
+//     const a = sessionStorage.getItem('profpic');
+//     return a===null || a==='null' ? '' :a;
+// }
+// export const Profile_picture = signal(getSessionProfilePicture());
+
+// effect(() => {
+//     sessionStorage.setItem('Uname', Uname.value);
+// });
+
