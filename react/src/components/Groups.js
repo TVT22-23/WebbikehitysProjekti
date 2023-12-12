@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Col, Container, Image, Row, Form, Card } from 'react-bootstrap';
 import { GroupName } from "./Group"
 import { useState, useEffect } from "react";
@@ -7,6 +7,7 @@ import { jwtToken, } from "./Signals";
 import { NotLoggedIn } from "./User";
 import axios from "axios";
 import { accountId } from "./Signals";
+
 
 const Groups = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
@@ -44,11 +45,11 @@ const Groups = () => {
     fetchOwnGroups();
 
   }, []);
-  
-  const filteredGroups = groupsData.filter(group => {
-    return ownGroups.some(ownGroup => ownGroup.group_groupid === group.group_id);
-  });
 
+  const filteredGroups = groupsData.filter(group => {
+    return ownGroups.some(ownGroup => ownGroup.group_groupid === group.group_id);   
+  });
+  console.log("Filetered:",filteredGroups);
   const handleCreateGroup = async () => {
     // You should include your secret key in the headers
     const headers = {
@@ -101,7 +102,7 @@ const Groups = () => {
         </Popup>
       </Row>
       <Row>
-      <OwnGroupGrid filteredGroups={filteredGroups} />
+        <OwnGroupGrid filteredGroups={filteredGroups} />
       </Row>
       <Row>
         <FindGroups groupsData={groupsData} />
@@ -118,9 +119,9 @@ function OwnGroupGrid({ filteredGroups }) {
     <div>
       <Row>
         {filteredGroups.map((group) => (
-          <a href={`/group/${group.group_id}`} className="groupBox" key={group.group_id}>
+          <Link to={`/group/${group.group_id}`} className="groupBox" key={group.group_id}>
             {group.group_name}
-          </a>
+          </Link>
         ))}
       </Row>
     </div>
@@ -143,7 +144,7 @@ function FindGroups({ groupsData }) {
       </Row>
       <Row>
         {groupsData.map((group) => (
-          <a href={`/group/${group.group_id}`} className="groupBox" key={group.group_id}>
+          <a href="group" className="groupBox" key={group.group_id}>
             {group.group_name}
           </a>
         ))}

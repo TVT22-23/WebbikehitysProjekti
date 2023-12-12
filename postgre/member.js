@@ -4,6 +4,7 @@ const sql = {
     INSERT_MEMBER: 'INSERT INTO member (account_accountid, group_groupid) VALUES ($1, $2)',
     GET_MEMBER: 'SELECT account_id, group_id FROM member JOIN account ON account_accountid = account.account_id JOIN moviegroup ON group_groupid = moviegroup.group_id',
     GET_MEMBER_BY_ACCOUNT:'SELECT * FROM member WHERE account_accountid = $1',
+    GET_MEMBER_BY_GROUP:'SELECT * FROM member WHERE group_groupid = $1',
     DELETE_MEMBER: 'DELETE FROM member WHERE member_id=$1'
 }
 
@@ -21,6 +22,14 @@ async function getMember(){
     return rows;
 }
 
+async function getMemberByGroup(){
+    const result = await pgPool.query(sql.GET_MEMBER_BY_GROUP);
+    const rows = result.rows;
+    //console.log(rows);
+    return rows;
+}
+
+
 async function getMemberByAccount(account_accountid){
     console.log("getMemberByAccount");
     if (!account_accountid) {
@@ -36,4 +45,4 @@ async function deleteMember(member_id) {
     await pgPool.query(sql.DELETE_MEMBER, [member_id]);
 }
 
-module.exports = {addMember, getMember, deleteMember, getMemberByAccount};
+module.exports = {addMember, getMember, deleteMember, getMemberByAccount, getMemberByGroup};
