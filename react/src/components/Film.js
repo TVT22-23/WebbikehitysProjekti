@@ -105,6 +105,10 @@ function Film() {
     axios.post('favoriteMovie/create', favMovies)
   }
 
+  function handleDeleteFavourites() {
+    axios.delete('favoriteMovie/deleteSpecific/' + accountId + '/' + filmID);
+  }
+
   useEffect(() => {
     if (!filmID) {
       return; // Don't proceed if filmID is undefined
@@ -176,7 +180,7 @@ function Film() {
             </div>
           </div>
           <Button onClick={handleAddFavourites}>Add to favourites</Button>
-          {/* <Button onClick={handleDeleteFavourites}>Delete from favourites</Button> */}
+          <Button onClick={handleDeleteFavourites}>Delete from favourites</Button>
         </Col>
 
         <Col>
@@ -223,7 +227,7 @@ function Film() {
         <Col>
           <div>
             <h4>Reviews</h4>
-            <div class="reviews">
+            <div className="reviews">
             <ReviewGrid openModal={openModal} reviews={reviews} />
             <ModalReview id={selectedReviewId} show={isModalOpen} handleClose={closeModal} review={selectedReview} />
           </div>
@@ -269,10 +273,10 @@ function FilmInfo({ movie }) {
   return (
     <div className="movieInfo">
       <h1>{movie.title}</h1> {/* Replace with actual property from your API */}
-      <h>Director: {movie.director}</h> {/* Replace with actual property from your API */}
+      <h1>Director: {movie.director}</h1> {/* Replace with actual property from your API */}
       <br />
       <br />
-      <p1>{movie.overview}</p1> {/* Replace with actual property from your API */}
+      <p>{movie.overview}</p> {/* Replace with actual property from your API */}
     </div>
   );
 }
@@ -303,7 +307,7 @@ function WhereToWatch() {
 
 function Review() {
   return (
-    <div class="review">
+    <div className="review">
       <form>
         <textarea></textarea>
       </form>
@@ -346,7 +350,7 @@ function AddToGroupButton() {
 
   return (
     <div>
-      <button class="button" onClick={() => handleShow(1)}>Add to a group</button>
+      <button className="button" onClick={() => handleShow(1)}>Add to a group</button>
       <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
     </div>
   )

@@ -28,7 +28,7 @@ function Settings() {
 function USettings() {
 
     const [NewUser_name, setNewUser_name] = useState(Uname);
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState('Add you own damn description');
     const [profpic, setProfpic] = useState([]);
     const navigate = useNavigate();
 
@@ -126,7 +126,6 @@ function USettings() {
                     <Button onClick={handleDeleteUser}>Delete user</Button>
                 </Row>
             </Form>
-            <Image src={profpic} height={200} width={200} rounded/>
         </div >
     )
 

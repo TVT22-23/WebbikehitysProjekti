@@ -38,9 +38,9 @@ router.delete('/delete/:fav_id', upload.none() , async (req, res) => {
     }
 });
 
-router.delete('/deleteSpecific', upload.none() , async (req, res) => {
-    const fav_account_id = req.body.fav_account_id
-    const movie_id = req.body.movie_id
+router.delete('/deleteSpecific/:fav_account_id/:movie_id', upload.none() , async (req, res) => {
+    const fav_account_id = req.params.fav_account_id
+    const movie_id = req.params.movie_id
 
     try {
         await deleteSpecific(fav_account_id, movie_id);
