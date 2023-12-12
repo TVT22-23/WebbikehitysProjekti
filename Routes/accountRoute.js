@@ -9,6 +9,7 @@ const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLa
 router.get('/get', async (req, res) => {                                                       //GET-endpoint - included in every route file
     const { user_name } = req.query;
 
+
     try {
         res.json(await getAccount(user_name));
         res.end();
