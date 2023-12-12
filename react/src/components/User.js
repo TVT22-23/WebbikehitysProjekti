@@ -5,7 +5,8 @@ import Draggable from 'react-draggable';
 import React, { useEffect, useState } from "react";
 import MovieGrid from "./movieGrid";
 import { getArticle } from "../finnkino";
-import { jwtToken } from "./Signals";
+import { Uname, jwtToken } from "./Signals";
+import axios from "axios";
 
 
 //Profile/user page
@@ -15,9 +16,12 @@ function User() {
   const [position, setPosition] = useState({});
   const [isDraggable, setIsDraggable] = useState(false);
   const [newsData, setNewsData] = useState([]);
+  const [desc, setDesc] = useState('');
   const toggleDraggable = () => {
     setIsDraggable((prevIsDraggable) => !prevIsDraggable); // Toggle the draggable state
   };
+
+
 
   useEffect(() => {
     const savedPosition = JSON.parse(localStorage.getItem('textBoxPosition')) || {};
@@ -28,6 +32,16 @@ function User() {
         setNewsData(data);
       })
       .catch((error) => console.error("Error fetching news:", error));
+
+    //get and set profile desc with username
+    axios.get('/account/get?user_name=' + Uname)
+      .then(resp => {
+        setDesc(resp.data[0].description);
+        console.log(resp);
+      })
+      .catch(error => {
+        console.error('Error:', error.data);
+      });
   }, []);
 
 
@@ -49,11 +63,11 @@ function User() {
           </Row>
           <Row>
             <Col lg="auto">
-              <ProfPic isDraggable={isDraggable} />
+              <ProfPic isDraggable={isDraggable} ProfPic />
             </Col>
             <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
               <Col className="borders m-3">
-                <p>this is where the description of this character goes, jorma is ismo laitela salilla</p>
+                <p>{desc}</p>
               </Col>
             </Draggable>
           </Row>
@@ -71,7 +85,7 @@ function User() {
           </Row>
           <Row>
             <Col className="link-style mt-4">
-              <button  onClick={toggleDraggable}>Edit profile</button>
+              <button onClick={toggleDraggable}>Edit profile</button>
             </Col>
           </Row>
         </Container>
@@ -83,7 +97,20 @@ function User() {
 //profile pic to be added to User();
 function ProfPic({ isDraggable }) {
   const [position, setPosition] = useState({});
-  const { userID } = useParams();
+  const [profPicture, setProfPicture] = useState([]);
+
+  useEffect(() => {
+    axios.get('/account/get?user_name=' + Uname)
+    .then(resp => {
+      const profPicString = resp.data[0].profile_picture.split(',');
+      const byteArray = profPicString.map(byte => parseInt(byte, 10));
+      const uint8Array = new Uint8Array(byteArray);
+      const blob = new Blob([uint8Array], { type: 'image/jpeg' });
+      setProfPicture( URL.createObjectURL(blob));
+    console.log(uint8Array);
+
+      })
+  }, []);
 
   useEffect(() => {
     const savedPosition = JSON.parse(localStorage.getItem('profPicPosition')) || {};
@@ -103,10 +130,10 @@ function ProfPic({ isDraggable }) {
     <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
       <div>
         <div>
-          <Image src={prof_pic} height={200} rounded className=" my-2" />
+          <Image src={profPicture} height={200} width={200} alt='no profile pic added' rounded className=" my-2" />
         </div>
         <div className="profpic-body">
-          <h4 className="profpic-heading">userid {userID} Jorma's Profilepic</h4>
+          <h4 className="profpic-heading text-center">{Uname}'s profile</h4>
         </div>
       </div>
     </Draggable>
