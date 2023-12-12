@@ -4,9 +4,15 @@ const upload = multer({dest: 'upload/'});
 
 const {addFavorite, getFavorite, deleteFavorite} = require('../postgre/favoriteMovie');
 
-router.get('/', async (req, res) => {
-
-        res.json(await getFavorite());
+router.get('/get', async (req, res) => {
+    const { fav_account_id } = req.query;
+    try {
+        res.json(await getFavorite(fav_account_id));
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.json({error: error.message}).status(500);
+    }
 });
 
 router.post('/create/:fav_account_id/:movie_id', upload.none() , async (req, res) => {
