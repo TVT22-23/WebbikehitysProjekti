@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { Col, Container, Image, Row, Form, Card } from 'react-bootstrap';
 import { GroupName } from "./Group"
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Popup } from "./Popup"
 import { jwtToken, } from "./Signals";
 import { NotLoggedIn } from "./User";
@@ -128,7 +128,34 @@ function OwnGroupGrid({ filteredGroups }) {
   );
 }
 
-function FindGroups({ groupsData }) {
+function FindGroups({groupsData}) {
+  const groupID = "name";
+
+  const [searchInput, setSearchInput] = useState('');
+  const [groups, setGroups] = useState([]);
+  const [filteredGroups, setFilteredGroups] = useState([]);
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/moviegroup/');
+        setGroups(response.data);
+      } catch (error) {
+        console.error('Error fetching groups', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const filtered = groupsData.filter(group =>
+      group.group_name.toLowerCase().includes(searchInput.toLowerCase())
+      );
+      setFilteredGroups(filtered);
+  }, [searchInput, groups]);
+
   return (
     <div>
       <Row>
@@ -136,14 +163,14 @@ function FindGroups({ groupsData }) {
       </Row>
       <Row>
         <div class="input-group rounded">
-          <input type="search" class="form-control rounded w-25" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          <input type="search" class="form-control rounded w-25" placeholder="Search" aria-label="Search" aria-describedby="search-addon" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
           <span id="search-addon">
             <i class="fas fa-search"></i>
           </span>
         </div>
       </Row>
       <Row>
-        {groupsData.map((group) => (
+        {filteredGroups.map((group) => (
           <a href="group" className="groupBox" key={group.group_id}>
             {group.group_name}
           </a>
