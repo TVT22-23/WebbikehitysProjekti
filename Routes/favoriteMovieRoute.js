@@ -15,9 +15,9 @@ router.get('/get', async (req, res) => {
     }
 });
 
-router.post('/create/:fav_account_id/:movie_id', upload.none() , async (req, res) => {
-    const fav_account_id = req.params.fav_account_id;
-    const movie_id = req.params.movie_id;
+router.post('/create', upload.none() , async (req, res) => {
+    const fav_account_id = req.body.fav_account_id;
+    const movie_id = req.body.movie_id;
 
     try {
         await addFavorite(fav_account_id, movie_id);
