@@ -1,6 +1,6 @@
 import { Link, Outlet, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Col, Container, Image, Row, Form, Card } from 'react-bootstrap';
+import { Col, Container, Image, Row, Form, Card, Button } from 'react-bootstrap';
 import ModalReview from "./Review-modal";
 import movie_poster from '../testikuvia/movie_poster.jpg';
 import disney from '../testikuvia/disney.png'
@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { MovieCard } from "./SearchFilms";
 import { FaStar } from 'react-icons/fa'
 import axios from "axios";
-import { jwtToken } from "./Signals";
+import { accountId, jwtToken } from "./Signals";
 import { NotLoggedIn } from "./User";
 
 
@@ -96,6 +96,15 @@ function Film() {
       });
 
   }
+
+  function handleAddFavourites() {
+    const favMovies = new FormData();
+    favMovies.append('fav_account_id', accountId);
+    favMovies.append('movie_id', filmID);
+
+    axios.post('favoriteMovie/create', favMovies)
+  }
+
   useEffect(() => {
     if (!filmID) {
       return; // Don't proceed if filmID is undefined
@@ -166,6 +175,8 @@ function Film() {
               </ul>
             </div>
           </div>
+          <Button onClick={handleAddFavourites}>Add to favourites</Button>
+          {/* <Button onClick={handleDeleteFavourites}>Delete from favourites</Button> */}
         </Col>
 
         <Col>
