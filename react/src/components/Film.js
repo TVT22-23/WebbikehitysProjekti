@@ -422,11 +422,11 @@ function ReviewGrid({ reviews }) {
         {reviews && reviews.length > 0 ? (
           reviews.map((review) => (
             <Col key={review.review_id}>
-              <Card style={{ width: '200px', backgroundColor: '#414141', color: 'var(--fourth-color)' }}>
+              <Card style={{ display: 'flex', float: 'left', overflow: 'hidden', width: '200px', height: '230px', padding: '10px', marginTop: '10px', marginBottom: '10px', backgroundColor: '#414141', color: 'var(--fourth-color)' }}>
                 {/* Use correct property names */}
                 <Card.Title>{review.user_name}</Card.Title>
                 <Card.Text>{review.text_review}</Card.Text>
-                <button style={{ padding: '7px', width: 'fit-content' }} onClick={() => handleShow(review)}>
+                <button className="position-absolute bottom-0 start-0 m-2" style={{ borderRadius: '10px', padding: '7px', width: 'fit-content' }} onClick={() => handleShow(review)}>
                   Full review
                 </button>
               </Card>
