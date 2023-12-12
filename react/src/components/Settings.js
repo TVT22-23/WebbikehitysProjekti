@@ -1,8 +1,8 @@
-import { Col, Form, Row, Button } from "react-bootstrap";
-import { Link, Outlet } from "react-router-dom";
-import { accountId, jwtToken } from "./Signals";
+import { Col, Form, Row, Button, Image } from "react-bootstrap";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Uname, accountId, jwtToken } from "./Signals";
 import { NotLoggedIn } from "./User";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios';
 
 
@@ -27,38 +27,57 @@ function Settings() {
 //Usersettings function to be added to User()
 function USettings() {
 
-    const [user_name, setUser_name] = useState('');
+    const [NewUser_name, setNewUser_name] = useState(Uname);
     const [description, setDescription] = useState('');
-    const [profpic, setProfpic] = useState(null);
+    const [profpic, setProfpic] = useState([]);
+    const navigate = useNavigate();
+
+
+    //get and set desc
+    useEffect(() => {
+        axios.get('/account/get?user_name=' + Uname)
+            .then(resp => {
+                setDescription(resp.data[0].description);
+                console.log(resp.data[0]);
+            })
+        }, [])
+
 
     function handleDeleteUser() {
-        // const userNameData = new FormData()
-        // userNameData.append(account)
-        const userNameData = new FormData();
-            // .then(resp => setUser_name(resp.data.user_name))
-        axios.post('account/delete/', userNameData)
+        axios.delete('account/delete/' + Uname)
+            .then(resp => {
+                navigate(`/`);
+                jwtToken.value = '';
+            })
     }
 
-    function handleSettingChanges() {
+    async function handleSettingChanges() {
         const reader = new FileReader();
-        reader.onload = function (event) {
-            const arrayBuffer = event.target.result;
-            const byteArray = new Uint8Array(arrayBuffer);
+        reader.onload = async function (event) {
+            const byteArray = new Uint8Array(event.target.result);
+
+            // const blob = new Blob([byteArray], { type: 'image/jpeg' });
+            // setProfpic( URL.createObjectURL(blob));
+
 
             const newUserSettings = new FormData();
-            newUserSettings.append('user_name', user_name);
-            newUserSettings.append('description', description);
+            newUserSettings.append('user_name', NewUser_name);
             newUserSettings.append('profile_picture', byteArray);
+            newUserSettings.append('description', description);
             newUserSettings.append('account_id', accountId);
 
-            // axios.post('account/update', newUserSettings);
-
-            console.log([...newUserSettings]);
-        };
-        if (profpic) {
+            try {
+                await axios.post('account/update', newUserSettings);
+                console.log('Update successful');
+              } catch (error) {
+                console.error('Error updating settings:', error);
+              }
+              console.log(byteArray);
+            };
+        
             reader.readAsArrayBuffer(profpic);
         }
-    }
+          
     return (
         <div className="link-style">
 
@@ -72,10 +91,10 @@ function USettings() {
                             <Form.Label> Change username</Form.Label>
                             <Form.Control
                                 type="username"
-                                placeholder={user_name}
+                                placeholder={NewUser_name}
                                 autoFocus
-                                value={user_name}
-                                onChange={e => setUser_name(e.target.value)}
+                                value={NewUser_name}
+                                onChange={e => setNewUser_name(e.target.value)}
                             />
 
                         </Form.Group>
@@ -107,6 +126,7 @@ function USettings() {
                     <Button onClick={handleDeleteUser}>Delete user</Button>
                 </Row>
             </Form>
+            <Image src={profpic} height={200} width={200} rounded/>
         </div >
     )
 
