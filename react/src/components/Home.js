@@ -1,12 +1,14 @@
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Card, Col, Container, Row, Image } from "react-bootstrap";
 import movie_poster from "../testikuvia/movie_poster.jpg"
 import ModalReview from "./Review-modal";
 import ModalToGroup from "./AddToGroup-modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MovieCard } from "./SearchFilms";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { jwtToken } from "./Signals";
+import { getArticle } from "../finnkino";
+
 
 
 
@@ -22,7 +24,7 @@ function Home() {
           <ReviewGrid />
         <Row>
           <h3 className="mt-4" style={{ color: '#CA3e47', borderBottom: '1px solid #CA3E47' }}>News</h3>
-          <NewsGrid />
+          <News />
         </Row>
       </Container>
 
@@ -249,6 +251,50 @@ function NewsGrid() {
         </Card>
       </Col>
     </Row>
+  )
+}
+
+function News(){
+  const [newsData, setNewsData] = useState([]);
+  useEffect(() => {
+    getArticle("https://www.finnkino.fi/xml/News")
+      .then((data) => {
+        console.log('Fetched News Data:', data);
+        setNewsData(data);
+      })
+      .catch((error) => console.error("Error fetching news:", error));
+  }, []);
+
+    // Show only the 4 newest news articles
+    const latestNews = newsData.slice(0, 4);
+
+    // Handle image click
+    const handleImageClick = (articleURL) => {
+      // Open the third-party URL in a new tab
+      window.open(articleURL, '_blank');
+    };
+  return(
+    <div>
+      <div>
+        <Container>
+          <Row>
+            {latestNews.map((newsItem, index) => (
+              <Col key={index}>
+                <Image
+                  src={newsItem.imageURL}
+                  alt="News Image"
+                  thumbnail
+                  className="my-2"
+                  onClick={() => handleImageClick(newsItem.articleUrl)}
+                  style={{ cursor: "pointer" }}
+                />
+                <h5>{newsItem.title}</h5>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </div>
+    </div>
   )
 }
 
