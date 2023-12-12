@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const {addGroup, getGroup, deleteGroup, changeOwner} = require('../postgre/movieGroup');
 
 router.get('/', async (req, res) => {
-
+        console.log("Got to group get");
         res.json(await getGroup());
 });
 
