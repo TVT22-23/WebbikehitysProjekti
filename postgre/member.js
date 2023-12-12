@@ -22,11 +22,13 @@ async function getMember(){
     return rows;
 }
 
-async function getMemberByGroup(){
-    const result = await pgPool.query(sql.GET_MEMBER_BY_GROUP);
+async function getMemberByGroup(group_groupid){
+    if(!group_groupid){
+        return[];
+    }
+    const result = await pgPool.query(sql.GET_MEMBER_BY_GROUP, [group_groupid]);
     const rows = result.rows;
-    //console.log(rows);
-    return rows;
+    return rows;  
 }
 
 

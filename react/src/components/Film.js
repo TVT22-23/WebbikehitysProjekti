@@ -65,6 +65,32 @@ function Film() {
         console.error('Error saving review:', error);
       });
   };
+  const handleAddToGroup = (groupId) => {
+    console.log("groupid:", groupId);
+    const reviewData = {
+      text_review: reviewText,
+      rating: 8.5,
+      recommend: null,
+      movie_id: filmID,
+      groupId:groupId,
+    };
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+    };
+
+    axios.post('/review/addReview', reviewData, { headers })
+      .then((response) => {
+
+        console.log('Review saved successfully:', response.data);
+      })
+      .catch((error) => {
+
+        console.error('Error saving review:', error);
+      });
+   
+  };
+
+
   const getActors = (url) => {
     return fetch(url)
       .then(res => res.json())
@@ -182,7 +208,7 @@ function Film() {
                 <Row>
                   <Rating />
                   <SubmitButton onSaveReview={handleSaveReview} />
-                  <AddToGroupButton />
+                  <AddToGroupButton onAddToGroup={handleAddToGroup} />
                   <Col />
                 </Row>
               </div>
@@ -318,7 +344,7 @@ function SubmitButton({ onSaveReview }) {
 }
 
 
-function AddToGroupButton() {
+function AddToGroupButton({onAddToGroup}) {
   const [showModal, setShowModal] = useState(false);
   const [reviewID, setReviewID] = useState(null);
 
@@ -336,7 +362,7 @@ function AddToGroupButton() {
   return (
     <div>
       <button class="button" onClick={() => handleShow(1)}>Add to a group</button>
-      <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} />
+      <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} onAddToGroup={onAddToGroup}/>
     </div>
   )
 }
@@ -445,4 +471,4 @@ function ReviewGrid({ reviews }) {
   );
 }
 
-export { Film, Crew, Cast, MovieGrid };
+export { Film, Crew, Cast, MovieGrid, ModalReview };

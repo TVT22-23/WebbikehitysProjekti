@@ -9,6 +9,7 @@ import axios from "axios";
 import { accountId } from "./Signals";
 
 
+
 const Groups = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [groupName, setGroupName] = useState('');
@@ -49,7 +50,7 @@ const Groups = () => {
   const filteredGroups = groupsData.filter(group => {
     return ownGroups.some(ownGroup => ownGroup.group_groupid === group.group_id);   
   });
-  console.log("Filetered:",filteredGroups);
+
   const handleCreateGroup = async () => {
     // You should include your secret key in the headers
     const headers = {
@@ -144,9 +145,9 @@ function FindGroups({ groupsData }) {
       </Row>
       <Row>
         {groupsData.map((group) => (
-          <a href="group" className="groupBox" key={group.group_id}>
+          <Link to={`/group/${group.group_id}`} className="groupBox" key={group.group_id}>
             {group.group_name}
-          </a>
+          </Link>
         ))}
       </Row>
     </div>
