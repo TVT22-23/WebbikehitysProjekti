@@ -1,13 +1,27 @@
 const router = require('express').Router();
 const multer = require('multer');
 const upload = multer({dest: 'upload/'});
+const jwt = require('jsonwebtoken');
 
-
-const {addMember, getMember, deleteMember} = require('../postgre/member');
+const {addMember, getMember, deleteMember, getMemberByAccount} = require('../postgre/member');
 
 router.get('/', async (req, res) => {
 
         res.json(await getMember());
+});
+router.get('/groups', async (req, res) => {
+    try {
+        console.log("Got to groups");
+        const authorizationHeader = req.headers.authorization;
+        const jwtToken = authorizationHeader.split(' ')[1];
+        const decodedToken = jwt.decode(jwtToken);
+        console.log(decodedToken);
+        const groups = await getMemberByAccount(decodedToken.account_id);
+        res.json(groups);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
 });
 
 router.post('/create/:account_accountid/:group_groupid', upload.none() , async (req, res) => {
