@@ -3,7 +3,7 @@ const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 const jwt = require('jsonwebtoken');
 
-const {addMember, getMember, deleteMember, getMemberByAccount} = require('../postgre/member');
+const {addMember, getMember, deleteMember, getMemberByAccount, getMemberByGroup} = require('../postgre/member');
 
 router.get('/', async (req, res) => {
 
@@ -21,6 +21,10 @@ router.get('/groups', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+router.get('/:groupId', async (req, res) => {
+    const c = req.params.groupId;
+    res.json(await getMemberByGroup(c));
+}); 
 
 router.post('/create/:account_accountid/:group_groupid', upload.none() , async (req, res) => {
     const account_accountid = req.params.account_accountid;
