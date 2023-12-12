@@ -593,3 +593,37 @@ input[type=radio]{
 .star{
   cursor: pointer;
 }
+
+.editProfile{
+  border-radius: 10px;
+  border-color: #CA3E47;
+  border-style: solid;
+  background-color: #414141;
+  color: #ffffff;
+  height: 40px;
+  width: auto;
+  margin: 10px;
+}
+
+.editProfile:hover{
+  background-color: #525252;
+}
+
+.editProfile:active{
+  background-color: #525252;
+}
+
+.reviews{
+  border-color: #CA3E47;
+  border-style: solid;
+  border-width: 2px;
+  background-color: #2b2b2b;
+  height: auto;
+  width: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  display: block;
+  align-items: center;
+  text-align: center;
+}
