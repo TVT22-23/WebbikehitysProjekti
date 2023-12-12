@@ -3,7 +3,8 @@ const { pgPool } = require('./connection');
 const sql = {
     INSERT_FAVORITE: 'INSERT INTO favoritemovie (fav_account_id, movie_id) VALUES ($1, $2)',
     GET_FAVORITE: 'SELECT movie_id FROM favoritemovie WHERE fav_account_id = $1',
-    DELETE_FAVORITE: 'DELETE FROM favoritemovie WHERE fav_id=$1'
+    DELETE_FAVORITE: 'DELETE FROM favoritemovie WHERE fav_id=$1',
+    DELETE_SPECIFIC: 'DELETE FROM favoritemovie WHERE fav_account_id=$1 AND movie_id=$2'
 }
 
 //getFavorite();                                                                                    //testing
@@ -23,5 +24,9 @@ async function getFavorite(fav_account_id){
 async function deleteFavorite(fav_id) {
     await pgPool.query(sql.DELETE_FAVORITE, [fav_id]);
 }
+
+async function deleteSpecific(fav_account_id, movie_id) {
+    await pgPool.query(sql.DELETE_SPECIFIC, [fav_account_id, movie_id]);
+}
     
-module.exports = {addFavorite, getFavorite, deleteFavorite};
+module.exports = {addFavorite, getFavorite, deleteFavorite, deleteSpecific};
