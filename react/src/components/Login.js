@@ -131,7 +131,7 @@ function Login() {
         <div className="link-style login-page">
             {jwtToken.value.length === 0 ? <LoginForm /> :
                 <div>
-                    <h2 className="my-5" >Welcome our dearly beloved user</h2>
+                    <h2 className="my-5" >Welcome our dearly beloved {Uname}</h2>
                     <button onClick={() => jwtToken.value = ''}>Logout</button>
                 </div>}
         </div>

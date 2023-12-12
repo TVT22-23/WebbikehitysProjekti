@@ -37,7 +37,6 @@ function User() {
     axios.get('/account/get?user_name=' + Uname)
       .then(resp => {
         setDesc(resp.data[0].description);
-        console.log(resp);
       })
       .catch(error => {
         console.error('Error:', error.data);
@@ -80,7 +79,7 @@ function User() {
             <Col >
               <ExtraBox ExtraBox isDraggable={isDraggable} newsData={newsData} />
               
-              <button class="editProfile" onClick={toggleDraggable}>edit profile</button>
+              <button className="editProfile" onClick={toggleDraggable}>edit profile</button>
             </Col>
           </Row>
           <Row>
@@ -107,7 +106,6 @@ function ProfPic({ isDraggable }) {
       const uint8Array = new Uint8Array(byteArray);
       const blob = new Blob([uint8Array], { type: 'image/jpeg' });
       setProfPicture( URL.createObjectURL(blob));
-    console.log(uint8Array);
 
       })
   }, []);
@@ -130,7 +128,7 @@ function ProfPic({ isDraggable }) {
     <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
       <div>
         <div>
-          <Image src={profPicture} height={200} width={200} alt='no profile pic added' rounded className=" my-2" />
+          <Image src={profPicture} height={200} width={200} alt='loading' rounded className=" my-2" />
         </div>
         <div className="profpic-body">
           <h4 className="profpic-heading text-center">{Uname}'s profile</h4>

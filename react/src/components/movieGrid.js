@@ -3,31 +3,47 @@ import Draggable from 'react-draggable';
 import { Container, Row, Col } from 'react-bootstrap';
 import { MovieCard } from "./SearchFilms";
 import axios from "axios";
-import { accountId } from "./Signals";
+import { Uname, accountId } from "./Signals";
+import { useNavigate } from "react-router-dom";
 
 function MovieGrid({ isDraggable, id }) {
-  const [favMovieID, setFavMovieID] = useState([]);
+  const [favMovieData, setFavMovieData] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    axios.get('/favoriteMovie/get?fav_account_id=' + accountId)
-    .then(resp => {
-      setFavMovieID(resp.data.map(f => ({
-        ID: f.movieID
-      })));
-      console.log(favMovieID.ID);
-      /*
-      for(let i=0;i<4;i++){
-        axios.get(`https://api.themoviedb.org/3/movie/${favMovieID[i]}?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
-        .then(resp => {
-          console.log(resp.data);
-        })
-      }
-      */
-    })
-  },[])
-  const movieID = 1;
-  const Poster = 'aAXit9k1rTBmmVbj6Zzm2nF5TDR.jpg';
-  const Title = 'Decision to Leave';
-  const Rating = 10;
+    axios.get('favoriteMovie/get?fav_account_id=' + accountId)
+      .then(resp => {
+        const limit = Math.min(resp.data.length, 4);
+
+        for (let i = 0; i < limit; i++) {
+          getDataFromAPI(resp.data[i]);
+        }
+
+        if (limit < 4 ) {
+          const left = 4 - limit;
+          for (let i = 0; i < left; i++) {
+            getDataFromAPI({movie_id: 600748}); //filler movie
+          }
+        }
+      })
+  }, []);
+
+  function getDataFromAPI(id) {
+    console.log(id.movie_id);
+    const movie_id= id.movie_id || id;
+    axios.get(`https://api.themoviedb.org/3/movie/${encodeURIComponent(movie_id)}?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
+      .then(resp => {
+        console.log(resp.data);
+        const movieData = {
+          Rating: resp.data.vote_average,
+          movieID: resp.data.id,
+          Title: resp.data.title,
+          Poster: resp.data.poster_path
+        }
+        setFavMovieData(prevData => [...prevData, movieData])
+      })
+  }
+
   const [position, setPosition] = useState({});
 
   useEffect(() => {
@@ -49,36 +65,24 @@ function MovieGrid({ isDraggable, id }) {
     <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
       <div className="borders movGrid">
         <Container>
-          <Row>
-          <Col>
-            <MovieCard    ID={movieID}
-                            Title={Title}
-                            Poster={Poster}
-                            Rating={Rating}/>
-          </Col>
-          <Col>
-          <MovieCard    ID={movieID}
-                            Title={Title}
-                            Poster={Poster}
-                            Rating={Rating}/>
-          </Col>
-          <Col>
-          <MovieCard    ID={movieID}
-                            Title={Title}
-                            Poster={Poster}
-                            Rating={Rating}/>
-          </Col>
-          <Col>
-          <MovieCard    ID={movieID}
-                            Title={Title}
-                            Poster={Poster}
-                            Rating={Rating}/>
-          </Col>
+          <h4>Favourite movies</h4>
+          <Row >
+            {favMovieData.map(f =>
+              <Col key={f.movieID}>
+                <MovieCard
+                  ID={f.movieID}
+                  Title={f.Title}
+                  Poster={f.Poster}
+                  Rating={f.Rating} />
+              </Col>
+            )}
           </Row>
         </Container>
       </div>
     </Draggable>
   );
 }
+
+
 
 export default MovieGrid;
