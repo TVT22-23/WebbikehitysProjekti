@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Button } from 'react-bootstrap';
 import { NewsGrid, ReviewGrid } from './Home';
 import prof_pic from '../testikuvia/prof_pic.jpg';
 import { Col, Card } from 'react-bootstrap';
@@ -28,6 +28,10 @@ function Group() {
     setSelectedReview(null);
     setShowReviewModal(false);
   };
+  function handleRequestToJoin() {
+    axios.post(`/memberRequest/create/${accountId.value}/${groupId}`);
+    console.log("request sent!!!!");
+  }
 
   useEffect(() => {
     const fetchGroupData = async () => {
@@ -120,6 +124,9 @@ function Group() {
         <Row>
           <GroupName groupName={groupData.group_name} />
           <Members memberData={memberData} />
+          <Col>
+            <Button onClick={() => handleRequestToJoin(groupId)}>Send Request</Button>
+          </Col>
         </Row>
         <Row>
           <Row>
@@ -191,7 +198,7 @@ function GeviewGrid({ reviewData, openModal }) {
                 {/* Use correct property names */}
                 <Card.Title>{review.user_name}</Card.Title>
                 <Card.Text>{review.text_review}</Card.Text>
-                <button style={{ padding: '7px', width: 'fit-content' }} onClick={() => openModal(review)}>
+                <button className="button" style={{ padding: '7px', width: 'fit-content', margin:'2px'  }} onClick={() => openModal(review)}>
                   Full review
                 </button>
               </Card>
@@ -232,13 +239,13 @@ function MemberRequests({ memberRequests }) {
               <Card style={{ width: '200px', backgroundColor: '#414141', color: 'var(--fourth-color)' }}>
                 <Card.Title>{`Request from ${request.senderName || 'Unknown Sender'}`}</Card.Title>
                 {/* Add other details if needed */}
-                <button
+                <button className="button"
                   style={{ padding: '7px', width: 'fit-content', marginRight: '5px' }}
                   onClick={() => handleActionClick(request.request_id, 'accept')}
                 >
                   Accept
                 </button>
-                <button
+                <button className="button"
                   style={{ padding: '7px', width: 'fit-content' }}
                   onClick={() => handleActionClick(request.request_id, 'reject')}
                 >
@@ -252,6 +259,8 @@ function MemberRequests({ memberRequests }) {
     </div>
   );
 }
+
+
 
 export default Group;
 export { GroupName };

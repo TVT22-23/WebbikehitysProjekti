@@ -1,6 +1,7 @@
 import { Col, Container, Modal, Row } from "react-bootstrap";
 import movie_poster from '../testikuvia/movie_poster.jpg';
 import { useEffect, useState } from "react";
+import { FaStar } from 'react-icons/fa';
 
 //testi dataa
 
@@ -44,6 +45,7 @@ function ModalReview({ id, show, handleClose, review }) {
                     <Row>
                         <Col lg={8}>
                             <p> {review?.text_review}</p>
+                            <StarRating rating={review?.rating} />
                         </Col>
                     </Row>
                 </Container>
@@ -56,5 +58,17 @@ function ModalReview({ id, show, handleClose, review }) {
         </Modal>
     );
 }
-
-export default ModalReview;
+function StarRating({ rating }) {
+    return (
+      <div className="star-rating">
+        {[...Array(5)].map((_, index) => (
+          <FaStar
+            key={index}
+            size={20}
+            color={index + 1 <= rating ? "#ffc107" : "#e4e5e9"}
+          />
+        ))}
+      </div>
+    );
+  }
+export default ModalReview

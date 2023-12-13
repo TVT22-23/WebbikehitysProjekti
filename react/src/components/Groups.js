@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { Col, Container, Image, Row, Form, Card,} from 'react-bootstrap';
+import { Col, Container, Image, Row, Form, Card, } from 'react-bootstrap';
 import { GroupName } from "./Group"
 import { useEffect, useState } from "react";
 import { Popup } from "./Popup"
@@ -48,7 +48,7 @@ const Groups = () => {
   }, []);
 
   const filterGroups = groupsData.filter(group => {
-    return ownGroups.some(ownGroup => ownGroup.group_groupid === group.group_id);   
+    return ownGroups.some(ownGroup => ownGroup.group_groupid === group.group_id);
   });
 
   const handleCreateGroup = async () => {
@@ -72,45 +72,45 @@ const Groups = () => {
 
   return (
     <Container>
-    <div>
-      <Row>
-        <button className="groupBox" onClick={() => setButtonPopup(true)}>
-          Create group
-        </button>
-        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-          <h3 style={{textAlign:'center', marginTop:'40px'}}>Create group</h3>
-          <form class="popUp">
-            <label>
-              <h3 style={{textAlign:'center', margin:'10px'}}>Group name:</h3>
-              <input
-              class="groupName"
-                type="text"
-                name="name"
-                value={groupName}
-                onChange={(e) => setGroupName(e.target.value)}
-              />
-            </label>
-            <Row>
-              <h3 style={{textAlign:'center', margin:'10px'}}>Description</h3>
-              <textarea class="groupDescription"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              >
-              </textarea>
-            </Row>
-            <button class="createGroupBtn" type="button" onClick={handleCreateGroup}>
-              Create Group
-            </button>
-          </form>
-        </Popup>
-      </Row>
-      <Row>
-        <OwnGroupGrid filteredGroups={filterGroups} />
-      </Row>
-      <Row>
-        <FindGroups groupsData={groupsData} ownGroups={ownGroups} />
-      </Row>
-    </div>
+      <div>
+        <Row>
+          <button className="groupBox" onClick={() => setButtonPopup(true)}>
+            Create group
+          </button>
+          <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+            <h3 style={{ textAlign: 'center', marginTop: '40px' }}>Create group</h3>
+            <form class="popUp">
+              <label>
+                <h3 style={{ textAlign: 'center', margin: '10px' }}>Group name:</h3>
+                <input
+                  class="groupName"
+                  type="text"
+                  name="name"
+                  value={groupName}
+                  onChange={(e) => setGroupName(e.target.value)}
+                />
+              </label>
+              <Row>
+                <h3 style={{ textAlign: 'center', margin: '10px' }}>Description</h3>
+                <textarea class="groupDescription"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                >
+                </textarea>
+              </Row>
+              <button class="createGroupBtn" type="button" onClick={handleCreateGroup}>
+                Create Group
+              </button>
+            </form>
+          </Popup>
+        </Row>
+        <Row>
+          <OwnGroupGrid filteredGroups={filterGroups} />
+        </Row>
+        <Row>
+          <FindGroups groupsData={groupsData} ownGroups={ownGroups} />
+        </Row>
+      </div>
     </Container>
   );
 };
@@ -131,7 +131,7 @@ function OwnGroupGrid({ filteredGroups }) {
   );
 }
 
-function FindGroups({groupsData, ownGroups}) {
+function FindGroups({ groupsData, ownGroups }) {
   const [searchInput, setSearchInput] = useState('');
   const [groups, setGroups] = useState([]);
   const [filteredGroups, setFilteredGroups] = useState([]);
@@ -159,7 +159,7 @@ function FindGroups({groupsData, ownGroups}) {
         group.group_name.toLowerCase().includes(searchInput.toLowerCase()) &&
         !ownGroups.some((ownGroup) => ownGroup.group_groupid === group.group_id)
     );
-      setFilteredGroups(filtered);
+    setFilteredGroups(filtered);
   }, [searchInput, groups]);
 
   if (loading) {
@@ -178,20 +178,18 @@ function FindGroups({groupsData, ownGroups}) {
           </span>
         </div>
       </Row>
-      <Row>
-      {filteredGroups.map((group) => (
-          <div key={group.group_id} className="groupBox">
-          <span>{group.group_name}</span>
-          <button onClick={() => handleRequestToJoin(group.group_id)}>Send Request</button>
-        </div>
-        ))}
-      </Row>
+      <div>
+        <Row>
+          {filteredGroups.map((group) => (
+            <Link to={`/group/${group.group_id}`} className="groupBox" key={group.group_id}>
+              {group.group_name}
+            </Link>
+          ))}
+        </Row>
+      </div>
     </div>
   )
 }
-function handleRequestToJoin(groupId){
-  axios.post(`/memberRequest/create/${accountId.value}/${groupId}`);
-  console.log("request sent!!!!");
-}
+
 
 export default Groups;

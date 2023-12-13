@@ -2,10 +2,8 @@ const router = require('express').Router();
 const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 const bcrypt = require('bcrypt');                                                           //used to hash our account informarion
-const jwt = require('jsonwebtoken');                                                        //used for login webtoken
-
-const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getAccountNameById} = require('../postgre/account');   //getting functions from postgre file - included in every route file
-const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getUname} = require('../postgre/account');   //getting functions from postgre file - included in every route file
+const jwt = require('jsonwebtoken');                                                        //used for login webtoken                                                                
+const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getUname, getAccountNameById} = require('../postgre/account');   //getting functions from postgre file - included in every route file
 
 router.get('/get', async (req, res) => {                                                       //GET-endpoint - included in every route file
     const { user_name } = req.body;
@@ -22,6 +20,8 @@ router.get('/get', async (req, res) => {                                        
 router.get('/:account_id', async (req, res) => {                                                       
     const c = req.params.account_id;
     res.json(await getAccountNameById(c));
+
+});
 router.get('/getUname', async (req, res) => {                                                       
     const { account_id } = req.query;
 
