@@ -4,6 +4,7 @@ const axios = require('axios')                                                  
 const sql = {                                                                                           //contains sql-queries for functions used in the postgre folder
     INSERT_ACCOUNT: 'INSERT INTO account (user_name, password, email) VALUES ($1, $2, $3)',             //included at the top of every postgre file
     GET_ACCOUNT: 'SELECT account_id, email, description, layout, profile_picture FROM account WHERE user_name=$1',
+    GET_UNAME: 'SELECT user_name FROM account WHERE account_id=$1',
     GET_PASSWORD: 'SELECT password FROM account WHERE user_name=$1',
     DELETE_ACCOUNT: 'DELETE FROM account WHERE user_name=$1',
     UPDATE_ACCOUNT: 'UPDATE account SET user_name = $1, description = $2, profile_picture = $3 WHERE account_id=$4',
@@ -32,6 +33,12 @@ async function getAccount(user_name){                                           
     return rows;
 }
 
+async function getUname(account_id){                                                                   //getting data from database - included in every postgre file
+    const result = await pgPool.query(sql.GET_UNAME,[account_id]);
+    const rows = result.rows;
+    return rows;
+}
+
 async function checkUser(user_name) {                                                                   //getting the user password for login from database
     const result = await pgPool.query(sql.GET_PASSWORD, [user_name]);
 
@@ -54,4 +61,4 @@ async function updateLayout(layout, account_id) {
     await pgPool.query(sql.UPDATE_LAYOUT, [layout, account_id]);
 }
 
-module.exports = {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout};       //exporting functions to be used in Route-files - included in every postgre file
+module.exports = {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getUname};       //exporting functions to be used in Route-files - included in every postgre file
