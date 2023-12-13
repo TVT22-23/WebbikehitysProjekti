@@ -70,17 +70,19 @@ const Groups = () => {
   };
 
   return (
+    <Container>
     <div>
       <Row>
         <button className="groupBox" onClick={() => setButtonPopup(true)}>
           Create group
         </button>
         <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-          <h3>Create group</h3>
-          <form>
+          <h3 style={{textAlign:'center', marginTop:'40px'}}>Create group</h3>
+          <form class="popUp">
             <label>
-              Group name:
+              <h3 style={{textAlign:'center', margin:'10px'}}>Group name:</h3>
               <input
+              class="groupName"
                 type="text"
                 name="name"
                 value={groupName}
@@ -88,14 +90,14 @@ const Groups = () => {
               />
             </label>
             <Row>
-              <textarea
+              <h3 style={{textAlign:'center', margin:'10px'}}>Description</h3>
+              <textarea class="groupDescription"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               >
-                Description
               </textarea>
             </Row>
-            <button type="button" onClick={handleCreateGroup}>
+            <button class="createGroupBtn" type="button" onClick={handleCreateGroup}>
               Create Group
             </button>
           </form>
@@ -107,8 +109,8 @@ const Groups = () => {
       <Row>
         <FindGroups groupsData={groupsData} />
       </Row>
-
     </div>
+    </Container>
   );
 };
 
