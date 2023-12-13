@@ -5,7 +5,7 @@ import Draggable from 'react-draggable';
 import React, { useEffect, useState } from "react";
 import MovieGrid from "./movieGrid";
 import { getArticle } from "../finnkino";
-import { Uname, jwtToken } from "./Signals";
+import { Uname, accountId, jwtToken } from "./Signals";
 import axios from "axios";
 
 
@@ -19,11 +19,25 @@ function User() {
   const [desc, setDesc] = useState('');
   const toggleDraggable = () => {
     setIsDraggable((prevIsDraggable) => !prevIsDraggable); // Toggle the draggable state
+    const Positions = new FormData();
+    const local = JSON.stringify(localStorage);
+    Positions.append('layout', local);
+    Positions.append('account_id', accountId.value);
+    axios.post('/account/updateLayout', Positions);
   };
 
 
 
   useEffect(() => {
+    axios.get('/account/get?user_name=' + Uname)
+    .then(res => {
+      console.log(res.data[0].layout.textBoxPosition)
+      localStorage.setItem('extraBoxPosition', res.data[0].layout.extraBoxPosition)
+      localStorage.setItem('profPicPosition', res.data[0].layout.profPicPosition)
+      localStorage.setItem('textBoxPosition', res.data[0].layout.textBoxPosition)
+      localStorage.setItem('userMovieGridMovieGridPosition', res.data[0].layout.userMovieGridMovieGridPosition)
+    })
+
     const savedPosition = JSON.parse(localStorage.getItem('textBoxPosition')) || {};
     setPosition(savedPosition);
     getArticle("https://www.finnkino.fi/xml/News")
