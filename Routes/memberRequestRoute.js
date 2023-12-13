@@ -5,9 +5,9 @@ const upload = multer({dest: 'upload/'});
 
 const {addMemberRequest, getMemberRequest, deleteMemberRequest, handleMemberRequest} = require('../postgre/memberRequest');
 
-router.get('/', async (req, res) => {
-
-        res.json(await getMemberRequest());
+router.get('/:groupID', async (req, res) => {
+    const c = req.params.groupID;
+    res.json(await getMemberRequest(c));
 });
 
 router.post('/create/:account_accountid/:group_groupid', upload.none() , async (req, res) => {

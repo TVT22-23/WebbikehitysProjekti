@@ -47,7 +47,7 @@ const Groups = () => {
 
   }, []);
 
-  const filteredGroups = groupsData.filter(group => {
+  const filterGroups = groupsData.filter(group => {
     return ownGroups.some(ownGroup => ownGroup.group_groupid === group.group_id);   
   });
 
@@ -103,10 +103,10 @@ const Groups = () => {
         </Popup>
       </Row>
       <Row>
-        <OwnGroupGrid filteredGroups={filteredGroups} />
+        <OwnGroupGrid filteredGroups={filterGroups} />
       </Row>
       <Row>
-        <FindGroups groupsData={groupsData} />
+        <FindGroups groupsData={groupsData} ownGroups={ownGroups} />
       </Row>
 
     </div>
@@ -129,7 +129,7 @@ function OwnGroupGrid({ filteredGroups }) {
   );
 }
 
-function FindGroups({groupsData}) {
+function FindGroups({groupsData, ownGroups}) {
   const [searchInput, setSearchInput] = useState('');
   const [groups, setGroups] = useState([]);
   const [filteredGroups, setFilteredGroups] = useState([]);
@@ -152,16 +152,17 @@ function FindGroups({groupsData}) {
   }, []);
 
   useEffect(() => {
-    const filtered = groupsData.filter(group =>
-      group.group_name.toLowerCase().includes(searchInput.toLowerCase())
-      );
+    const filtered = groupsData.filter(
+      (group) =>
+        group.group_name.toLowerCase().includes(searchInput.toLowerCase()) &&
+        !ownGroups.some((ownGroup) => ownGroup.group_groupid === group.group_id)
+    );
       setFilteredGroups(filtered);
   }, [searchInput, groups]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
-  
   return (
     <div>
       <Row>
@@ -177,12 +178,18 @@ function FindGroups({groupsData}) {
       </Row>
       <Row>
       {filteredGroups.map((group) => (
-          <Link to={`/group/${group.group_id}`} className="groupBox" key={group.group_id}>{group.group_name}
-          </Link>
+          <div key={group.group_id} className="groupBox">
+          <span>{group.group_name}</span>
+          <button onClick={() => handleRequestToJoin(group.group_id)}>Send Request</button>
+        </div>
         ))}
       </Row>
     </div>
   )
+}
+function handleRequestToJoin(groupId){
+  axios.post(`/memberRequest/create/${accountId.value}/${groupId}`);
+  console.log("request sent!!!!");
 }
 
 export default Groups;
