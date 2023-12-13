@@ -36,7 +36,9 @@ function LoginForm() {
         axios.post('/account/login', loginData)
         .then(resp => {
             jwtToken.value = resp.data.jwtToken;
+            accountId.value = resp.data.currentAccId;
             console.log("JWT Token:", jwtToken.value); // Log the JWT token value
+            console.log(accountId.value);
         })
         .catch(error => console.log(error.data));
     };

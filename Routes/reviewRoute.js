@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
 
 router.get('/group/:groupId', async (req, res) => {
     let groupId = req.params.groupId;
-
     try {
         const reviews = await getReviewsByGoupId(groupId);
         res.json(reviews);

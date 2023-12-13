@@ -5,17 +5,19 @@ import { Container, Row } from 'react-bootstrap';
 import { NewsGrid, ReviewGrid } from './Home';
 import prof_pic from '../testikuvia/prof_pic.jpg';
 import { Col, Card } from 'react-bootstrap';
-import ModalReview from './Review-modal';
+import ModalReview from './Review-modal'
+import { accountId } from './Signals';
+
 
 function Group() {
   const { groupId } = useParams();
   console.log(groupId);
+  console.log("AccoundId in group: ", accountId.value);
   const [groupData, setGroupData] = useState(null);
   const [memberData, setMemberData] = useState(null);
   const [reviewData, setReviewData] = useState(null);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [selectedReview, setSelectedReview] = useState(null);
-
   const handleShowReviewModal = (review) => {
     setSelectedReview(review);
     setShowReviewModal(true);
@@ -34,6 +36,7 @@ function Group() {
       } catch (error) {
         console.error('Error fetching group data:', error);
       }
+      
     };
     const fetchMemberData = async () => {
       try {
@@ -57,16 +60,17 @@ function Group() {
     fetchGroupData();
     fetchReviewData();
   }, [groupId]);
-
   if (!groupData) {
     return <div>Loading...</div>;
   }
   if (!memberData) {
     return <div>Loading...</div>;
   }
-  console.log("data: ", groupData);
 
-  console.log("Reviews: ", reviewData);
+  
+  const isGroupOwner = groupData.owner_id === accountId.value;
+  console.log("AccVal:", accountId.value, "Owner:", groupData.owner);
+  
   return (
     <div>
       <Container>
@@ -76,9 +80,11 @@ function Group() {
         </Row>
         <Row>
           <Row>
-            {groupData.description}
+            <Col className="borders m-3">
+              {groupData.description}
+            </Col>
           </Row>
-          <GeviewGrid reviewData={reviewData} openModal={handleShowReviewModal}  />
+          <GeviewGrid reviewData={reviewData} openModal={handleShowReviewModal} />
           {selectedReview && (
             <ModalReview
               id={selectedReview.review_id}
@@ -88,6 +94,7 @@ function Group() {
             />
           )}
         </Row>
+        {isGroupOwner && <MemberRequests/>}
       </Container>
     </div>
   );
@@ -151,6 +158,19 @@ function GeviewGrid({ reviewData, openModal }) {
       </Row>
     </Container>
   );
+}
+
+function MemberRequests(){
+  return(
+    <Container>
+      <Row>
+        <p>Liibalaaba request</p>
+        <p>Liibalaaba request</p>
+        <p>Liibalaaba request</p>
+        <p>Liibalaaba request</p>
+      </Row>
+    </Container>
+  )
 }
 
 

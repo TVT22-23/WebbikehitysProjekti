@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { Col, Container, Image, Row, Form, Card } from 'react-bootstrap';
+import { Col, Container, Image, Row, Form, Card,} from 'react-bootstrap';
 import { GroupName } from "./Group"
 import { useEffect, useState } from "react";
 import { Popup } from "./Popup"
@@ -130,8 +130,6 @@ function OwnGroupGrid({ filteredGroups }) {
 }
 
 function FindGroups({groupsData}) {
-  const groupID = "name";
-
   const [searchInput, setSearchInput] = useState('');
   const [groups, setGroups] = useState([]);
   const [filteredGroups, setFilteredGroups] = useState([]);
@@ -157,6 +155,7 @@ function FindGroups({groupsData}) {
       setFilteredGroups(filtered);
   }, [searchInput, groups]);
 
+
   return (
     <div>
       <Row>
@@ -171,14 +170,8 @@ function FindGroups({groupsData}) {
         </div>
       </Row>
       <Row>
-
-        {groupsData.map((group) => (
-          <Link to={`/group/${group.group_id}`} className="groupBox" key={group.group_id}>
-
-        {filteredGroups.map((group) => (
-          <a href="group" className="groupBox" key={group.group_id}>
-
-            {group.group_name}
+      {filteredGroups.map((group) => (
+          <Link to={`/group/${group.group_id}`} className="groupBox" key={group.group_id}>{group.group_name}
           </Link>
         ))}
       </Row>
