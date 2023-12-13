@@ -1,11 +1,10 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Col, Container, Image, Row } from 'react-bootstrap';
-import prof_pic from '../testikuvia/prof_pic.jpg';
 import Draggable from 'react-draggable';
 import React, { useEffect, useState } from "react";
-import MovieGrid from "./movieGrid";
+import {MovieGrid2} from "./movieGrid";
 import { getArticle } from "../finnkino";
-import { SharedUname, Uname, accountId, jwtToken } from "./Signals";
+import { SharedUname } from "./Signals";
 import axios from "axios";
 
 
@@ -88,7 +87,7 @@ function SharedUser() {
           </Row>
           <Row>
             <Col >
-              <MovieGrid isDraggable={isDraggable} id="userMovieGrid" />
+            <MovieGrid2 isDraggable={isDraggable} id="userMovieGrid" userID={userID} />
             </Col>
           </Row>
           <Row>
@@ -131,10 +130,7 @@ function ProfPic({ isDraggable }) {
     // Update position state while dragging
     setPosition({ x: data.x, y: data.y });
   };
-  useEffect(() => {
-    // Save position data to local storage
-    localStorage.setItem('profPicPosition', JSON.stringify(position));
-  }, [position]);
+
 
   return (
     <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
