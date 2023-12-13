@@ -3,7 +3,7 @@ import { Col, Container, Image, Row } from 'react-bootstrap';
 import prof_pic from '../testikuvia/prof_pic.jpg';
 import Draggable from 'react-draggable';
 import React, { useEffect, useState } from "react";
-import MovieGrid from "./movieGrid";
+import { MovieGrid } from "./movieGrid";
 import { getArticle } from "../finnkino";
 import { Uname, accountId, jwtToken } from "./Signals";
 import axios from "axios";

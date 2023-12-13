@@ -1,4 +1,4 @@
-import { Col, Form, Row, Button, Image } from "react-bootstrap";
+import { Col, Form, Row, Button } from "react-bootstrap";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Uname, accountId, jwtToken } from "./Signals";
 import { NotLoggedIn } from "./User";
