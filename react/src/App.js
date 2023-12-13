@@ -12,6 +12,8 @@ import { Film, Cast, Crew } from "./components/Film";
 import Footer from "./components/Footer";
 import {SearchFilms} from "./components/SearchFilms";
 import { GSettings, USettings, Settings } from "./components/Settings";
+import { accountId } from "./components/Signals";
+import { SharedUser } from "./components/SharedUser";
 
 // const persons = [
 //   { fname: 'Reima', lname: 'Raniska' },
@@ -31,7 +33,8 @@ function App() {
       
         <Route path='' element={<Home />} />
         <Route path='/searchFilms' element={<SearchFilms />} />
-        <Route path="/user" element={<User />} />
+        <Route path={"/user"} element={<User />} />
+        <Route path={"/user/:userID"} element={<SharedUser />} />
         <Route path='/film' element={<Film />} >
           <Route path='cast' element={<Cast />} />
         </Route>

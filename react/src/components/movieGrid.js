@@ -29,11 +29,9 @@ function MovieGrid({ isDraggable, id }) {
   }, []);
 
   function getDataFromAPI(id) {
-    console.log(id.movie_id);
     const movie_id= id.movie_id || id;
     axios.get(`https://api.themoviedb.org/3/movie/${encodeURIComponent(movie_id)}?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
       .then(resp => {
-        console.log(resp.data);
         const movieData = {
           Rating: resp.data.vote_average,
           movieID: resp.data.id,

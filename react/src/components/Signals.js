@@ -43,6 +43,16 @@ export const Uname = signal(getSessionUname());
 effect(() => {
     sessionStorage.setItem('Uname', Uname.value);
 });
+
+function getSharedUname() {
+    const a = sessionStorage.getItem('SharedUname');
+    return a===null || a==='null' ? '' :a;
+}
+export const SharedUname = signal(getSharedUname());
+
+effect(() => {
+    sessionStorage.setItem('SharedUname', SharedUname.value);
+});
 // function getSessionProfileImage() {
 //     const a = sessionStorage.getItem('profpic');
 //     return a===null || a==='null' ? '' :a;

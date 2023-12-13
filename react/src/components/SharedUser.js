@@ -5,30 +5,19 @@ import Draggable from 'react-draggable';
 import React, { useEffect, useState } from "react";
 import MovieGrid from "./movieGrid";
 import { getArticle } from "../finnkino";
-import { Uname, accountId, jwtToken } from "./Signals";
+import { SharedUname, Uname, accountId, jwtToken } from "./Signals";
 import axios from "axios";
 
 
 //Profile/user page
 
 
-function User() {
+function SharedUser() {
+  const { userID } = useParams();
   const [position, setPosition] = useState({});
   const [isDraggable, setIsDraggable] = useState(false);
   const [newsData, setNewsData] = useState([]);
-  const [desc, setDesc] = useState('');
-  const [username, setUsername] = useState('');
-  const { userID } = useParams();
-
-  const toggleDraggable = () => {
-    setIsDraggable((prevIsDraggable) => !prevIsDraggable); // Toggle the draggable state
-    const Positions = new FormData();
-    const local = JSON.stringify(localStorage);
-    Positions.append('layout', local);
-    Positions.append('account_id', accountId.value);
-    axios.post('/account/updateLayout', Positions);
-  };
-
+  const [desc, setDesc] = useState('empty');
 
 
   useEffect(() => {
@@ -41,20 +30,23 @@ function User() {
       })
       .catch((error) => console.error("Error fetching news:", error));
 
-    axios.get('/account/getUname?account_id=' + accountId)
+    axios.get('/account/getUname?account_id=' + userID)
       .then(resp => {
-        console.log(resp.data);
-      })
-
-    //get and set profile desc with username
-    axios.get('/account/get?user_name=' + Uname)
-      .then(resp => {
-        setDesc(resp.data[0].description);
-      })
-      .catch(error => {
-        console.error('Error:', error.data);
+        SharedUname.value = resp.data[0].user_name
       });
-  }, []);
+    }, [userID]);
+
+    useEffect(() => {
+      if (SharedUname !== ''){
+        //get and set profile desc with SharedUname
+        axios.get('/account/get?user_name=' + SharedUname)
+        .then(resp => {
+          const descript = resp.data[0].descpription;
+          console.log(resp.data[0].description);
+          setDesc(descript);
+        })
+      }
+    },[])
 
 
   const handleDrag = (e, data) => {
@@ -66,8 +58,6 @@ function User() {
   }, [position]);
   return (
     <div>
-      {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
-      {jwtToken.value.length === 0 ? <NotLoggedIn /> :
         <Container>
           <Row>
             <Col >
@@ -91,17 +81,13 @@ function User() {
           <Row>
             <Col >
               <ExtraBox ExtraBox isDraggable={isDraggable} newsData={newsData} />
-
-              <button className="editProfile" onClick={toggleDraggable}>edit profile</button>
             </Col>
           </Row>
           <Row>
             <Col className="link-style mt-4">
-              <button onClick={toggleDraggable}>Edit profile</button>
             </Col>
           </Row>
         </Container>
-      }
     </div>
   );
 }
@@ -112,7 +98,7 @@ function ProfPic({ isDraggable }) {
   const [profPicture, setProfPicture] = useState([]);
 
   useEffect(() => {
-    axios.get('/account/get?user_name=' + Uname)
+    axios.get('/account/get?user_name=' + SharedUname)
       .then(resp => {
         const profPicString = resp.data[0].profile_picture.split(',');
         const byteArray = profPicString.map(byte => parseInt(byte, 10));
@@ -144,7 +130,7 @@ function ProfPic({ isDraggable }) {
           <Image src={profPicture} height={200} width={200} alt='loading' rounded className=" my-2" />
         </div>
         <div className="profpic-body">
-          <h4 className="profpic-heading text-center">{Uname}'s profile</h4>
+          <h4 className="profpic-heading text-center">{SharedUname}'s profile</h4>
         </div>
       </div>
     </Draggable>
@@ -205,13 +191,5 @@ function ExtraBox({ isDraggable, newsData }) {
   );
 }
 
-function NotLoggedIn() {
-  return (
-    <div className="text-center m-5 borders" style={{ color: 'var(--fourth-color', textShadow: '1px 1px 1px 1px #3b3b3b' }}>
-      <h2> Please <Link to="/login">log in</Link> to use this feature</h2>
-    </div>
-  )
-}
 
-
-export { User, NotLoggedIn };
+export { SharedUser};
