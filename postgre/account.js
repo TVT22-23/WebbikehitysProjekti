@@ -4,6 +4,7 @@ const axios = require('axios')                                                  
 const sql = {                                                                                           //contains sql-queries for functions used in the postgre folder
     INSERT_ACCOUNT: 'INSERT INTO account (user_name, password, email) VALUES ($1, $2, $3)',             //included at the top of every postgre file
     GET_ACCOUNT: 'SELECT account_id, email, description, layout, profile_picture FROM account WHERE user_name=$1',
+    GET_ACCOUNT_NAME_BY_ID:'SELECT user_name FROM account WHERE account_id=$1',
     GET_UNAME: 'SELECT user_name FROM account WHERE account_id=$1',
     GET_PASSWORD: 'SELECT password FROM account WHERE user_name=$1',
     DELETE_ACCOUNT: 'DELETE FROM account WHERE user_name=$1',
@@ -26,7 +27,11 @@ axios.post("//localhost:3001/account/create/testAccount4/testPass4/testEmail4") 
 async function addAccount(user_name, password, email) {                                                 //adding an account to the account-table in database
     await pgPool.query(sql.INSERT_ACCOUNT, [user_name,password,email])
 }
-
+async function getAccountNameById(account_id){
+    const result = await pgPool.query(sql.GET_ACCOUNT_NAME_BY_ID, [account_id]);
+    const rows = result.rows;
+    return rows;
+}
 async function getAccount(user_name){                                                                   //getting data from database - included in every postgre file
     const result = await pgPool.query(sql.GET_ACCOUNT,[user_name]);
     const rows = result.rows;
@@ -61,4 +66,5 @@ async function updateLayout(layout, account_id) {
     await pgPool.query(sql.UPDATE_LAYOUT, [layout, account_id]);
 }
 
-module.exports = {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getUname};       //exporting functions to be used in Route-files - included in every postgre file
+module.exports = {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getAccountNameById, getUname};       //exporting functions to be used in Route-files - included in every postgre file
+       //exporting functions to be used in Route-files - included in every postgre file

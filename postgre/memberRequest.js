@@ -2,7 +2,7 @@ const { pgPool }= require('./connection');
 
 const sql = {
     INSERT_MEMBERREQUEST: 'INSERT INTO memberrequest (account_accountid, group_groupid, member) VALUES ($1, $2, $3)',
-    GET_MEMBERREQUEST: 'SELECT * FROM memberrequest JOIN moviegroup ON group_groupid = moviegroup.group_id WHERE group_id = ($1)',
+    GET_MEMBERREQUEST: 'SELECT * FROM memberrequest WHERE group_groupid = ($1)',
     DELETE_MEMBERREQUEST: 'DELETE FROM memberrequest WHERE request_id=$1',
     ACCEPT_MEMBERREQUEST: 'INSERT INTO member(account_accountid, group_groupid) SELECT account_accountid, group_groupid FROM memberrequest WHERE request_id=$1'
 }
