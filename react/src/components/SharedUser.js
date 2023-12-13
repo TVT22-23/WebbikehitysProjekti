@@ -17,11 +17,19 @@ function SharedUser() {
   const [position, setPosition] = useState({});
   const [isDraggable, setIsDraggable] = useState(false);
   const [newsData, setNewsData] = useState([]);
-  const [desc, setDesc] = useState('empty');
+  const [desc, setDesc] = useState('');
 
+  axios.get('/account/get?user_name=' + SharedUname)
+    .then(res => {
+      console.log(res.data[0].layout.textBoxPosition)
+      localStorage.setItem('extraBoxPosition2', res.data[0].layout.extraBoxPosition)
+      localStorage.setItem('profPicPosition2', res.data[0].layout.profPicPosition)
+      localStorage.setItem('textBoxPosition2', res.data[0].layout.textBoxPosition)
+      localStorage.setItem('userMovieGridMovieGridPosition2', res.data[0].layout.userMovieGridMovieGridPosition)
+    })
 
   useEffect(() => {
-    const savedPosition = JSON.parse(localStorage.getItem('textBoxPosition')) || {};
+    const savedPosition = JSON.parse(localStorage.getItem('textBoxPosition2')) || {};
     setPosition(savedPosition);
     getArticle("https://www.finnkino.fi/xml/News")
       .then((data) => {
@@ -41,9 +49,9 @@ function SharedUser() {
         //get and set profile desc with SharedUname
         axios.get('/account/get?user_name=' + SharedUname)
         .then(resp => {
-          const descript = resp.data[0].descpription;
-          console.log(resp.data[0].description);
-          setDesc(descript);
+          //console.log(resp.data[0].description);
+          setDesc(JSON.stringify(resp.data[0].description));
+          console.log(desc);
         })
       }
     },[])
@@ -56,6 +64,11 @@ function SharedUser() {
     // Save position data to local storage
     localStorage.setItem('textBoxPosition', JSON.stringify(position));
   }, [position]);
+
+  if(!desc) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div>
         <Container>
@@ -110,7 +123,7 @@ function ProfPic({ isDraggable }) {
   }, []);
 
   useEffect(() => {
-    const savedPosition = JSON.parse(localStorage.getItem('profPicPosition')) || {};
+    const savedPosition = JSON.parse(localStorage.getItem('profPicPosition2')) || {};
     setPosition(savedPosition);
   }, []);
 
@@ -143,7 +156,7 @@ function ProfPic({ isDraggable }) {
 function ExtraBox({ isDraggable, newsData }) {
   const [position, setPosition] = useState({});
   useEffect(() => {
-    const savedPosition = JSON.parse(localStorage.getItem("extraBoxPosition")) || {};
+    const savedPosition = JSON.parse(localStorage.getItem("extraBoxPosition2")) || {};
     setPosition(savedPosition);
   }, []);
 
