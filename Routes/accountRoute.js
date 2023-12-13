@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');                                               
 const jwt = require('jsonwebtoken');                                                        //used for login webtoken
 
 const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getAccountNameById} = require('../postgre/account');   //getting functions from postgre file - included in every route file
+const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getUname} = require('../postgre/account');   //getting functions from postgre file - included in every route file
 
 router.get('/get', async (req, res) => {                                                       //GET-endpoint - included in every route file
     const { user_name } = req.body;
@@ -21,6 +22,16 @@ router.get('/get', async (req, res) => {                                        
 router.get('/:account_id', async (req, res) => {                                                       
     const c = req.params.account_id;
     res.json(await getAccountNameById(c));
+router.get('/getUname', async (req, res) => {                                                       
+    const { account_id } = req.query;
+
+    try {
+        res.json(await getUname(account_id));
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.json({error: error.message}).status(500);
+    }
 });
 
 router.post('/create', upload.none() , async (req, res) => {                                //creating a new account POST-endpoint

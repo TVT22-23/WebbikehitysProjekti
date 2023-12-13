@@ -159,8 +159,8 @@ function Members({ memberData }) {
   return (
     <div class="groupBanner">
       {memberData.map((member) => (
-        <a key={member.member_id} href={`/user/${member.member_id}`}>
-          <img className="member" src={prof_pic} alt={`Profile of ${member.member_id}`} />
+        <a key={member.member_id} href={`/user/${member.account_accountid}`}>
+          <img className="member" src={prof_pic} alt={`Profile of ${member.account_accountid}`} />
         </a>
       ))}
     </div>

@@ -1,38 +1,34 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Col, Container, Image, Row } from 'react-bootstrap';
-import prof_pic from '../testikuvia/prof_pic.jpg';
 import Draggable from 'react-draggable';
 import React, { useEffect, useState } from "react";
-import { MovieGrid } from "./movieGrid";
+import {MovieGrid2} from "./movieGrid";
 import { getArticle } from "../finnkino";
-import { Uname, accountId, jwtToken } from "./Signals";
+import { SharedUname } from "./Signals";
 import axios from "axios";
 
 
 //Profile/user page
 
 
-function User() {
+function SharedUser() {
+  const { userID } = useParams();
   const [position, setPosition] = useState({});
   const [isDraggable, setIsDraggable] = useState(false);
   const [newsData, setNewsData] = useState([]);
   const [desc, setDesc] = useState('');
-  const [username, setUsername] = useState('');
-  const { userID } = useParams();
 
-  const toggleDraggable = () => {
-    setIsDraggable((prevIsDraggable) => !prevIsDraggable); // Toggle the draggable state
-    const Positions = new FormData();
-    const local = JSON.stringify(localStorage);
-    Positions.append('layout', local);
-    Positions.append('account_id', accountId.value);
-    axios.post('/account/updateLayout', Positions);
-  };
-
-
+  axios.get('/account/get?user_name=' + SharedUname)
+    .then(res => {
+      console.log(res.data[0].layout.textBoxPosition)
+      localStorage.setItem('extraBoxPosition2', res.data[0].layout.extraBoxPosition)
+      localStorage.setItem('profPicPosition2', res.data[0].layout.profPicPosition)
+      localStorage.setItem('textBoxPosition2', res.data[0].layout.textBoxPosition)
+      localStorage.setItem('userMovieGridMovieGridPosition2', res.data[0].layout.userMovieGridMovieGridPosition)
+    })
 
   useEffect(() => {
-    const savedPosition = JSON.parse(localStorage.getItem('textBoxPosition')) || {};
+    const savedPosition = JSON.parse(localStorage.getItem('textBoxPosition2')) || {};
     setPosition(savedPosition);
     getArticle("https://www.finnkino.fi/xml/News")
       .then((data) => {
@@ -41,20 +37,23 @@ function User() {
       })
       .catch((error) => console.error("Error fetching news:", error));
 
-    axios.get('/account/getUname?account_id=' + accountId)
+    axios.get('/account/getUname?account_id=' + userID)
       .then(resp => {
-        console.log(resp.data);
-      })
-
-    //get and set profile desc with username
-    axios.get('/account/get?user_name=' + Uname)
-      .then(resp => {
-        setDesc(resp.data[0].description);
-      })
-      .catch(error => {
-        console.error('Error:', error.data);
+        SharedUname.value = resp.data[0].user_name
       });
-  }, []);
+    }, [userID]);
+
+    useEffect(() => {
+      if (SharedUname !== ''){
+        //get and set profile desc with SharedUname
+        axios.get('/account/get?user_name=' + SharedUname)
+        .then(resp => {
+          //console.log(resp.data[0].description);
+          setDesc(JSON.stringify(resp.data[0].description));
+          console.log(desc);
+        })
+      }
+    },[])
 
 
   const handleDrag = (e, data) => {
@@ -64,10 +63,13 @@ function User() {
     // Save position data to local storage
     localStorage.setItem('textBoxPosition', JSON.stringify(position));
   }, [position]);
+
+  if(!desc) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div>
-      {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
-      {jwtToken.value.length === 0 ? <NotLoggedIn /> :
         <Container>
           <Row>
             <Col >
@@ -85,23 +87,19 @@ function User() {
           </Row>
           <Row>
             <Col >
-              <MovieGrid isDraggable={isDraggable} id="userMovieGrid" />
+            <MovieGrid2 isDraggable={isDraggable} id="userMovieGrid" userID={userID} />
             </Col>
           </Row>
           <Row>
             <Col >
               <ExtraBox ExtraBox isDraggable={isDraggable} newsData={newsData} />
-
-              <button className="editProfile" onClick={toggleDraggable}>edit profile</button>
             </Col>
           </Row>
           <Row>
             <Col className="link-style mt-4">
-              <button onClick={toggleDraggable}>Edit profile</button>
             </Col>
           </Row>
         </Container>
-      }
     </div>
   );
 }
@@ -112,7 +110,7 @@ function ProfPic({ isDraggable }) {
   const [profPicture, setProfPicture] = useState([]);
 
   useEffect(() => {
-    axios.get('/account/get?user_name=' + Uname)
+    axios.get('/account/get?user_name=' + SharedUname)
       .then(resp => {
         const profPicString = resp.data[0].profile_picture.split(',');
         const byteArray = profPicString.map(byte => parseInt(byte, 10));
@@ -124,7 +122,7 @@ function ProfPic({ isDraggable }) {
   }, []);
 
   useEffect(() => {
-    const savedPosition = JSON.parse(localStorage.getItem('profPicPosition')) || {};
+    const savedPosition = JSON.parse(localStorage.getItem('profPicPosition2')) || {};
     setPosition(savedPosition);
   }, []);
 
@@ -132,10 +130,7 @@ function ProfPic({ isDraggable }) {
     // Update position state while dragging
     setPosition({ x: data.x, y: data.y });
   };
-  useEffect(() => {
-    // Save position data to local storage
-    localStorage.setItem('profPicPosition', JSON.stringify(position));
-  }, [position]);
+
 
   return (
     <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
@@ -144,7 +139,7 @@ function ProfPic({ isDraggable }) {
           <Image src={profPicture} height={200} width={200} alt='loading' rounded className=" my-2" />
         </div>
         <div className="profpic-body">
-          <h4 className="profpic-heading text-center">{Uname}'s profile</h4>
+          <h4 className="profpic-heading text-center">{SharedUname}'s profile</h4>
         </div>
       </div>
     </Draggable>
@@ -157,7 +152,7 @@ function ProfPic({ isDraggable }) {
 function ExtraBox({ isDraggable, newsData }) {
   const [position, setPosition] = useState({});
   useEffect(() => {
-    const savedPosition = JSON.parse(localStorage.getItem("extraBoxPosition")) || {};
+    const savedPosition = JSON.parse(localStorage.getItem("extraBoxPosition2")) || {};
     setPosition(savedPosition);
   }, []);
 
@@ -205,13 +200,5 @@ function ExtraBox({ isDraggable, newsData }) {
   );
 }
 
-function NotLoggedIn() {
-  return (
-    <div className="text-center m-5 borders" style={{ color: 'var(--fourth-color', textShadow: '1px 1px 1px 1px #3b3b3b' }}>
-      <h2> Please <Link to="/login">log in</Link> to use this feature</h2>
-    </div>
-  )
-}
 
-
-export { User, NotLoggedIn };
+export { SharedUser};
