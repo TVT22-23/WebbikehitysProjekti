@@ -27,6 +27,8 @@ function Film() {
   const [selectedReviewId, setSelectedReviewId] = useState(null);
   const [selectedReview, setSelectedReview] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentRating, setCurrentRating] = useState(null);
+  const [hover, setHover] = useState(null);
 
   const openModal = (reviewId, reviewData) => {
     setSelectedReviewId(reviewId);
@@ -47,7 +49,7 @@ function Film() {
     console.log("Value: ", jwtToken.value);
     const reviewData = {
       text_review: reviewText,
-      rating: 8.5,
+      rating: currentRating,
       recommend: null,
       movie_id: filmID,
     };
@@ -69,10 +71,10 @@ function Film() {
     console.log("groupid:", groupId);
     const reviewData = {
       text_review: reviewText,
-      rating: 8.5,
+      rating: currentRating,
       recommend: null,
       movie_id: filmID,
-      groupId:groupId,
+      groupId: groupId,
     };
     const headers = {
       Authorization: `Bearer ${jwtToken}`,
@@ -87,7 +89,7 @@ function Film() {
 
         console.error('Error saving review:', error);
       });
-   
+
   };
 
 
@@ -221,7 +223,28 @@ function Film() {
                   <textarea value={reviewText} onChange={handleReviewChange}></textarea>
                 </form>
                 <Row>
-                  <Rating />
+                  <div className="">
+                    {[...Array(5)].map((star, index) => {
+                      const currentRating = index + 1;
+                      return (
+                        <label key={index}>
+                          <input
+                            type="radio"
+                            name="rating"
+                            value={currentRating}
+                            onClick={() => setCurrentRating(currentRating)}
+                          />
+                          <FaStar
+                            className='star'
+                            size={50}
+                            color={currentRating <= (hover || currentRating) ? "#ffc107" : "#e4e5e9"}
+                            onMouseEnter={() => setHover(currentRating)}
+                            onMouseLeave={() => setHover(null)}
+                          />
+                        </label>
+                      );
+                    })}
+                  </div>
                   <SubmitButton onSaveReview={handleSaveReview} />
                   <AddToGroupButton onAddToGroup={handleAddToGroup} />
                   <Col />
@@ -254,9 +277,9 @@ function Film() {
           <div>
             <h4>Reviews</h4>
             <div className="reviews">
-            <ReviewGrid openModal={openModal} reviews={reviews} />
-            <ModalReview id={selectedReviewId} show={isModalOpen} handleClose={closeModal} review={selectedReview} />
-          </div>
+              <ReviewGrid openModal={openModal} reviews={reviews} />
+              <ModalReview id={selectedReviewId} show={isModalOpen} handleClose={closeModal} review={selectedReview} />
+            </div>
           </div>
         </Col>
       </Row>
@@ -264,36 +287,7 @@ function Film() {
   );
 }
 
-function Rating() {
-  const [rating, setRating] = useState(null);
-  const [hover, setHover] = useState(null);
 
-  return (
-
-    <div className="">
-      {[...Array(5)].map((star, index) => {
-        const currentRating = index + 1;
-        return (
-          <label key={index}>
-            <input
-              type="radio"
-              name="rating"
-              value={currentRating}
-              onClick={() => setRating(currentRating)}
-            />
-            <FaStar
-              className='star'
-              size={50}
-              color={currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
-              onMouseEnter={() => setHover(currentRating)}
-              onMouseLeave={() => setHover(null)}
-            />
-          </label>
-        );
-      })}
-    </div>
-  )
-}
 
 function FilmInfo({ movie }) {
   return (
@@ -331,19 +325,9 @@ function WhereToWatch() {
   )
 }
 
-function Review() {
-  return (
-    <div className="review">
-      <form>
-        <textarea></textarea>
-      </form>
-      <Row>
-        <SubmitButton />
-        <AddToGroupButton />
-      </Row>
-    </div>
-  )
-}
+
+
+  
 
 function SubmitButton({ onSaveReview }) {
   return (
@@ -359,7 +343,7 @@ function SubmitButton({ onSaveReview }) {
 }
 
 
-function AddToGroupButton({onAddToGroup}) {
+function AddToGroupButton({ onAddToGroup }) {
   const [showModal, setShowModal] = useState(false);
   const [reviewID, setReviewID] = useState(null);
 
@@ -377,7 +361,7 @@ function AddToGroupButton({onAddToGroup}) {
   return (
     <div>
       <button class="button" onClick={() => handleShow(1)}>Add to a group</button>
-      <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} onAddToGroup={onAddToGroup}/>
+      <ModalToGroup id={reviewID} show={showModal} handleClose={handleClose} onAddToGroup={onAddToGroup} />
 
     </div>
   )
@@ -465,9 +449,9 @@ function ReviewGrid({ reviews }) {
           reviews.map((review) => (
             <Col key={review.review_id}>
               <Card style={{ display: 'flex', float: 'left', overflow: 'hidden', width: '200px', height: '230px', padding: '10px', marginTop: '10px', marginBottom: '10px', backgroundColor: '#414141', color: 'var(--fourth-color)' }}>
-                {/* Use correct property names */}
                 <Card.Title>{review.user_name}</Card.Title>
                 <Card.Text>{review.text_review}</Card.Text>
+                <StarRating rating={review?.rating} />
                 <button className="position-absolute bottom-0 start-0 m-2" style={{ borderRadius: '10px', padding: '7px', width: 'fit-content' }} onClick={() => handleShow(review)}>
                   Full review
                 </button>
@@ -486,5 +470,17 @@ function ReviewGrid({ reviews }) {
     </Container>
   );
 }
-
+function StarRating({ rating }) {
+  return (
+    <div className="star-rating">
+      {[...Array(5)].map((_, index) => (
+        <FaStar
+          key={index}
+          size={20}
+          color={index + 1 <= rating ? "#ffc107" : "#e4e5e9"}
+        />
+      ))}
+    </div>
+  );
+}
 export { Film, Crew, Cast, MovieGrid, ModalReview };
