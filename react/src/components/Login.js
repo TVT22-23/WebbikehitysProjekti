@@ -43,6 +43,16 @@ function LoginForm() {
         .catch(error => console.log(error.data));
     };
 
+    axios.get('/account/get?user_name=' + Uname)
+    .then(res => {
+      console.log(res.data[0].layout.textBoxPosition)
+      localStorage.setItem('extraBoxPosition', res.data[0].layout.extraBoxPosition)
+      localStorage.setItem('profPicPosition', res.data[0].layout.profPicPosition)
+      localStorage.setItem('textBoxPosition', res.data[0].layout.textBoxPosition)
+      localStorage.setItem('userMovieGridMovieGridPosition', res.data[0].layout.userMovieGridMovieGridPosition)
+    })
+
+
     // post new accounts uname, pass and email to endpoint as FormData
     function handleNewAccount() {
         handleClose();
