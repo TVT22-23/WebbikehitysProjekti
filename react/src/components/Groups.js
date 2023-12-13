@@ -6,9 +6,6 @@ import { Popup } from "./Popup"
 import { jwtToken, } from "./Signals";
 import { NotLoggedIn } from "./User";
 import axios from "axios";
-import { accountId } from "./Signals";
-
-
 
 const Groups = () => {
   const [buttonPopup, setButtonPopup] = useState(false);
