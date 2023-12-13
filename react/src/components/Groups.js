@@ -133,6 +133,7 @@ function FindGroups({groupsData}) {
   const [searchInput, setSearchInput] = useState('');
   const [groups, setGroups] = useState([]);
   const [filteredGroups, setFilteredGroups] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
 
@@ -142,6 +143,8 @@ function FindGroups({groupsData}) {
         setGroups(response.data);
       } catch (error) {
         console.error('Error fetching groups', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -155,7 +158,10 @@ function FindGroups({groupsData}) {
       setFilteredGroups(filtered);
   }, [searchInput, groups]);
 
-
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  
   return (
     <div>
       <Row>
