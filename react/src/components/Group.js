@@ -19,6 +19,7 @@ function Group() {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [selectedReview, setSelectedReview] = useState(null);
   const [requestData, setRequestData] = useState(null);
+  const isMember = memberData && memberData.some((member) => member.account_accountid === parseInt(accountId.value, 10));
   const handleShowReviewModal = (review) => {
     setSelectedReview(review);
     setShowReviewModal(true);
@@ -125,7 +126,7 @@ function Group() {
           <GroupName groupName={groupData.group_name} />
           <Members memberData={memberData} />
           <Col>
-            <Button onClick={() => handleRequestToJoin(groupId)}>Send Request</Button>
+          {!isMember && <Button onClick={() => handleRequestToJoin(groupId)}>Send Request</Button>}
           </Col>
         </Row>
         <Row>
