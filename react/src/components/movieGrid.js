@@ -55,6 +55,11 @@ function MovieGrid({ isDraggable, id }) {
     setPosition({ x: data.x, y: data.y });
   };
 
+  useEffect(() => {
+    // Save position data to local storage
+    localStorage.setItem(`${id}MovieGridPosition`, JSON.stringify(position));
+  }, [position, id]);
+
   return (
     <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
       <div className="borders movGrid">
