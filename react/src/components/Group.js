@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Button } from 'react-bootstrap';
+import { NewsGrid, ReviewGrid } from './Home';
 import prof_pic from '../testikuvia/prof_pic.jpg';
 import { Col, Card } from 'react-bootstrap';
 import ModalReview from './Review-modal'
@@ -17,6 +18,8 @@ function Group() {
   const [reviewData, setReviewData] = useState(null);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [selectedReview, setSelectedReview] = useState(null);
+  const [requestData, setRequestData] = useState(null);
+  const isMember = memberData && memberData.some((member) => member.account_accountid === parseInt(accountId.value, 10));
   const handleShowReviewModal = (review) => {
     setSelectedReview(review);
     setShowReviewModal(true);
@@ -26,6 +29,10 @@ function Group() {
     setSelectedReview(null);
     setShowReviewModal(false);
   };
+  function handleRequestToJoin() {
+    axios.post(`/memberRequest/create/${accountId.value}/${groupId}`);
+    console.log("request sent!!!!");
+  }
 
   useEffect(() => {
     const fetchGroupData = async () => {
@@ -52,12 +59,42 @@ function Group() {
       } catch (error) {
         console.error('Error fetching review data:', error);
       }
-
-
     }
+    const fetchRequestData = async () => {
+      try {
+        const response = await axios.get(`/memberRequest/${groupId}`);
+        const requestDataWithNames = await Promise.all(
+          response.data.map(async (request) => {
+            try {
+              const accountIdInt = parseInt(request.account_accountid, 10);
+              const accountResponse = await axios.get(`/account/${accountIdInt}`);
+              const userArray = accountResponse.data;
+              const senderName = userArray.length > 0 ? userArray[0].user_name : null;
+              return senderName
+                ? { ...request, senderName }  // Spread the existing request properties and add senderName
+                : null;
+            } catch (error) {
+              console.error('Error fetching account data:', error);
+              return null;
+            }
+          })
+        );
+    
+        // Remove any entries that have null (sender name not found)
+        const filteredRequestData = requestDataWithNames.filter(Boolean);
+    
+        setRequestData(filteredRequestData);
+      } catch (error) {
+        console.error('Error fetching group data:', error);
+      }
+    };
+    
+        // Remove any entries that have null (sender name not found)
+    fetchRequestData();
     fetchMemberData();
     fetchGroupData();
     fetchReviewData();
+   
   }, [groupId]);
   if (!groupData) {
     return <div>Loading...</div>;
@@ -65,17 +102,32 @@ function Group() {
   if (!memberData) {
     return <div>Loading...</div>;
   }
+  if (!requestData) {
+    return <div>Loading...</div>;
+  }
+
+  console.log("Testiiii", requestData);
+  console.log("Request:", requestData);
+  console.log("AccVal:", accountId.value, "Owner:", groupData.owner);
 
   
-  const isGroupOwner = groupData.owner_id === accountId.value;
-  console.log("AccVal:", accountId.value, "Owner:", groupData.owner);
-  
+  console.log("Type of groupData.owner:", typeof groupData.owner);
+  console.log("Type of accountId.value:", typeof accountId.value);
+  if (groupData.owner && parseInt(groupData.owner, 10) === parseInt(accountId.value, 10)) {
+    console.log("You are the owner");
+    
+  }
+  const isGroupOwner =parseInt(groupData.owner, 10) === parseInt(accountId.value, 10);
+
   return (
     <div>
       <Container>
         <Row>
           <GroupName groupName={groupData.group_name} />
           <Members memberData={memberData} />
+          <Col>
+          {!isMember && <Button onClick={() => handleRequestToJoin(groupId)}>Send Request</Button>}
+          </Col>
         </Row>
         <Row>
           <Row>
@@ -93,7 +145,10 @@ function Group() {
             />
           )}
         </Row>
-        {isGroupOwner && <MemberRequests/>}
+        <Row>
+          {isGroupOwner &&<MemberRequests memberRequests={requestData}/>}
+        </Row>
+         
       </Container>
     </div>
   );
@@ -144,7 +199,7 @@ function GeviewGrid({ reviewData, openModal }) {
                 {/* Use correct property names */}
                 <Card.Title>{review.user_name}</Card.Title>
                 <Card.Text>{review.text_review}</Card.Text>
-                <button style={{ padding: '7px', width: 'fit-content' }} onClick={() => openModal(review)}>
+                <button className="button" style={{ padding: '7px', width: 'fit-content', margin:'2px'  }} onClick={() => openModal(review)}>
                   Full review
                 </button>
               </Card>
@@ -159,18 +214,53 @@ function GeviewGrid({ reviewData, openModal }) {
   );
 }
 
-function MemberRequests(){
-  return(
-    <Container>
-      <Row>
-        <p>Liibalaaba request</p>
-        <p>Liibalaaba request</p>
-        <p>Liibalaaba request</p>
-        <p>Liibalaaba request</p>
-      </Row>
-    </Container>
-  )
+function MemberRequests({ memberRequests }) {
+  const handleActionClick = async (requestId, action) => {
+    console.log(`Request ${requestId} - ${action}`);
+    try {
+      if (action === 'accept') {
+        await axios.post(`/memberRequest/accept/${requestId}`);
+        console.log(`Request ${requestId} accepted successfully.`);
+      } else if (action === 'reject') {
+        await axios.post(`/memberRequest/reject/${requestId}`);
+        console.log(`Request ${requestId} rejected successfully.`);
+      }
+      // Optionally, you can handle state updates or perform other actions after accepting/rejecting.
+    } catch (error) {
+      console.error(`Error ${action}ing request ${requestId}:`, error);
+    }
+  }
+  return (
+    <div>
+      <h>Member Requests</h>
+      <Container>
+        <Row>
+          {memberRequests.map((request) => (
+            <Col key={request.request_id}>
+              <Card style={{ width: '200px', backgroundColor: '#414141', color: 'var(--fourth-color)' }}>
+                <Card.Title>{`Request from ${request.senderName || 'Unknown Sender'}`}</Card.Title>
+                {/* Add other details if needed */}
+                <button className="button"
+                  style={{ padding: '7px', width: 'fit-content', marginRight: '5px' }}
+                  onClick={() => handleActionClick(request.request_id, 'accept')}
+                >
+                  Accept
+                </button>
+                <button className="button"
+                  style={{ padding: '7px', width: 'fit-content' }}
+                  onClick={() => handleActionClick(request.request_id, 'reject')}
+                >
+                  Reject
+                </button>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </div>
+  );
 }
+
 
 
 export default Group;
