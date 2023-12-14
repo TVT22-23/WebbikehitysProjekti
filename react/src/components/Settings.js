@@ -10,7 +10,7 @@ function Settings() {
     return (
         <div>
             {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
-            {jwtToken.value.length === 0 ? <NotLoggedIn /> :
+            {jwtToken.value.length === 0 ? <NotLoggedIn prompt={'see account settings'} /> :
                 <Row className="m-2">
                     <USettings />
                     <Col className="link-style">

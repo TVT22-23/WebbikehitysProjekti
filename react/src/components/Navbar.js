@@ -10,7 +10,6 @@ return(
   <Link to="/settings">Settings</Link>
   <Link to="/login">Login</Link>
   <Link to="/searchFilms">Search Films</Link>
-
 </div>
     );
 }

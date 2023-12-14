@@ -197,7 +197,7 @@ function MovieCard({ ID, Title, Poster, Rating }) {
 
     //if there is no poster, show this poster
     if (Poster === null) {
-        Poster = 'tGX3YyPaYMbjiRwR5PjRsJW7GtM.jpg'
+        Poster = '96A0AsPQnPqLCiEAftJNWEJ1uXD.jpg' //shaggy shaggy
     }
 
     return (
