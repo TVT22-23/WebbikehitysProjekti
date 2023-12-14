@@ -74,9 +74,14 @@ const Groups = () => {
     <Container>
       <div>
         <Row>
-          <button className="groupBox" onClick={() => setButtonPopup(true)}>
-            Create group
-          </button>
+          <div>
+            {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
+            {jwtToken.value.length === 0 ? <NotLoggedIn prompt={'create a group'}/>:
+              <button className="groupBox" onClick={() => setButtonPopup(true)}>
+                Create group
+              </button>
+            }
+          </div>
           <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
             <h3 style={{ textAlign: 'center', marginTop: '40px' }}>Create group</h3>
             <form class="popUp">

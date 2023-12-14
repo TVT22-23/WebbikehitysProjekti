@@ -130,16 +130,16 @@ function Film() {
     favMovies.append('movie_id', filmID);
 
     axios.post('favoriteMovie/create', favMovies)
-    .then(resp =>{
-      alert('favourite movie added, you can add the same movie multiple times!!')
-    });
+      .then(resp => {
+        alert('favourite movie added, you can add the same movie multiple times!!')
+      });
   }
 
   function handleDeleteFavourites() {
     axios.delete('favoriteMovie/deleteSpecific/' + accountId + '/' + filmID)
-    .then(resp =>{
-      alert('favourite movie deleted')
-    });
+      .then(resp => {
+        alert('favourite movie deleted')
+      });
   }
 
   useEffect(() => {
@@ -212,8 +212,13 @@ function Film() {
               </ul>
             </div>
           </div>
-          <Button onClick={handleAddFavourites}>Add to favourites</Button>
-          <Button onClick={handleDeleteFavourites}>Delete from favourites</Button>
+          {jwtToken.value.length === 0 ?  <NotLoggedIn prompt={'add to favourite movies'} /> :
+            <div>
+
+              <Button onClick={handleAddFavourites}>Add to favourites</Button>
+              <Button onClick={handleDeleteFavourites}>Delete from favourites</Button>
+            </div>
+          }
         </Col>
 
         <Col>
@@ -222,7 +227,7 @@ function Film() {
 
           <div>
             {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
-            {jwtToken.value.length === 0 ? <NotLoggedIn /> :
+            {jwtToken.value.length === 0 ? <NotLoggedIn prompt={'to add a review'} /> :
               <div className="review">
                 <form>
                   <textarea value={reviewText} onChange={handleReviewChange}></textarea>
@@ -332,7 +337,7 @@ function WhereToWatch() {
 
 
 
-  
+
 
 function SubmitButton({ onSaveReview }) {
   return (

@@ -61,7 +61,7 @@ function User() {
   return (
     <div>
       {/* if user is not logged in and there is no jwtToken, show NotLoggedIn */}
-      {jwtToken.value.length === 0 ? <NotLoggedIn /> :
+      {jwtToken.value.length === 0 ? <NotLoggedIn prompt={'view your profile page'} /> :
         <Container>
           <Row>
             <Col >
@@ -201,10 +201,10 @@ function ExtraBox({ isDraggable, newsData }) {
   );
 }
 
-function NotLoggedIn() {
+function NotLoggedIn({prompt}) {
   return (
-    <div className="text-center m-5 borders" style={{ color: 'var(--fourth-color', textShadow: '1px 1px 1px 1px #3b3b3b' }}>
-      <h2> Please <Link to="/login">log in</Link> to use this feature</h2>
+    <div className="text-center m-5 mt-3 borders" style={{ color: 'var(--fourth-color', textShadow: '1px 1px 1px 1px #3b3b3b' }}>
+      <h2> Please <Link to="/login">log in</Link> to {prompt}</h2>
     </div>
   )
 }
