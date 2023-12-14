@@ -130,10 +130,16 @@ function Film() {
     favMovies.append('movie_id', filmID);
 
     axios.post('favoriteMovie/create', favMovies)
+    .then(resp =>{
+      alert('favourite movie added, you can add the same movie multiple times!!')
+    });
   }
 
   function handleDeleteFavourites() {
-    axios.delete('favoriteMovie/deleteSpecific/' + accountId + '/' + filmID);
+    axios.delete('favoriteMovie/deleteSpecific/' + accountId + '/' + filmID)
+    .then(resp =>{
+      alert('favourite movie deleted')
+    });
   }
 
   useEffect(() => {
