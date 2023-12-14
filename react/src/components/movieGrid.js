@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { MovieCard } from "./SearchFilms";
 import axios from "axios";
 import { accountId } from "./Signals";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function MovieGrid({ isDraggable, id }) {
   const [favMovieData, setFavMovieData] = useState([]);
@@ -19,17 +19,17 @@ function MovieGrid({ isDraggable, id }) {
           getDataFromAPI(resp.data[i]);
         }
 
-        if (limit < 4 ) {
+        if (limit < 4) {
           const left = 4 - limit;
           for (let i = 0; i < left; i++) {
-            getDataFromAPI({movie_id: 600748}); //filler movie
+            getDataFromAPI({ movie_id: 600748 }); //filler movie
           }
         }
       })
   }, []);
 
   function getDataFromAPI(id) {
-    const movie_id= id.movie_id || id;
+    const movie_id = id.movie_id || id;
     axios.get(`https://api.themoviedb.org/3/movie/${encodeURIComponent(movie_id)}?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
       .then(resp => {
         const movieData = {
@@ -68,11 +68,13 @@ function MovieGrid({ isDraggable, id }) {
           <Row >
             {favMovieData.map(f =>
               <Col key={f.movieID}>
-                <MovieCard
-                  ID={f.movieID}
-                  Title={f.Title}
-                  Poster={f.Poster}
-                  Rating={f.Rating} />
+                <Link to={`/film/${f.movieID}`}>
+                  <MovieCard
+                    ID={f.movieID}
+                    Title={f.Title}
+                    Poster={f.Poster}
+                    Rating={f.Rating} />
+                </Link>
               </Col>
             )}
           </Row>
@@ -97,17 +99,17 @@ function MovieGrid2({ isDraggable, id, userID }) {
           getDataFromAPI(resp.data[i]);
         }
 
-        if (limit < 4 ) {
+        if (limit < 4) {
           const left = 4 - limit;
           for (let i = 0; i < left; i++) {
-            getDataFromAPI({movie_id: 600748}); //filler movie
+            getDataFromAPI({ movie_id: 600748 }); //filler movie
           }
         }
       })
   }, [userID]);
 
   function getDataFromAPI(id) {
-    const movie_id= id.movie_id || id;
+    const movie_id = id.movie_id || id;
     axios.get(`https://api.themoviedb.org/3/movie/${encodeURIComponent(movie_id)}?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
       .then(resp => {
         const movieData = {
@@ -145,11 +147,13 @@ function MovieGrid2({ isDraggable, id, userID }) {
           <Row >
             {favMovieData.map(f =>
               <Col key={f.movieID}>
-                <MovieCard
-                  ID={f.movieID}
-                  Title={f.Title}
-                  Poster={f.Poster}
-                  Rating={f.Rating} />
+                <Link to={`/film/${f.movieID}`}>
+                  <MovieCard
+                    ID={f.movieID}
+                    Title={f.Title}
+                    Poster={f.Poster}
+                    Rating={f.Rating} />
+                </Link>
               </Col>
             )}
           </Row>
@@ -162,4 +166,4 @@ function MovieGrid2({ isDraggable, id, userID }) {
 
 
 
-export { MovieGrid, MovieGrid2};
+export { MovieGrid, MovieGrid2 };

@@ -4,7 +4,6 @@ function Navbar() {
 
 return(
 <div className="topnav">
-  
   <Link to="/" className="active">Home</Link>
   <Link to="/user">Profile</Link>
   <Link to="/groups">Groups</Link>
