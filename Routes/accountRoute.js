@@ -2,12 +2,11 @@ const router = require('express').Router();
 const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 const bcrypt = require('bcrypt');                                                           //used to hash our account informarion
-const jwt = require('jsonwebtoken');                                                        //used for login webtoken
-
-const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getUname} = require('../postgre/account');   //getting functions from postgre file - included in every route file
+const jwt = require('jsonwebtoken');                                                        //used for login webtoken                                                                
+const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getUname, getAccountNameById} = require('../postgre/account');   //getting functions from postgre file - included in every route file
 
 router.get('/get', async (req, res) => {                                                       //GET-endpoint - included in every route file
-    const { user_name } = req.query;
+    const { user_name } = req.body;
 
     try {
         res.json(await getAccount(user_name));
@@ -18,6 +17,11 @@ router.get('/get', async (req, res) => {                                        
     }
 });
 
+router.get('/:account_id', async (req, res) => {                                                       
+    const c = req.params.account_id;
+    res.json(await getAccountNameById(c));
+
+});
 router.get('/getUname', async (req, res) => {                                                       
     const { account_id } = req.query;
 
@@ -60,7 +64,6 @@ router.post('/login', upload.none(), async (req, res) => {                      
             const token = jwt.sign({user_name: user_name, account_id: user.account_id }, '' + process.env.JWT_SECRET_KEY, { expiresIn: '1800s' });
 
             const decodedToken = jwt.decode(token);
-            console.log("Decode:", decodedToken.account_id);
             res.status(200).json({jwtToken: token, currentAccId: decodedToken.account_id});
         } else {                                                                            //incorrect password
             res.status(401).json({error: 'Invalid password'});
