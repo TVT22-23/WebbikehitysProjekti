@@ -10,7 +10,7 @@ import Group from "./components/Group";
 import Home from "./components/Home";
 import { Film, Cast, Crew } from "./components/Film";
 import Footer from "./components/Footer";
-import {SearchFilms} from "./components/SearchFilms";
+import { SearchFilms } from "./components/SearchFilms";
 import { GSettings, USettings, Settings } from "./components/Settings";
 import { accountId } from "./components/Signals";
 import { SharedUser } from "./components/SharedUser";
@@ -26,32 +26,32 @@ function App() {
   const valueForContext = 'Hello world';
   return (
     <div className="background-size" >
-      <NavbarContext.Provider value={valueForContext}>
-        <Navbar />
-      </NavbarContext.Provider>
-      <Routes>
-      
-        <Route path='' element={<Home />} />
-        <Route path='/searchFilms' element={<SearchFilms />} />
-        <Route path={"/user"} element={<User />} />
-        <Route path={"/user/:userID"} element={<SharedUser />} />
-        <Route path='/film' element={<Film />} >
-          <Route path='cast' element={<Cast />} />
-        </Route>
-        <Route path='/film/:filmID' element={<Film />} >
-          <Route path='cast' element={<Cast />} />
-          <Route path='crew' element={<Crew />} />
-        </Route>
-        <Route path='/groups' element={<Groups />} />
-        <Route path='/group/:groupId' element={<Group />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='settings' element={<Settings />} >
-          <Route path="usettings" element={<USettings />} />
-          <Route path="gsettings" element={<GSettings />} />
-        </Route>
-        <Route path="*" element={<h2>Page not found</h2>} />
-      </Routes>
-      <Footer />
+        <NavbarContext.Provider value={valueForContext}>
+          <Navbar />
+        </NavbarContext.Provider>
+        <Routes>
+
+          <Route path='' element={<Home />} />
+          <Route path='/searchFilms' element={<SearchFilms />} />
+          <Route path={"/user"} element={<User />} />
+          <Route path={"/user/:userID"} element={<SharedUser />} />
+          <Route path='/film' element={<Film />} >
+            <Route path='cast' element={<Cast />} />
+          </Route>
+          <Route path='/film/:filmID' element={<Film />} >
+            <Route path='cast' element={<Cast />} />
+            <Route path='crew' element={<Crew />} />
+          </Route>
+          <Route path='/groups' element={<Groups />} />
+          <Route path='/group/:groupId' element={<Group />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='settings' element={<Settings />} >
+            <Route path="usettings" element={<USettings />} />
+            <Route path="gsettings" element={<GSettings />} />
+          </Route>
+          <Route path="*" element={<h2>Page not found</h2>} />
+        </Routes>
+        <Footer />
     </div>
   );
 }
