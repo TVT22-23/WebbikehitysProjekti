@@ -67,7 +67,7 @@ function Group() {
           response.data.map(async (request) => {
             try {
               const accountIdInt = parseInt(request.account_accountid, 10);
-              const accountResponse = await axios.get(`/account/${accountIdInt}`);
+              const accountResponse = await axios.get('/account/getUname?account_id=' + accountIdInt);
               const userArray = accountResponse.data;
               const senderName = userArray.length > 0 ? userArray[0].user_name : null;
               return senderName
