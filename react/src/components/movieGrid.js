@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import { Container, Row, Col } from 'react-bootstrap';
 import { MovieCard } from "./SearchFilms";
 import axios from "axios";
-import { Uname, accountId } from "./Signals";
+import { accountId } from "./Signals";
 import { useNavigate } from "react-router-dom";
 
 function MovieGrid({ isDraggable, id }) {
@@ -47,6 +47,7 @@ function MovieGrid({ isDraggable, id }) {
   useEffect(() => {
     const savedPosition = JSON.parse(localStorage.getItem(`${id}MovieGridPosition`)) || {};
     setPosition(savedPosition);
+    console.log(savedPosition);
   }, [id]);
 
   const handleDrag = (e, data) => {
@@ -77,9 +78,10 @@ function MovieGrid({ isDraggable, id }) {
 }
 
 
+
+
 function MovieGrid2({ isDraggable, id, userID }) {
   const [favMovieData, setFavMovieData] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('favoriteMovie/get?fav_account_id=' + userID)
@@ -97,7 +99,7 @@ function MovieGrid2({ isDraggable, id, userID }) {
           }
         }
       })
-  }, []);
+  }, [userID]);
 
   function getDataFromAPI(id) {
     const movie_id= id.movie_id || id;

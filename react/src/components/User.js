@@ -1,12 +1,13 @@
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Col, Container, Image, Row } from 'react-bootstrap';
-import prof_pic from '../testikuvia/prof_pic.jpg';
 import Draggable from 'react-draggable';
 import React, { useEffect, useState } from "react";
 import { MovieGrid } from "./movieGrid";
 import { getArticle } from "../finnkino";
 import { Uname, accountId, jwtToken } from "./Signals";
 import axios from "axios";
+import defaultProfilePic from "../testikuvia/defaultProfilePic.jpg"
+
 
 
 //Profile/user page
@@ -16,9 +17,7 @@ function User() {
   const [position, setPosition] = useState({});
   const [isDraggable, setIsDraggable] = useState(false);
   const [newsData, setNewsData] = useState([]);
-  const [desc, setDesc] = useState('');
-  const [username, setUsername] = useState('');
-  const { userID } = useParams();
+  const [desc, setDesc] = useState('desc loading');
 
   const toggleDraggable = () => {
     setIsDraggable((prevIsDraggable) => !prevIsDraggable); // Toggle the draggable state
@@ -41,15 +40,10 @@ function User() {
       })
       .catch((error) => console.error("Error fetching news:", error));
 
-    axios.get('/account/getUname?account_id=' + accountId)
-      .then(resp => {
-        console.log(resp.data);
-      })
-
     //get and set profile desc with username
     axios.get('/account/get?user_name=' + Uname)
       .then(resp => {
-        setDesc(resp.data[0].description);
+        setDesc((prev) => resp.data[0].description);
       })
       .catch(error => {
         console.error('Error:', error.data);
@@ -91,8 +85,6 @@ function User() {
           <Row>
             <Col >
               <ExtraBox ExtraBox isDraggable={isDraggable} newsData={newsData} />
-
-              <button className="editProfile" onClick={toggleDraggable}>edit profile</button>
             </Col>
           </Row>
           <Row>
@@ -114,12 +106,16 @@ function ProfPic({ isDraggable }) {
   useEffect(() => {
     axios.get('/account/get?user_name=' + Uname)
       .then(resp => {
-        const profPicString = resp.data[0].profile_picture.split(',');
-        const byteArray = profPicString.map(byte => parseInt(byte, 10));
-        const uint8Array = new Uint8Array(byteArray);
-        const blob = new Blob([uint8Array], { type: 'image/jpeg' });
-        setProfPicture(URL.createObjectURL(blob));
-
+        if (resp.data[0].profile_picture === null){
+          setProfPicture(defaultProfilePic)
+        } else {
+          const profPicString = resp.data[0].profile_picture.split(',');
+          const byteArray = profPicString.map(byte => parseInt(byte, 10));
+          const uint8Array = new Uint8Array(byteArray);
+          const blob = new Blob([uint8Array], { type: 'image/jpeg' });
+          setProfPicture(URL.createObjectURL(blob));
+          
+        }
       })
   }, []);
 

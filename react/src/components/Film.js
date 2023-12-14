@@ -1,8 +1,7 @@
-import { Link, Outlet, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Col, Container, Image, Row, Form, Card, Button } from 'react-bootstrap';
 import ModalReview from "./Review-modal";
-import movie_poster from '../testikuvia/movie_poster.jpg';
 import disney from '../testikuvia/disney.png'
 import hbo from '../testikuvia/hbo.png'
 import hulu from '../testikuvia/hulu.png'
