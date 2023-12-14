@@ -9,8 +9,7 @@ function LoginForm() {
     const [user_name, setUser_name] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const [reviews, setReviews] = useState([]);
-    
+
     //show or close the account creation modal
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -25,33 +24,40 @@ function LoginForm() {
         Uname.value = user_name
         //get accountId with username
         axios.get('/account/get?user_name=' + user_name)
-        .then(resp => {
-            accountId.value = resp.data[0].account_id;
-            console.log(accountId.value);
-        })
-        .catch(error => {
-            console.error('Error:', error.data);
-        });
-  
+            .then(resp => {
+                accountId.value = resp.data[0].account_id;
+                console.log(accountId.value);
+            })
+            .catch(error => {
+                console.error('Error:', error.message);
+            });
+
         axios.post('/account/login', loginData)
-        .then(resp => {
-            jwtToken.value = resp.data.jwtToken;
-            accountId.value = resp.data.currentAccId;
-            console.log("JWT Token:", jwtToken.value); // Log the JWT token value
-            console.log(accountId.value);
-        })
-        .catch(error => console.log(error.data));
-    };
-
-    axios.get('/account/get?user_name=' + Uname)
-    .then(res => {
-      console.log(res.data[0].layout.textBoxPosition)
-      localStorage.setItem('extraBoxPosition', res.data[0].layout.extraBoxPosition)
-      localStorage.setItem('profPicPosition', res.data[0].layout.profPicPosition)
-      localStorage.setItem('textBoxPosition', res.data[0].layout.textBoxPosition)
-      localStorage.setItem('userMovieGridMovieGridPosition', res.data[0].layout.userMovieGridMovieGridPosition)
-    })
-
+            .then(resp => {
+                jwtToken.value = resp.data.jwtToken;
+                accountId.value = resp.data.currentAccId;
+               // console.log("JWT Token:", jwtToken.value); // Log the JWT token value
+                console.log(accountId.value);
+            })
+            .catch(error => alert(error.message))
+            
+            
+            axios.get('/account/get?user_name=' + Uname)
+            .then(res => {
+                if (res.data[0].layout === null) {
+                    localStorage.setItem('extraBoxPosition', "{\"x\":4,\"y\":40}")
+                    localStorage.setItem('profPicPosition', "{\"x\":-12,\"y\":25}")
+                    localStorage.setItem('textBoxPosition', "{\"x\":-3,\"y\":3}")
+                    localStorage.setItem('userMovieGridMovieGridPosition', "{\"x\":-249,\"y\":101}")
+                } else {
+                    localStorage.setItem('extraBoxPosition', res.data[0].layout.extraBoxPosition)
+                    localStorage.setItem('profPicPosition', res.data[0].layout.profPicPosition)
+                    localStorage.setItem('textBoxPosition', res.data[0].layout.textBoxPosition)
+                    localStorage.setItem('userMovieGridMovieGridPosition', res.data[0].layout.userMovieGridMovieGridPosition)
+                }
+            })
+            
+        };
 
     // post new accounts uname, pass and email to endpoint as FormData
     function handleNewAccount() {
@@ -61,7 +67,11 @@ function LoginForm() {
         newAccountData.append('password', password);
         newAccountData.append('email', email);
 
-        axios.post('/account/create', newAccountData);
+        axios.post('/account/create', newAccountData)
+            .then(resp => {
+                alert('new account created');
+            })
+            .catch(error => alert('account creation failed, ', error.data))
 
         console.log(newAccountData);
     }
@@ -76,7 +86,7 @@ function LoginForm() {
                 <p className="create-account-link" onClick={handleShow}> New user? Click here to create an account</p>
                 <button onClick={login}>Login</button>
             </div>
-    
+
             {/* username, pass and email are set here, on submit handleNewAccount is called */}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

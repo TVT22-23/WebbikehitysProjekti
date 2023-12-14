@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import Draggable from 'react-draggable';
 import React, { useEffect, useState } from "react";
-import {MovieGrid2} from "./movieGrid";
+import { MovieGrid2 } from "./movieGrid";
 import { getArticle } from "../finnkino";
 import { SharedUname } from "./Signals";
 import axios from "axios";
@@ -41,65 +41,60 @@ function SharedUser() {
       .then(resp => {
         SharedUname.value = resp.data[0].user_name
       });
-    }, [userID]);
+  }, [userID]);
 
-    useEffect(() => {
-      if (SharedUname !== ''){
-        //get and set profile desc with SharedUname
-        axios.get('/account/get?user_name=' + SharedUname)
+  useEffect(() => {
+    if (SharedUname !== '') {
+      //get and set profile desc with SharedUname
+      axios.get('/account/get?user_name=' + SharedUname)
         .then(resp => {
           //console.log(resp.data[0].description);
           setDesc(JSON.stringify(resp.data[0].description));
-          console.log(desc);
         })
-      }
-    },[])
+    }
+  }, [])
 
 
   const handleDrag = (e, data) => {
     setPosition({ x: data.x, y: data.y });
   };
-  useEffect(() => {
-    // Save position data to local storage
-    localStorage.setItem('textBoxPosition', JSON.stringify(position));
-  }, [position]);
 
-  if(!desc) {
+  if (!desc) {
     return <p>Loading...</p>;
   }
 
   return (
     <div>
-        <Container>
-          <Row>
-            <Col >
+      <Container>
+        <Row>
+          <Col >
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="auto">
+            <ProfPic isDraggable={isDraggable} ProfPic />
+          </Col>
+          <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
+            <Col className="borders m-3">
+              <p>{desc}</p>
             </Col>
-          </Row>
-          <Row>
-            <Col lg="auto">
-              <ProfPic isDraggable={isDraggable} ProfPic />
-            </Col>
-            <Draggable disabled={!isDraggable} onDrag={handleDrag} position={position}>
-              <Col className="borders m-3">
-                <p>{desc}</p>
-              </Col>
-            </Draggable>
-          </Row>
-          <Row>
-            <Col >
+          </Draggable>
+        </Row>
+        <Row>
+          <Col >
             <MovieGrid2 isDraggable={isDraggable} id="userMovieGrid" userID={userID} />
-            </Col>
-          </Row>
-          <Row>
-            <Col >
-              <ExtraBox ExtraBox isDraggable={isDraggable} newsData={newsData} />
-            </Col>
-          </Row>
-          <Row>
-            <Col className="link-style mt-4">
-            </Col>
-          </Row>
-        </Container>
+          </Col>
+        </Row>
+        <Row>
+          <Col >
+            <ExtraBox ExtraBox isDraggable={isDraggable} newsData={newsData} />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="link-style mt-4">
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
@@ -161,11 +156,6 @@ function ExtraBox({ isDraggable, newsData }) {
     setPosition({ x: data.x, y: data.y });
   };
 
-  useEffect(() => {
-    // Save position data to local storage
-    localStorage.setItem("extraBoxPosition", JSON.stringify(position));
-  }, [position]);
-
   // Show only the 4 newest news articles
   const latestNews = newsData.slice(0, 4);
 
@@ -201,4 +191,4 @@ function ExtraBox({ isDraggable, newsData }) {
 }
 
 
-export { SharedUser};
+export { SharedUser };

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Container, Row } from 'react-bootstrap';
-import { NewsGrid, ReviewGrid } from './Home';
 import prof_pic from '../testikuvia/prof_pic.jpg';
 import { Col, Card } from 'react-bootstrap';
 import ModalReview from './Review-modal'

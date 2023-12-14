@@ -5,7 +5,6 @@ import { NotLoggedIn } from "./User";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
-
 function Settings() {
 
     return (
@@ -40,7 +39,7 @@ function USettings() {
                 setDescription(resp.data[0].description);
                 console.log(resp.data[0]);
             })
-        }, [])
+    }, [])
 
 
     function handleDeleteUser() {
@@ -48,6 +47,7 @@ function USettings() {
             .then(resp => {
                 navigate(`/`);
                 jwtToken.value = '';
+                alert('account ' + Uname + ' deleted')
             })
     }
 
@@ -55,9 +55,6 @@ function USettings() {
         const reader = new FileReader();
         reader.onload = async function (event) {
             const byteArray = new Uint8Array(event.target.result);
-
-            // const blob = new Blob([byteArray], { type: 'image/jpeg' });
-            // setProfpic( URL.createObjectURL(blob));
 
 
             const newUserSettings = new FormData();
@@ -69,19 +66,21 @@ function USettings() {
             try {
                 await axios.post('account/update', newUserSettings);
                 console.log('Update successful');
-              } catch (error) {
+                alert('User settings updated succesfully')
+            } catch (error) {
                 console.error('Error updating settings:', error);
-              }
-              console.log(byteArray);
-            };
-        
-            reader.readAsArrayBuffer(profpic);
-        }
-          
+            }
+        };
+
+
+        reader.readAsArrayBuffer(profpic);
+    }
+
     return (
         <div className="link-style">
 
             <h1 className="mt-3">User settings</h1>
+            <p style={{color:'#2b2b2b'}}>Always select your profile picture or suffer the consequences</p>
             <Form onSubmit={event => {
                 event.preventDefault();
             }}>
@@ -105,7 +104,7 @@ function USettings() {
                             type="file"
                             placeholder="profile picture"
                             autoFocus
-                            accept=".jpg, .jpeg, .png"
+                            accept=".jpg, .jpeg"
                             onChange={e => setProfpic(e.target.files[0])}
                         />
                     </Col>
@@ -118,7 +117,6 @@ function USettings() {
                             as="textarea"
                             maxLength="200" rows={3}
                             value={description}
-                            autoFocus
                             onChange={e => setDescription(e.target.value)}
                         />
                     </Form.Group>
