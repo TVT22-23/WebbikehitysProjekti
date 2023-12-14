@@ -28,6 +28,7 @@ function Film() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentRating, setCurrentRating] = useState(null);
   const [hover, setHover] = useState(null);
+  const [movie_poster, setMovie_poster] = useState();
 
   const openModal = (reviewId, reviewData) => {
     setSelectedReviewId(reviewId);
@@ -152,6 +153,7 @@ function Film() {
       .then((response) => response.json())
       .then((data) => {
         setMovie(data);
+        setMovie_poster(data.poster_path)
         getWatchProviders(`https://api.themoviedb.org/3/movie/${filmID}/watch/providers?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
         getActors(`https://api.themoviedb.org/3/movie/${filmID}/credits?api_key=3972673c7c2bf3c70fc1b5593e956b47`)
           .then(({ actors, director }) => {
@@ -187,6 +189,10 @@ function Film() {
 
   }, [filmID]);
 
+  if (movie_poster === null){
+    setMovie_poster('/96A0AsPQnPqLCiEAftJNWEJ1uXD.jpg')
+  }
+
   if (!movie) {
 
     return <p>Loading...</p>;
@@ -196,7 +202,7 @@ function Film() {
     <Container>
       <Row>
         <Col>
-          <Image src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="movie_poster" className="imageframe" />
+          <Image src={`https://image.tmdb.org/t/p/w500${movie_poster}`} alt="movie_poster" className="imageframe" />
           <div className="people">
 
             <div className="crew">
