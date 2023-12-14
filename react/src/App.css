@@ -257,9 +257,9 @@ textarea {
   text-align: center;
   color: #CA3E47;
   font-size: 50px;
-  height: 100px;
+  height: auto;
   width: auto;
-  display: block;
+  display: flex;
   border-radius: 10px;
   background-color: #313131;
   box-shadow: 1px 1px 10px 1px black;
