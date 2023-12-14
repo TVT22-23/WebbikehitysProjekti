@@ -1,5 +1,5 @@
 import { Col, Form, Row, Button } from "react-bootstrap";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Uname, accountId, jwtToken } from "./Signals";
 import { NotLoggedIn } from "./User";
 import { useState, useEffect } from "react";
@@ -13,10 +13,6 @@ function Settings() {
             {jwtToken.value.length === 0 ? <NotLoggedIn prompt={'see account settings'} /> :
                 <Row className="m-2">
                     <USettings />
-                    <Col className="link-style">
-                        <Link to={'gsettings'} >Group Settings</Link>
-                    </Col>
-                    <Outlet />
                 </Row>
             }
         </div>
