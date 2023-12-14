@@ -129,7 +129,7 @@ function MovieGrid2({ isDraggable, id, userID }) {
 
   useEffect(() => {
     // Save position data to local storage
-    localStorage.setItem(`${id}MovieGridPosition`, JSON.stringify(position));
+    localStorage.setItem(`${id}MovieGridPosition2`, JSON.stringify(position));
   }, [position, id]);
 
   return (
