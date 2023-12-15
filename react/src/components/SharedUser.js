@@ -20,11 +20,18 @@ function SharedUser() {
 
   axios.get('/account/get?user_name=' + SharedUname)
     .then(res => {
-      console.log(res.data[0].layout.textBoxPosition)
-      localStorage.setItem('extraBoxPosition2', res.data[0].layout.extraBoxPosition)
-      localStorage.setItem('profPicPosition2', res.data[0].layout.profPicPosition)
-      localStorage.setItem('textBoxPosition2', res.data[0].layout.textBoxPosition)
-      localStorage.setItem('userMovieGridMovieGridPosition2', res.data[0].layout.userMovieGridMovieGridPosition)
+      if (res.data[0].layout === null){
+        localStorage.setItem('extraBoxPosition', "{\"x\":4,\"y\":40}")
+        localStorage.setItem('profPicPosition', "{\"x\":-12,\"y\":25}")
+        localStorage.setItem('textBoxPosition', "{\"x\":-3,\"y\":3}")
+        localStorage.setItem('userMovieGridMovieGridPosition', "{\"x\":-249,\"y\":101}")
+      } else {
+        console.log(res.data[0].layout.textBoxPosition)
+        localStorage.setItem('extraBoxPosition2', res.data[0].layout.extraBoxPosition)
+        localStorage.setItem('profPicPosition2', res.data[0].layout.profPicPosition)
+        localStorage.setItem('textBoxPosition2', res.data[0].layout.textBoxPosition)
+        localStorage.setItem('userMovieGridMovieGridPosition2', res.data[0].layout.userMovieGridMovieGridPosition)
+      }
     })
 
   useEffect(() => {

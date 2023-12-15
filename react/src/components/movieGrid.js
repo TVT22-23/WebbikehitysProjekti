@@ -4,11 +4,10 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { MovieCard } from "./SearchFilms";
 import axios from "axios";
 import { accountId } from "./Signals";
-import { useNavigate, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 
 function MovieGrid({ isDraggable, id }) {
   const [favMovieData, setFavMovieData] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('favoriteMovie/get?fav_account_id=' + accountId)
