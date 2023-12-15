@@ -76,4 +76,5 @@ Ohjelmistotestaus kohdistui REST-rajapintaan. Testit suoritettiin Mocha-, Chai- 
 ## 7. Linkit
 
 - Linkki palvelimelle: https://group23-webdevproj-shaggyshaggy.onrender.com/
-- Linkki esittelyvideoon:
+- Linkki esittelyvideoon: https://www.youtube.com/watch?v=_W_ToXyTMug
+
