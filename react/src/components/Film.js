@@ -309,7 +309,7 @@ function FilmInfo({ movie }) {
   return (
     <div className="movieInfo">
       <h1>{movie.title}</h1> {/* Replace with actual property from your API */}
-      <h1>Director: {movie.director}</h1> {/* Replace with actual property from your API */}
+      <h4>Director: {movie.director}</h4> {/* Replace with actual property from your API */}
       <br />
       <br />
       <p>{movie.overview}</p> {/* Replace with actual property from your API */}
