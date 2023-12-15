@@ -1,5 +1,5 @@
-# WebbikehitysProjekti
-Webbikehitys kurssin projekti
+# ShaggyShaggy-Movie Platform
+Web-ohjelmoinnin sovellusprojekti, Ryhmä 23
 
 ## 1.	Johdanto
 
