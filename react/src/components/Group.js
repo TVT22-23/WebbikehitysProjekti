@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Button } from 'react-bootstrap';
+import { Container, Row, Button, } from 'react-bootstrap';
+import { ArrowLeftShort, ArrowRightShort } from 'react-bootstrap-icons';
 import { NewsGrid, ReviewGrid } from './Home';
 import prof_pic from '../testikuvia/prof_pic.jpg';
 import { Col, Card } from 'react-bootstrap';
@@ -124,7 +125,7 @@ function Group() {
       <Container>
         <Row>
           <GroupName groupName={groupData.group_name} />
-          <Members memberData={memberData} />
+          <Members memberData={memberData} isGroupOwner={isGroupOwner} />
           <Col>
           {!isMember && <Button onClick={() => handleRequestToJoin(groupId)}>Send Request</Button>}
           </Col>
@@ -153,7 +154,6 @@ function Group() {
     </div>
   );
 }
-
 function GroupName({ groupName }) {
   return (
     <div>
@@ -162,18 +162,108 @@ function GroupName({ groupName }) {
   );
 }
 
-function Members({ memberData }) {
+function Members({ memberData, isGroupOwner }) {
+  const membersPerPage = 4;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [membersWithProfilePictures, setMembersWithProfilePictures] = useState([]);
+
+  useEffect(() => {
+    const fetchMembersWithProfilePictures = async () => {
+      const membersWithPictures = await Promise.all(
+        memberData.map(async (member) => {
+          try {
+            const accountIdInt = parseInt(member.account_accountid, 10);
+            const profilePicture = await getProfilePicture(accountIdInt);
+            return {
+              ...member,
+              profilePicture,
+            };
+          } catch (error) {
+            console.error('Error fetching account data:', error);
+            return null;
+          }
+        })
+      );
+      const filteredMembersWithPictures = membersWithPictures.filter(Boolean);
+      setMembersWithProfilePictures(filteredMembersWithPictures);
+    };
+    async function getProfilePicture(accountId) {
+      try {
+        const result = await axios.get(`/account/getProfilePicture?account_id=${accountId}`);
+        const profPicString = result.data.profile_picture.split(',');
+        const byteArray = profPicString.map(byte => parseInt(byte, 10));
+        const uint8Array = new Uint8Array(byteArray);
+        const blob = new Blob([uint8Array], { type: 'image/jpeg' });
+        return URL.createObjectURL(blob);
+      } catch (error) {
+        console.error('Error fetching profile picture:', error);
+        return null;
+      }
+    }
+
+    fetchMembersWithProfilePictures();
+  }, [memberData]);
+
+
+  const indexOfLastMember = currentPage * membersPerPage;
+  const indexOfFirstMember = indexOfLastMember - membersPerPage;
+  const currentMembers = memberData.slice(indexOfFirstMember, indexOfLastMember);
+
+  const totalPages = Math.ceil(memberData.length / membersPerPage);
+
+ 
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+  const handleDeleteButton = (member) => {
+    axios.delete(`/member/delete/${member}`)
+    .then(response => {
+      console.log(response.data); 
+    })
+  }
+  
+
+  
+
   console.log("Members: ", memberData);
   return (
-    <div class="groupBanner">
-      {memberData.map((member) => (
-        <a key={member.member_id} href={`/user/${member.account_accountid}`}>
-          <img className="member" src={prof_pic} alt={`Profile of ${member.account_accountid}`} />
-        </a>
-      ))}
+    <div className="groupBanner">
+      <Row className="justify-content-between">
+        <Col xs="auto">
+          <button className="button" style={{ padding: '7px', width: 'fit-content', margin: '2px' }} onClick={handlePrevPage} disabled={currentPage === 1}>
+            <ArrowLeftShort />
+          </button>
+        </Col>
+        {membersWithProfilePictures.slice(indexOfFirstMember, indexOfLastMember).map((member) => (
+          <Col key={member.member_id} className="member-container">
+            <a href={`/user/${member.account_accountid}`}>
+              <img className="member" src={member.profilePicture || prof_pic} alt={`Profile of ${member.account_accountid}`} />
+            </a>
+            {isGroupOwner && (
+              <div className="button-container">
+                <button className="button" onClick={() => handleDeleteButton(member.member_id)} style={{ padding: '4px', width: 'fit-content', margin: '2px' }}>
+                  Delete
+                </button>
+              </div>
+            )}
+          </Col>
+        ))}
+        <Col xs="auto">
+          <button className="button" style={{ padding: '7px', width: 'fit-content', margin: '2px' }} onClick={handleNextPage} disabled={currentPage === totalPages}>
+            <ArrowRightShort />
+          </button>
+        </Col>
+      </Row>
     </div>
   );
 }
+
 
 function GeviewGrid({ reviewData, openModal }) {
   const [showModal, setShowModal] = useState(false);

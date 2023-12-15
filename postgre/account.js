@@ -9,7 +9,8 @@ const sql = {                                                                   
     GET_PASSWORD: 'SELECT password FROM account WHERE user_name=$1',
     DELETE_ACCOUNT: 'DELETE FROM account WHERE user_name=$1',
     UPDATE_ACCOUNT: 'UPDATE account SET user_name = $1, description = $2, profile_picture = $3 WHERE account_id=$4',
-    UPDATE_LAYOUT: 'UPDATE account SET layout = $1 WHERE account_id=$2'
+    UPDATE_LAYOUT: 'UPDATE account SET layout = $1 WHERE account_id=$2',
+    GET_PROFILE_PICTURE:'SELECT profile_picture FROM account WHERE account_id=$1',
 }
 
 //addAccount('poistoAccount', 'poistoPassword', 'poistoEmail');                                         //testing
@@ -43,7 +44,16 @@ async function getUname(account_id){                                            
     const rows = result.rows;
     return rows;
 }
-
+async function getProfilePic(account_id){
+    console.log("Got to get profPic!!!")                                                                   //getting data from database - included in every postgre file
+    const result = await pgPool.query(sql.GET_PROFILE_PICTURE,[account_id]);
+    const rows = result.rows;
+    if (rows.length > 0) {
+        return rows[0].profile_picture;
+    } else {
+        return null;
+    }
+}
 async function checkUser(user_name) {                                                                   //getting the user password for login from database
     const result = await pgPool.query(sql.GET_PASSWORD, [user_name]);
 
@@ -66,5 +76,5 @@ async function updateLayout(layout, account_id) {
     await pgPool.query(sql.UPDATE_LAYOUT, [layout, account_id]);
 }
 
-module.exports = {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getAccountNameById, getUname};       //exporting functions to be used in Route-files - included in every postgre file
+module.exports = {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getAccountNameById, getUname, getProfilePic};       //exporting functions to be used in Route-files - included in every postgre file
        //exporting functions to be used in Route-files - included in every postgre file

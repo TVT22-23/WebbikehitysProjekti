@@ -3,7 +3,7 @@ const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 const bcrypt = require('bcrypt');                                                           //used to hash our account informarion
 const jwt = require('jsonwebtoken');                                                        //used for login webtoken                                                                
-const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getUname, getAccountNameById} = require('../postgre/account');   //getting functions from postgre file - included in every route file
+const {addAccount, getAccount, checkUser, deleteAccount, updateAccount, updateLayout, getUname, getAccountNameById, getProfilePic} = require('../postgre/account');   //getting functions from postgre file - included in every route file
 
 router.get('/get', async (req, res) => {                                                       //GET-endpoint - included in every route file
     const { user_name } = req.query;
@@ -36,6 +36,20 @@ router.get('/getUname', async (req, res) => {
         res.json({error: error.message}).status(500);
     }
 });
+
+router.get('/getProfilePicture', async (req, res) => {
+    const { account_id } = req.query;
+    
+    try {
+        console.log(`Fetching profile picture for account ID: ${account_id}`);
+        const profilePicture = await getProfilePic(account_id);
+        console.log('Profile picture retrieved successfully:', profilePicture);
+        res.json({ profile_picture: profilePicture });
+      } catch (error) {
+        console.error('Error fetching profile picture:', error);
+        res.status(500).json({ error: error.message });
+      }
+  });
 
 router.post('/create', upload.none() , async (req, res) => {                                //creating a new account POST-endpoint
     const user_name = req.body.user_name;                                                   //.

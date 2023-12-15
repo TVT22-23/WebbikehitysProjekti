@@ -47,6 +47,7 @@ router.delete('/delete/:member_id', upload.none() , async (req, res) => {
         console.log(error);
         res.json({error: error.message}).status(500);
     }
+    console.log("Member deleted succesfully!");
 });
 
 module.exports = router;
