@@ -13,14 +13,17 @@ Projektin päätavoitteena on luoda käyttäjäystävällinen verkkopalvelu, jok
 -	käyttäjän oman näkymän kustomointi ja jakaminen
 -	elokuva-arvostelujen lisääminen ja selaaminen
 -	ryhmien luonti ja hallinta
+-	ryhmiin omien arvostelujen lisääminen
 -	käyttäjän poistaminen
 -	responsiivinen UI
+-	elokuvien selaaminen
+-	lempielokuvien tallennus omaan profiiliin
 
 ## 3.	Sovelluksen rakenne ja toiminnallisuudet
 
 ### 3.1. Tekninen rakenne
 
-Sovelluksen toteutukseen valittiin React- ja Node.js-nimiset JavaScript-pohjaiset teknologiat, ja niillä rakennettin sovelluksen käyttöliittymä sekä backend-rakenne. Sovellus käyttää PostgreSQL-tietokantaa, joka on luotu Render-palvelussa. Framework on toteutettu käyttäen Express-teknologiaa.
+Sovelluksen toteutukseen valittiin React- ja Node.js-nimiset JavaScript-pohjaiset teknologiat, ja niillä rakennettin sovelluksen käyttöliittymä sekä backend-rakenne. Sovellus käyttää PostgreSQL-tietokantaa, joka on luotu Render-palvelussa. Framework on toteutettu käyttäen Express-teknologiaa. Visuaalinen ilme toteutettiin CSS:llä.
 
 
 ### 3.2. Avoimen datan lähteiden hyödyntäminen
@@ -44,15 +47,22 @@ Lisäksi sovelluksessa on responsiivinen käyttöliittymä, jonka pienin tuettav
 
 ## 4.	Projektin eteneminen ja toteutus
 
-Alustettiin PostgreSQL-tietokanta sekä jaettiin ryhmäläisille omat tehtäväalueet. Toinen puoli ryhmästä aloitti käyttöliittymän suunnittelulla ja toinen puoli aloitti luomalla REST-rajapinnan sovellukselle. Ryhmä loi oman GitHub-organisaation, sinne säilytyspaikan, sekä Kanban-taulun auttamaan jäsentämään projektin etenemistä.
+Ryhmä loi oman GitHub-organisaation, sinne säilytyspaikan, sekä Kanban-taulun auttamaan jäsentämään projektin etenemistä.
 
-Projektipalavereja on järjestetty kerran viikossa sekä ylläpidetty kommunikointia päivittäin Discord-alustan kautta.
+Alustettiin PostgreSQL-tietokanta sekä jaettiin ryhmäläisille omat tehtäväalueet. Ryhmä kokoontui yhteen ja määritteli koko projektin Kanban-tauluun, josta jokaiselle ryhmän jäsenelle asetettiin ensimmäiset tehtävät.
 
-Tietokanta on toteutettu käyttäen Render-palvelua, ja tietokannan taulut on alustettu Visual Studio Coden (VSCode) puolella. VSCodessa Frontend-työryhmä on suunnitellut ja toteuttanut käyttöliittymän ja Backend-työryhmä puolestaan viimeistellyt tietokannan ja rajapinnan. Projektin edetessä jokainen työryhmän jäsen on kerryttänyt kokemusta Fullstack-roolissa.
+Ryhmä jakautui kahtia: toinen puoli ryhmästä aloitti käyttöliittymän suunnittelulla ja toinen toteutti REST-rajapinnan sovellukselle.
+Projektipalavereja on järjestetty kerran viikossa sekä ylläpidetty kommunikointia päivittäin Discord-alustan kautta. Apua ja tukea on pyydetty sekä tarjottu matalalla kynnyksellä koko kehityksen ajan.
+
+Tietokanta on toteutettu käyttäen Render-palvelua, ja tietokannan taulut on alustettu Visual Studio Coden (VSCode) puolella. VSCodessa Frontend-työryhmä on suunnitellut ja toteuttanut käyttöliittymän ja Backend-työryhmä puolestaan viimeistellyt tietokannan ja rajapinnan. Projektin edetessä jokainen ryhmän jäsen on kuitenkin kerryttänyt kokemusta Fullstack-roolissa.
+
+Versionhallinnassa tuli ajoittain konflikteja, joita katsotiin ja ratkaistiin yhdessä. Samoin myös koodin kirjoittamisessa välillä huomattiin lievää sokeutta. Usein toinen silmäpari ja tehokas tauottaminen oli ratkaisu ongelmiin.
+
 
 ## 5.	Ohjelmistotestaus
 
-Ohjelmistotestaus kohdistui REST-rajapintaan ja erityisesti käyttäjään. Testit suoritettiin Mocha-, Chai- ja Supertest-kirjastoilla, sekä asynkronisilla funktioilla. Testaamisessa päädyttiin käyttämään ”beforeEach”- ja ”afterEach”-koukkuja (Hook), joilla varmistettiin esto testidatan talletuksesta tietokantaan asti. 
+Ohjelmistotestaus kohdistui REST-rajapintaan. Testit suoritettiin Mocha-, Chai- ja Supertest-kirjastoilla, sekä asynkronisilla funktioilla. Testaamisessa päädyttiin käyttämään ”beforeEach”- ja ”afterEach”-koukkuja (Hook), joilla varmistettiin esto testidatan talletuksesta tietokantaan asti. Testaamisessa oli haasteita, sillä jostakin syystä testidata löysi tiensä välillä tietokantaan asti. Tämä saatiin korjattua lisäämässä aikaa ennen aikakatkaisua.
+
 
 ## 6. Tekijät
 
@@ -65,5 +75,5 @@ Ohjelmistotestaus kohdistui REST-rajapintaan ja erityisesti käyttäjään. Test
 
 ## 7. Linkit
 
-- Linkki palvelimelle:
+- Linkki palvelimelle: https://group23-webdevproj-shaggyshaggy.onrender.com/
 - Linkki esittelyvideoon:
