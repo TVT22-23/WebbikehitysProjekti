@@ -1,12 +1,10 @@
-import { Link, useParams } from "react-router-dom";
-import { Col, Container, Image, Row, Form, Card, } from 'react-bootstrap';
-import { GroupName } from "./Group"
+import { Link } from "react-router-dom";
+import { Container, Row } from 'react-bootstrap';
 import { useEffect, useState } from "react";
 import { Popup } from "./Popup"
 import { jwtToken, } from "./Signals";
 import { NotLoggedIn } from "./User";
 import axios from "axios";
-import { accountId } from "./Signals";
 
 
 
